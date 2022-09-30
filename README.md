@@ -1,3 +1,13 @@
+
+# AleTrail
+
+## Members
+* Ryan Spurlock
+* Alex Mclvor
+* Justin Thomas
+* Julie Liao
+
+
 # Module3 Project Gamma
 
 ## Getting started
