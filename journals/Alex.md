@@ -3,3 +3,4 @@
 9/28/22 -  Worked as a group on the wireframe for the site in Excalidraw
 9/29/22 - Worked on the API document. Worked on deploying the project to Heroku
 9/30/22 - Discussed API, Issues, DB strategy
+10/3/22 - Got front end and Heroku working, finished the API list, worked on creating issues
