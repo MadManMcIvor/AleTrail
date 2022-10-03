@@ -39,6 +39,7 @@
 * Update a beer review
 * Delete a delete a beer review
 
+## Breweries
 ### Get a list of breweries
 
 * Endpoint path: /{city}/breweries/
@@ -175,8 +176,8 @@
     }
     ```
 
-## Beers
 
+## Beers
 ### Get a list of beers
 
 * Endpoint path: /{city}/beers/
@@ -303,8 +304,8 @@
     }
     ```
 
-## Users
 
+## Users
 ### Get a detailed view of a User
 
 * Endpoint path: /user/{user_id}/
@@ -459,7 +460,6 @@
 
 
 ## Brewery Reviews - in the same microservice as Users
-
 ### Get a list view of brewery reviews by user
 
 * Endpoint path: /user/{user_id}/brewery_reviews/
@@ -600,8 +600,9 @@
       "deleted": true,
     }
     ```
-## Beer Reviews - in the same microservice as Users
 
+
+## Beer Reviews - in the same microservice as Users
 ### Get a list view of Beer reviews by User
 
 * Endpoint path: /user/{user_id}/beer_reviews/
