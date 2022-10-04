@@ -1,13 +1,23 @@
 # volumes:
 services:
-  fastapi:
+  breweries_and_beers:
     build:
-      context: sample_service
-      dockerfile: Dockerfile.dev
+      context: ./breweries_and_beers
+      dockerfile: ./Dockerfile.dev
     ports:
       - 8000:8000
     volumes:
-      - ./sample_service:/app
+      - ./breweries_and_beers:/app
+    
+  users_and_favorites:
+    build:
+        context: ./users_and_favorites
+        dockerfile: ./Dockerfile.dev
+    ports:
+        - 8001:8001
+    volumes:
+        - ./users_and_favorites:/app
+    environment:
   
   ghi:
     image: node:lts-bullseye
