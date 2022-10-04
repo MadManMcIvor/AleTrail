@@ -1,5 +1,5 @@
 ## 10/3/22
-* 
+* Got front end and Heroku working, finished the API list, worked on creating issues
 
 ## 9/30/22
 * Discussed API, Issues, DB strategy
