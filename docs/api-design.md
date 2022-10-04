@@ -7,37 +7,26 @@
 
 ## Beers
 * List beers all beers by city
-* Detailed view of beers w/ reviews list of that beer
+* Detailed view of beers 
 * Create a beer
 * Update a beer
 * Delete a beer
 
+---
+
+## Favorites
+* List of favorite beers/breweries for a user
+* Add a favorite
+* Delete a favorite
+
 ## Users
 * View User details
-  * List of favorite beers
-  * List of favorite breweries
-  * List of User beer reviews
-  * List of User brewery reviews
 * Update user information
 * Sign up/Create User
 * Delete User
 * Log in/out (create/delete token)
 
-## Brewery Reviews - in the same microservice as Users
-* List reviews by user
-* List reviews by brewery
-* Detailed view of a specific review
-* Create a brewery review
-* Update a brewery review
-* Delete a delete a brewery review
-
-## Beer Reviews - in the same microservice as Users
-* List reviews by user
-* List reviews by beer
-* Detailed view of a specific review
-* Create a beer review
-* Update a beer review
-* Delete a delete a beer review
+---
 
 ## Breweries
 ### Get a list of breweries
@@ -66,6 +55,7 @@
       ]
     }
     ```
+
 ### Get a detailed view of a brewery
 
 * Endpoint path: /{city}/breweries/{brewery_id}/
@@ -103,6 +93,7 @@
       ]
     }
     ```
+
 ### Create a brewery
 
 * Endpoint path: /{city}/breweries/
@@ -176,7 +167,6 @@
     }
     ```
 
-
 ## Beers
 ### Get a list of beers
 
@@ -202,6 +192,8 @@
       ]
     }
     ```
+
+
 ### Get a detailed view of a beer
 
 * Endpoint path: /{city}/breweries/{brewery_id}/beers/{beer_id}/
@@ -224,18 +216,12 @@
           "ibu": string,
           "abv": string,
           "image_url": string,
-          "review": [
-            {
-                "rating": string,
-                "text": string,
-                "image": string,
-                "created_on": date,
-            }
-          ]
         }
       ]
     }
     ```
+
+
 ### Create a beer
 
 * Endpoint path: /{city}/beers/
@@ -304,7 +290,6 @@
     }
     ```
 
-
 ## Users
 ### Get a detailed view of a User
 
@@ -340,34 +325,11 @@
             "created_on": date,
           }
           ],
-          "beer_reviews": [
-            {
-            "href": /{city}/breweries/{brewery_id}/beers/{beer_id}/reviews/{review_id},
-            "image_url": string,
-            "title": string,
-            "description": string,
-            "rating": int,
-            "beer_id": string,
-            "beer_name": string,
-            "brewery_name": string,
-            "created_on": date,
-          }
-          ],
-          "brewery_reviews": [
-            {
-            "href": /{city}/breweries/{brewery_id}/reviews/{review_id},
-            "image_url": string,
-            "title": string,
-            "description": string,
-            "rating": int,
-            "brewery_id": string,
-            "brewery_name": string,
-            "created_on": date,
-          }
-          ]
-        
+        }
     }
     ```
+
+
 ### Create a User/Sign Up
 
 * Endpoint path: /user/
@@ -458,323 +420,64 @@
     true
     ```
 
+## Favourites
+### Favourite beers
 
-## Brewery Reviews - in the same microservice as Users
-### Get a list view of brewery reviews by user
-
-* Endpoint path: /user/{user_id}/brewery_reviews/
+* Endpoint path: /{user_id}/favorites/
 * Endpoint method: GET
 
 * Headers:
   * Authorization: Bearer token
 
-* Response: A list view of a brewery reviews by user
+* Response: get a list of favourites for a user
 * Response shape:
     ```json
     {
-          "brewery_reviews": [
-            {
-            "href": /{city}/breweries/{brewery_id}/reviews/{brewery_review_id},
-            "image_url": string,
-            "username": string,
-            "title": string,
-            "description": string,
-            "rating": int,
+        {  
+            "fav_id": string,
+            "user_id": string,
+            "beer_id": string,
             "brewery_id": string,
-            "brewery_name": string,
-            "created_on": date,
-          }
-          ]
-    }
-    ```
-### Get a list view of brewery reviews by brewery
-
-* Endpoint path: /{city}/breweries/{brewery_id}/reviews/
-* Endpoint method: GET
-
-* Headers:
-  * Authorization: Bearer token
-
-* Response: A list view of a brewery reviews by brewery
-* Response shape:
-    ```json
-    {
-          "brewery_reviews": [
-            {
-            "href": /{city}/breweries/{brewery_id}/reviews/{brewery_review_id},
             "image_url": string,
-            "username": string,
-            "title": string,
-            "description": string,
-            "rating": int,
-            "brewery_id": string,
-            "brewery_name": string,
+            "name": string,
             "created_on": date,
-          }
-          ]
     }
     ```
 
+### Add Favourite beers
 
-### Get a detailed view of a brewery review by User
-
-* Endpoint path: /{city}/breweries/{brewery_id}/reviews/{review_id}/
-* Endpoint method: GET
-
-* Headers:
-  * Authorization: Bearer token
-
-* Response: A detailed view of a brewery review
-* Response shape:
-    ```json
-    {
-      "brewery_review_id": int,
-      "href": /{city}/breweries/{brewery_id}/reviews/{brewery_review_id},
-      "image_url": string,
-      "username": string,
-      "title": string,
-      "description": string,
-      "rating": int,
-      "brewery_id": string,
-      "brewery_name": string,
-      "created_on": date,  
-    }
-    ```
-
-### Create a brewery review
-
-* Endpoint path: /{city}/breweries/{brewery_id}/reviews/
+* Endpoint path: /{user_id}/favorites/
 * Endpoint method: POST
 
 * Headers:
   * Authorization: Bearer token
 
-* Response: Create a brewery
+* Response: Add a favourite
 * Response shape:
     ```json
     {
-      "image_url": string,
-      "username": string,
-      "title": string,
-      "description": string,
-      "rating": int,
-      "brewery_id": string,
-      "brewery_name": string,
+        {  
+            "image_url": string,
+            "name": string,
+            "user_id": string,
+            "beer_id": string,
+            "brewery_id": string,
     }
     ```
 
-### Update a brewery review
+### Delete Favourite beers
 
-* Endpoint path: /{city}/breweries/{brewery_id}/reviews/
-* Endpoint method: PUT
-
-* Headers:
-  * Authorization: Bearer token
-
-* Response: Update a brewery
-* Response shape:
-    ```json
-   {
-      "image_url": string,
-      "username": string,
-      "title": string,
-      "description": string,
-      "rating": int,
-      "brewery_id": string,    
-      "brewery_name": string,
-    }
-    ```
-
-### Delete a User
-
-* Endpoint path: /{city}/breweries/{brewery_id}/reviews/
+* Endpoint path: /{user_id}/favorites/{fav_id}
 * Endpoint method: DELETE
 
 * Headers:
   * Authorization: Bearer token
 
-* Response: Delete a brewery review
+* Response: Delete a favourite
 * Response shape:
     ```json
     {
-      "deleted": true,
+        {  
+
     }
     ```
-
-
-## Beer Reviews - in the same microservice as Users
-### Get a list view of Beer reviews by User
-
-* Endpoint path: /user/{user_id}/beer_reviews/
-* Endpoint method: GET
-
-* Headers:
-  * Authorization: Bearer token
-
-* Response: A list view of a beer reviews by user
-* Response shape:
-    ```json
-    {
-          "beer_reviews": [
-            {
-            "href": /{city}/breweries/{brewery_id}/beers/{beer_id}/reviews/{beer_review_id},
-            "image_url": string,
-            "username": string,
-            "title": string,
-            "description": string,
-            "rating": int,
-            "brewery_id": string,
-            "brewery_name": string,
-            "beer_id": string,
-            "beer_name": string,
-            "created_on": date,
-          }
-          ]
-    }
-    ```
-### Get a list view of Beers reviews by Brewery
-
-* Endpoint path: /{city}/breweries/{brewery_id}/beers/{beer_id}/reviews/
-* Endpoint method: GET
-
-* Headers:
-  * Authorization: Bearer token
-
-* Response: A list view of a Beer reviews by brewery
-* Response shape:
-    ```json
-    {
-          "beer_reviews": [
-          {
-            "href": /{city}/breweries/{brewery_id}/beers/{beer_id}/reviews/{beer_review_id}/,
-            "image_url": string,
-            "username": string,
-            "title": string,
-            "description": string,
-            "rating": int,
-            "brewery_id": string,
-            "brewery_name": string,
-            "beer_id": string,
-            "beer_name": string,
-            "created_on": date,
-          }
-          ]
-    }
-    ```
-
-
-### Get a detailed view of a Beer review by User
-
-* Endpoint path: /{city}/breweries/{brewery_id}/beers/{beer_id}/reviews/{beer_review_id}/
-* Endpoint method: GET
-
-* Headers:
-  * Authorization: Bearer token
-
-* Response: A detailed view of a Beer review
-* Response shape:
-    ```json
-    {
-      "beer_review_id": int,
-      "href": /{city}/breweries/{brewery_id}/beers/{beer_id}/reviews/{beer_review_id}/,
-      "image_url": string,
-      "username": string,
-      "title": string,
-      "description": string,
-      "rating": int,
-      "brewery_id": string,
-      "brewery_name": string,
-      "beer_id": string,
-      "beer_name": string,
-      "created_on": date,  
-    }
-    ```
-
-### Create a Beer review
-
-* Endpoint path: /{city}/breweries/{brewery_id}/beers/{beer_id}/reviews/{beer_review_id}/
-* Endpoint method: POST
-
-* Headers:
-  * Authorization: Bearer token
-
-* Response: Create a Beer
-* Response shape:
-    ```json
-    {
-      "image_url": string,
-      "username": string,
-      "title": string,
-      "description": string,
-      "rating": int,
-      "brewery_id": string,
-      "brewery_name": string,
-      "beer_id": string,
-      "beer_name": string,
-    }
-    ```
-
-### Update a Beer review
-
-* Endpoint path: /{city}/breweries/{brewery_id}/beers/{beer_id}/reviews/{beer_review_id}/
-* Endpoint method: PUT
-
-* Headers:
-  * Authorization: Bearer token
-
-* Response: Update a brewery
-* Response shape:
-    ```json
-   {
-      "beer_review_id": int,
-      "image_url": string,
-      "username": string,
-      "title": string,
-      "description": string,
-      "rating": int,
-      "brewery_id": string,
-      "brewery_name": string,
-      "beer_id": string,
-      "beer_name": string,
-    }
-    ```
-
-### Delete a Beer Review
-
-* Endpoint path: /{city}/breweries/{brewery_id}/beers/{beer_id}/reviews/{beer_review_id}/
-* Endpoint method: DELETE
-
-* Headers:
-  * Authorization: Bearer token
-
-* Response: Delete a Beer review
-* Response shape:
-    ```json
-    {
-      "deleted": true,
-    }
-    ```
-
-
-
-Example API Data from OpenBreweryDB
-    {
-        "id": "10-56-brewing-company-knox",
-        "name": "10-56 Brewing Company",
-        "brewery_type": "micro",
-        "street": "400 Brown Cir",
-        "address_2": null,
-        "address_3": null,
-        "city": "Knox",
-        "state": "Indiana",
-        "county_province": null,
-        "postal_code": "46534",
-        "country": "United States",
-        "longitude": "-86.627954",
-        "latitude": "41.289715",
-        "phone": "6308165790",
-        "website_url": null,
-        "updated_at": "2022-08-20T02:56:08.975Z",
-        "created_at": "2022-08-20T02:56:08.975Z"
-    },
-
