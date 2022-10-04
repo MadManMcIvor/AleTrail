@@ -5,7 +5,7 @@
 * We worked on wireframe for our app using excalidraw. We discussed what features and designs we want on the webpage. We also decided AleTrail going to be our group name.
 
 ## 9/28/22
-* We continued working on the wireframe and discussed what to include in the MVP.Authenticaation, brewery list page with detail card, beer list page with detail cards, and user profile page with list view of their favorite breweries and beers. Stretch Goals: add a brewery request form, add a beer request form, add a map that displays breweries and distance from them, add a taste profile to recommend beers, and add challenges and badges to user profiles.
+* We continued working on the wireframe and discussed what to include in the MVP.Authentication, brewery list page with detail card, beer list page with detail cards, and user profile page with list view of their favorite breweries and beers. Stretch Goals: add a brewery request form, add a beer request form, add a map that displays breweries and distance from them, add a taste profile to recommend beers, and add challenges and badges to user profiles.
 
 ## 9/29/22
 * We worked on endpoints and decided on the response shape 
