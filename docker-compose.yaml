@@ -19,7 +19,7 @@ services:
       context: ./breweries_and_beers
       dockerfile: ./Dockerfile.dev
     ports:
-      - 8000:8000
+      - 8090:8000
     volumes:
       - ./breweries_and_beers:/app
     environment:
@@ -31,7 +31,7 @@ services:
         context: ./users_and_favorites
         dockerfile: ./Dockerfile.dev
     ports:
-        - 8001:8001
+        - 8100:8000
     volumes:
         - ./users_and_favorites:/app
     environment:
