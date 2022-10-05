@@ -33,7 +33,7 @@ services:
         context: ./users_and_favorites
         dockerfile: ./Dockerfile.dev
     ports:
-        - 8100:8000
+        - 8100:8001
     volumes:
         - ./users_and_favorites:/app
     environment:
@@ -52,8 +52,8 @@ services:
       HOST_OS: ${OS}
       NODE_ENV: development
       HOST: "0.0.0.0"
-      REACT_APP_API_HOST: http://localhost:8000
-      REACT_APP_FASTAPI_HOST: http://localhost:8001
+      REACT_APP_BREWERIES_AND_BEERS_API_HOST: http://localhost:8000
+      REACT_APP_USERS_AND_FAVORITES_API_HOST: http://localhost:8001
   
       
   pg-admin:
