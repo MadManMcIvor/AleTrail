@@ -1,3 +1,8 @@
+## 10/4/22
+* Reworked our APIs Doc as a team to reflect a re-scoped MVP - we're switching to just breweries, beers, favorites, and users. Making reviews a stretch goal if we can get to it.
+* We each created our own issues to get us started and figure out our roles. I'm taking the React/frontend side of the project to start
+* We got the main project up to speed so everyone can create test branches with a base layout set.
+
 ## 10/3/22
 * Got front end and Heroku working, finished the API list, worked on creating issues
 
