@@ -1,6 +1,8 @@
 volumes:
-    postgres-data:
-        external: true
+  postgres-data:
+      external: true
+  pg-admin:
+    external: true
 services:
   postgres:
       build:
@@ -51,5 +53,15 @@ services:
       NODE_ENV: development
       HOST: "0.0.0.0"
       REACT_APP_API_HOST: http://localhost:8000
-  
+      
+  pg-admin:
+    image: dpage/pgadmin4
+    volumes:
+      - pg-admin:/var/lib/pgadmin
+    ports:
+      - 8082:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: username@hackreactor.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_DISABLE_POSTFIX: 1
             
