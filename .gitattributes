@@ -1,3 +1,4 @@
+# Does this cause an issue?
 * text=auto
 *.sql text eol=lf
 *.sh text eol=lf
