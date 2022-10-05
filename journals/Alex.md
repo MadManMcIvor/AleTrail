@@ -1,3 +1,8 @@
+## 10/5/22
+* We decided on using PostgreSQL as our database as opposed to MongoDB
+* We worked as a team to get our docker compose file up and working for local development.
+* Started to create a data file so we can create the tables and some dummy data for the end points to grab when we dive into them
+
 ## 10/4/22
 * Reworked our APIs Doc as a team to reflect a re-scope MVP - we're just going to do breweries, beers, favorites, and users. Making reviews a stretch goal if we can get to it.
 * We each created our own issues to get us started and figure out our roles. I'm taking the React/frontend side of the project to start

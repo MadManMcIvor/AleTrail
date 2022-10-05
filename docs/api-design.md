@@ -70,7 +70,7 @@
     {
       "brewery": [
         {
-          "brewery_id": string,
+          "brewery_id": int,
           "name": string,
           "street": string,
           "city": string,
