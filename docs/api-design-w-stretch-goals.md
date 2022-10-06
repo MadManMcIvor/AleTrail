@@ -314,13 +314,16 @@
 * Headers:
   * Authorization: Bearer token
 
-* Response: A detailed view of a brewery
+* Response: A detailed view of a user
 * Response shape:
     ```json
     {
         {
           "user_id": int,
-          "name": string,
+          "first": string,
+          "last": string,
+          "profile_pic": string,
+          "email": string,
           "username": string,
           "favorite_beers": [
             {
@@ -376,12 +379,14 @@
 * Headers:
   * Authorization: Bearer token
 
-* Response: Create a brewery
+* Response: Create a user 
 * Response shape:
     ```json
     {
       {
-          "name": string,
+          "first": string,
+          "last": string,
+          "email": string,
           "username": string,
           "password": string,
       }
@@ -396,12 +401,14 @@
 * Headers:
   * Authorization: Bearer token
 
-* Response: Update a brewery
+* Response: Update a user 
 * Response shape:
     ```json
     {
       {
-          "name": string,
+          "first": string,
+          "last": string,
+          "email": string, 
           "username": string,
           "password": string,
       }
