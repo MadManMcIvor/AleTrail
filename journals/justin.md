@@ -1,3 +1,5 @@
+## 10/5/22
+Configured YAML file for each microservice, got docker up and running, added pgadmin
 
 ## 10/3/22 
 Got front end and Heroku working, finished the API list
