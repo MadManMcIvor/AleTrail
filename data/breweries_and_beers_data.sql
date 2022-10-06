@@ -53,6 +53,6 @@ INSERT INTO beers VALUES
 ;
 
 
-SELECT setval('breweries_id_seq', (SELECT MAX(id) + 1 FROM breweries));
-SELECT setval('beers_id_seq', (SELECT MAX(id) + 1 FROM beers));
+SELECT setval('breweries_brewery_id_seq', (SELECT MAX(brewery_id) + 1 FROM breweries));
+SELECT setval('beers_beer_id_seq', (SELECT MAX(beer_id) + 1 FROM beers));
 
