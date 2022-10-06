@@ -108,7 +108,6 @@
     {
       "breweries": [
         {
-          "brewery_id": string,
           "name": string,
           "street": string,
           "city": string,
@@ -118,6 +117,7 @@
           "image_url": string,
           "description": string,
           "website": string,
+          "owner": string
         }
       ]
     }
@@ -215,6 +215,7 @@
           "type": string,
           "ibu": string,
           "abv": string,
+          "brewery": int,
           "image_url": string,
         }
       ]
