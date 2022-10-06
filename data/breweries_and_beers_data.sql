@@ -31,6 +31,7 @@ CREATE TABLE beers (
     type VARCHAR(150) NOT NULL,
     ibu SMALLINT NOT NULL,
     abv FLOAT NOT NULL,
+    brewery INTEGER NOT NULL REFERENCES breweries("brewery_id") ON DELETE CASCADE,
     image_url VARCHAR(300) NULL
 );
 
