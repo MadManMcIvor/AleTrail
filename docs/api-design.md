@@ -293,7 +293,7 @@
 ## Users
 ### Get a detailed view of a User
 
-* Endpoint path: /user/{user_id}/
+* Endpoint path: /users/{user_id}/
 * Endpoint method: GET
 
 * Headers:
@@ -335,7 +335,7 @@
 
 ### Create a User/Sign Up
 
-* Endpoint path: /user/
+* Endpoint path: /users/
 * Endpoint method: POST
 
 * Headers:
@@ -357,7 +357,7 @@
 
 ### Update a User
 
-* Endpoint path: /user/{user_id}/
+* Endpoint path: /users/{user_id}/
 * Endpoint method: PUT
 
 * Headers:
@@ -379,7 +379,7 @@
 
 ### Delete a User
 
-* Endpoint path: /user/{user_id}/
+* Endpoint path: /users/{user_id}/
 * Endpoint method: DELETE
 
 * Headers:
@@ -395,7 +395,7 @@
 
 ### Login
 
-* Endpoint path: /user/token
+* Endpoint path: /users/token
 * Endpoint method: POST
 
 * Request shape (form):
@@ -415,7 +415,7 @@
 
 ### Logout
 
-* Endpoint path: /user/token
+* Endpoint path: /users/token
 * Endpoint method: DELETE
 
 * Headers:

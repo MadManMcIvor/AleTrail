@@ -18,6 +18,8 @@ class UserOut(BaseModel):
     email: str
     username: str
 
+class UsersOut(BaseModel):
+    users: list[UserOut]
 
 class UserQueries:
     def get_all_users(self):
