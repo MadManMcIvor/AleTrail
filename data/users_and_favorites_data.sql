@@ -4,7 +4,7 @@ CREATE TABLE users (
     id SERIAL NOT NULL UNIQUE,
     first TEXT NOT NULL,
     last TEXT NOT NULL,
-    profile_pic TEXT NULL,
+    profile_pic TEXT,
     email TEXT NOT NULL UNIQUE,
     username TEXT NOT NULL UNIQUE,
 );
@@ -12,7 +12,7 @@ CREATE TABLE users (
 
 INSERT INTO users VALUES
   (1, 'James', 'Smith', null, 'James@gmail.com', 'Jsmith'),
-  (2, 'David', 'Jones', null, 'David@gmail.com', 'Djones',
+  (2, 'David', 'Jones', null, 'David@gmail.com', 'Djones'),
   (3, 'Patrick', 'Land', null, 'Patrick@gmail.com', 'Patrick'),
   (4, 'Abbie', 'Schmidt', null, 'Abbie@gmail.com', 'Abbies'),
   (5, 'Paul', 'Baker', null, 'Paul@gmail.com', 'Pbaker'),

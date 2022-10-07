@@ -5,7 +5,7 @@ from queries.users import(
     UsersOut,
     )
 
-from queries import UserQueries
+from queries.users import UserQueries
 
 router = APIRouter()
 

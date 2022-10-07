@@ -1,3 +1,6 @@
+## 10/6/22 
+Today we tested our data in our database and set up beekeeper. I continued working on users routers and queries. Made changes to the user database. I'm going to read the docs/ watch video on authentication. 
+
 ## 10/5/22
 Today we made changes to the docker-compose.yaml files so we can work on local development. We decided that we want to use PostgreSql for our database and have pgAdmin setup. We worked on creating some database so we can test locally. 
 

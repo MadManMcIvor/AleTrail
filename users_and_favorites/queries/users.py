@@ -1,11 +1,12 @@
 from pydantic import BaseModel
+from typing import List, Optional, Union
 from queries.pool import pool 
 
 
 class UserIn(BaseModel):
     first: str
     last: str
-    profile_pic: str
+    profile_pic: Optional[str]
     email: str
     username: str
 
@@ -14,7 +15,7 @@ class UserOut(BaseModel):
     id: int
     first: str
     last: str
-    profile_pic: str
+    profile_pic: Optional[str]
     email: str
     username: str
 
