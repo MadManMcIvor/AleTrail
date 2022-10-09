@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, Response 
+from typing import Union 
 from queries.users import( 
+    Error,
     UserIn,
     UserOut,
     UsersOut,
@@ -21,8 +23,7 @@ def users_list(queries: UserQueries = Depends()):
 def get_user(
     user_id: int,
     response: Response,
-    queries: UserQueries = Depends(),
-):
+    queries: UserQueries = Depends()):
     record = queries.get_user(user_id)
     if record is None:
         response.status_code = 404
@@ -30,26 +31,26 @@ def get_user(
         return record
 
 
-@router.post("/users", response_model=UserOut)
-def create_user(user_in: UserIn, queries: UserQueries = Depends()):
+@router.post("/users", response_model=Union[UserOut, Error])
+def create_user(
+    user_in: UserIn, 
+    queries: UserQueries = Depends(),
+    ) -> Union[UserOut, Error]:
     return queries.create_user(user_in)
 
 
-@router.put("/users/{user_id}", response_model=UserOut)
+@router.put("/users/{user_id}", response_model=Union[UserOut, Error])
 def update_user(
     user_id: int,
     user_in: UserIn,
-    response: Response,
     queries: UserQueries = Depends(),
-):
-    record = queries.update_user(user_id, user_in)
-    if record is None:
-        response.status_code = 404
-    else:
-        return record
+) -> Union[Error, UserOut]:
+    return queries.update_user(user_id, user_in)
 
 
 @router.delete("/users/{user_id}", response_model=bool)
-def delete_user(user_id: int, queries: UserQueries = Depends()):
-    queries.delete_user(user_id)
-    return True
+def delete_user(
+    user_id: int, 
+    queries: UserQueries = Depends(),
+) -> bool:
+    return queries.delete_user(user_id)
