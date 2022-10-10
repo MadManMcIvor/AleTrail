@@ -1,3 +1,6 @@
+## 10/6/22
+* Created the tables and dummy data for breweries and beers with Justin. Did some live share for the first time. Also, got Beekeeper up and running.
+
 ## 10/5/22
 * We decided on using PostgreSQL as our database as opposed to MongoDB
 * We worked as a team to get our docker compose file up and working for local development.
