@@ -1,6 +1,11 @@
+from turtle import st
 from pydantic import BaseModel
 from typing import Optional, Union
 from queries.pool import pool
+
+
+class DuplicateAccountError(ValueError):
+    pass
 
 
 class Error(BaseModel):
@@ -13,6 +18,8 @@ class UserIn(BaseModel):
     profile_pic: Optional[str]
     email: str
     username: str
+    password: str
+    is_brewery_owner: str
 
 
 class UserOut(BaseModel):
@@ -22,12 +29,20 @@ class UserOut(BaseModel):
     profile_pic: Optional[str]
     email: str
     username: str
+    is_brewery_owner: str  
 
+class UserOutWithPassword(UserOut):
+    hashed_password: str
+
+class LoginIn(BaseModel):
+    username: str
+    password: str 
 
 class UsersOut(BaseModel):
     users: list[UserOut]
 
 
+# list all users for admin 
 class UserQueries:
     def get_all_users(self):
         with pool.connection() as conn:
@@ -35,7 +50,7 @@ class UserQueries:
                 cur.execute(
                     """
                     SELECT id, first, last, profile_pic,
-                        email, profile_pic, username
+                        email, profile_pic, username, is_brewery_owner  
                     FROM users
                     ORDER BY last, first
                 """
@@ -50,6 +65,7 @@ class UserQueries:
 
                 return results
 
+    # get user detail 
     def get_user(self, id) -> Optional[UserOut]:
         try:
             with pool.connection() as conn:
@@ -57,7 +73,7 @@ class UserQueries:
                     cur.execute(
                         """
                         SELECT id, first, last, profile_pic,
-                            email, username
+                            email, username, is_brewery_owner 
                         FROM users
                         WHERE id = %s
                     """,
@@ -77,34 +93,65 @@ class UserQueries:
             print(e)
             return {"message": "Could not get that user"}
 
-    def create_user(self, user: UserIn) -> Union[UserOut, Error]:
-        try:
-            with pool.connection() as conn:
-                with conn.cursor() as cur:
-                    params = [
-                        user.first,
-                        user.last,
-                        user.profile_pic,
-                        user.email,
-                        user.username,
-                    ]
-                    cur.execute(
-                        """
-                        INSERT INTO users (first, last, profile_pic, email, username)
-                        VALUES (%s, %s, %s, %s, %s)
-                        RETURNING id, first, last, profile_pic, email, username
-                        """,
-                        params,
-                    )
-                    record = None
-                    row = cur.fetchone()
-                    if row is not None:
-                        record = {}
-                        for i, column in enumerate(cur.description):
-                            record[column.name] = row[i]
-                    return record
-        except Exception:
-            return {"message": "Can't create user"}
+    # def create_user(self, user: UserIn) -> Union[UserOut, Error]:
+    #     try:
+    #         with pool.connection() as conn:
+    #             with conn.cursor() as cur:
+    #                 params = [
+    #                     user.first,
+    #                     user.last,
+    #                     user.profile_pic,
+    #                     user.email,
+    #                     user.username,
+    #                     user.password,
+    #                     user.is_brewery_owner,
+    #                 ]
+    #                 cur.execute(
+    #                     """
+    #                     INSERT INTO users (first, last, profile_pic, email, username, password, is_brewery_owner)
+    #                     VALUES (%s, %s, %s, %s, %s, %s, %s)
+    #                     RETURNING id, first, last, profile_pic, email, username, is_brewery_owner 
+    #                     """,
+    #                     params,
+    #                 )
+    #                 record = None
+    #                 row = cur.fetchone()
+    #                 if row is not None:
+    #                     record = {}
+    #                     for i, column in enumerate(cur.description):
+    #                         record[column.name] = row[i]
+    #                 return record
+    #     except Exception:
+    #         return {"message": "Can't create user"}
+
+    def create_account(self, info: UserIn, hashed_password: str) -> UserOutWithPassword:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                params = [
+                    info.first,
+                    info.last,
+                    info.profile_pic,
+                    info.email,
+                    info.username,
+                    hashed_password(info.password),
+                    info.is_brewery_owner,
+                ]
+                cur.execute(
+                    """
+                    INSERT INTO users (first, last, profile_pic, email, username, password, is_brewery_owner)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    RETURNING id, first, last, profile_pic, email, username, password, is_brewery_owner 
+                    """,
+                    params,
+                )
+                record = None
+                row = cur.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                return record
+
 
     def update_user(self, user_id: int, user: UserIn) -> Union[UserOut, Error]:
         try:
@@ -118,6 +165,7 @@ class UserQueries:
                         , profile_pic = %s
                         , email = %s
                         , username = %s
+                        , password = %s
                         WHERE id = %s
                         RETURNING id, first, last, profile_pic, email, username
                         """,
@@ -127,6 +175,7 @@ class UserQueries:
                             user.profile_pic,
                             user.email,
                             user.username,
+                            user.password,
                             user_id,
                         ],
                     )
