@@ -1,20 +1,21 @@
 import React, { useState, useEffect} from 'react'
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 function BeerCard(props) {
-
     return (
-        <div className="w-25 p-3" key={props.beer_id}>
-            <div className="card">
-                <img className="card-img-top" src={props.image_url} alt="Card image cap"/>
-                <div className="card-body">
-                    <h5 className="card-title">{props.name}</h5>
-                    <p className="card-text">{props.description}</p>
-                </div>
-            </div>  
-        </div>
-        
-    )
-}
+        <Card key={props.beer_id} style={{ width: '18rem' }}>
+          <Card.Img variant="top" src={props.image_url} />
+          <Card.Body>
+            <Card.Title>{props.name}</Card.Title>
+            <Card.Text>
+              {props.description}
+            </Card.Text>
+            <Button variant="primary">See more</Button>
+          </Card.Body>
+        </Card>
+      );
+    }
 
 export default BeerCard;
 

@@ -1,5 +1,9 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect} from 'react';
 import BeerCard from './BeerCard';
+import Row from 'react-bootstrap/Row';
+import CardGroup from 'react-bootstrap/CardGroup';
+import BeerCardCarousel from './BeerCardCarousel';
+
 
 function Beers() {
     var beers = [
@@ -38,9 +42,7 @@ function Beers() {
       return (
         <div>
             <h1>Beers!</h1>
-            <div className="card-deck">
-                {beers}
-            </div>
+            <BeerCardCarousel beers={beers}/>
         </div>
         
     )
