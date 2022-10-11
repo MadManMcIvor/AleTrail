@@ -1,3 +1,6 @@
+## 10/10/22
+* Transformed the existing "under construction" React into the skeleton for our project. Played with a few different attempts to make masonry work on the breweries page"
+
 ## 10/6/22
 * Created the tables and dummy data for breweries and beers with Justin. Did some live share for the first time. Also, got Beekeeper up and running.
 
