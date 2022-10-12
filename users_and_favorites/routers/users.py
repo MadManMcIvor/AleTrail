@@ -39,7 +39,8 @@ router = APIRouter()
 
 
 @router.get("/users", response_model=UsersOut)
-def users_list(queries: UserQueries = Depends(),
+def users_list(
+    queries: UserQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     if account_data:
@@ -50,17 +51,16 @@ def users_list(queries: UserQueries = Depends(),
 
 @router.get("/users/{user_id}", response_model=Optional[UserOut])
 def get_user(
-    user_id: int, 
-    response: Response, 
+    user_id: int,
+    response: Response,
     queries: UserQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
-    ):
+):
     record = queries.get_user(user_id)
     if record is not None and account_data:
-        return record 
+        return record
     else:
         response.status_code = 404
-
 
 
 # @router.get("/protected", response_model=bool)
@@ -132,5 +132,5 @@ def delete_user(
     queries: UserQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> bool:
-    if account_data: 
+    if account_data:
         return queries.delete_user(user_id)
