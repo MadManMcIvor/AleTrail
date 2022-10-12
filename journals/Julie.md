@@ -1,3 +1,6 @@
+## 10/12/22
+Today I asked for feedback from teammates and removed is_admin from the users table database. The testing data in the database is updated to have hashed password. After the changes, I deleted and rebuild the volume to test the database to make sure nothing is broken. Fixed more endpoints to be protected. 
+
 ## 10/11/22
 Today I created a signing key and continued to make corrections on the users endpoint because after adding the authentication, the swagger endpoints didn't work correctly. 
 

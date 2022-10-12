@@ -39,26 +39,35 @@ router = APIRouter()
 
 
 @router.get("/users", response_model=UsersOut)
-def users_list(queries: UserQueries = Depends()):
-    return {
-        "users": queries.get_all_users(),
-    }
+def users_list(queries: UserQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    if account_data:
+        return {
+            "users": queries.get_all_users(),
+        }
 
 
 @router.get("/users/{user_id}", response_model=Optional[UserOut])
-def get_user(user_id: int, response: Response, queries: UserQueries = Depends()):
-    record = queries.get_user(user_id)
-    if record is None:
-        response.status_code = 404
-    else:
-        return record
-
-
-@router.get("/protected", response_model=bool)
-async def get_protected(
+def get_user(
+    user_id: int, 
+    response: Response, 
+    queries: UserQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
-):
-    return True
+    ):
+    record = queries.get_user(user_id)
+    if record is not None and account_data:
+        return record 
+    else:
+        response.status_code = 404
+
+
+
+# @router.get("/protected", response_model=bool)
+# async def get_protected(
+#     account_data: dict = Depends(authenticator.get_current_account_data),
+# ):
+#     return True
 
 
 @router.get("/token", response_model=AccountToken | None)
@@ -121,5 +130,7 @@ async def update_user(
 def delete_user(
     user_id: int,
     queries: UserQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> bool:
-    return queries.delete_user(user_id)
+    if account_data: 
+        return queries.delete_user(user_id)

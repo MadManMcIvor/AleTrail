@@ -1,4 +1,3 @@
-from turtle import st
 from pydantic import BaseModel
 from typing import Optional, Union
 from queries.pool import pool
@@ -41,6 +40,7 @@ class UsersOut(BaseModel):
 
 
 class UserQueries:
+    # this is used for authentication during login
     def get(self, email) -> UserOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
