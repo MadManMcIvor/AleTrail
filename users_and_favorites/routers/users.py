@@ -21,6 +21,7 @@ from queries.users import (
     DuplicateAccountError,
 )
 
+
 class AccountForm(BaseModel):
     username: str
     password: str
@@ -38,34 +39,35 @@ router = APIRouter()
 
 
 @router.get("/users", response_model=UsersOut)
-def users_list(queries: UserQueries = Depends()):
-    return {
-        "users": queries.get_all_users(),
-    }
+def users_list(
+    queries: UserQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    if account_data:
+        return {
+            "users": queries.get_all_users(),
+        }
 
 
 @router.get("/users/{user_id}", response_model=Optional[UserOut])
-def get_user(user_id: int, response: Response, queries: UserQueries = Depends()):
-    record = queries.get_user(user_id)
-    if record is None:
-        response.status_code = 404
-    else:
-        return record
-
-
-@router.get("/protected", response_model=bool)
-async def get_protected(
+def get_user(
+    user_id: int,
+    response: Response,
+    queries: UserQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    return True
+    record = queries.get_user(user_id)
+    if record is not None and account_data:
+        return record
+    else:
+        response.status_code = 404
 
 
-# @router.get("/api/vacations", response_model = bool)
+# @router.get("/protected", response_model=bool)
 # async def get_protected(
-#     vacations: VacationQueries = Depends(),
 #     account_data: dict = Depends(authenticator.get_current_account_data),
 # ):
-#     return vacations.get_account_vacations(account_data)
+#     return True
 
 
 @router.get("/token", response_model=AccountToken | None)
@@ -109,25 +111,26 @@ async def create_account(
     return AccountToken(user=user, **token.dict())
 
 
-
-@router.put("/users/{user_id}", response_model=Union[UserOut, Error])
-def update_user(
+@router.put("/users/{user_id}")
+async def update_user(
     user_id: int,
     user_in: UserIn,
     response: Response,
     queries: UserQueries = Depends(),
-) -> Union[Error, UserOut]:
-    # return queries.update_user(user_id, user_in)
-    record = queries.update_user(user_id, user_in)
-    if record is None:
-        response.status_code = 404
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    hashed_password = authenticator.hash_password(user_in.password)
+    if account_data:
+        return queries.update_user(user_id, user_in, hashed_password)
     else:
-        return record
+        response.status_code = 404
 
 
 @router.delete("/users/{user_id}", response_model=bool)
 def delete_user(
     user_id: int,
     queries: UserQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> bool:
-    return queries.delete_user(user_id)
+    if account_data:
+        return queries.delete_user(user_id)

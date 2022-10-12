@@ -39,7 +39,7 @@ services:
     environment:
       DATABASE_URL: postgresql://users_and_favorites:password@postgres/users_and_favorites
       WAIT_HOSTS: postgres:5432 
-      SIGNING_KEY: B13D36AE-9847-40F5-AAB2-69D2012DF5B9
+      SIGNING_KEY: ${SIGNING_KEY}
 
   ghi:
     image: node:lts-bullseye

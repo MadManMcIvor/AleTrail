@@ -1,4 +1,3 @@
-from turtle import st
 from pydantic import BaseModel
 from typing import Optional, Union
 from queries.pool import pool
@@ -19,7 +18,7 @@ class UserIn(BaseModel):
     email: str
     username: str
     password: str
-    is_brewery_owner: str
+    is_brewery_owner: bool
 
 
 class UserOut(BaseModel):
@@ -29,44 +28,38 @@ class UserOut(BaseModel):
     profile_pic: Optional[str]
     email: str
     username: str
-    is_brewery_owner: str  
+    is_brewery_owner: bool
+
 
 class UserOutWithPassword(UserOut):
     hashed_password: str
+
 
 class UsersOut(BaseModel):
     users: list[UserOut]
 
 
-class AccountIn(BaseModel):
-    email: str 
-    password: str 
-
-class AccountOut(BaseModel):
-    email: str 
-
 class UserQueries:
+    # this is used for authentication during login
     def get(self, email) -> UserOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                        SELECT email
+                        SELECT *
                         FROM users
                         WHERE email = %s 
                     """,
-                        [email],
-                    )
-                results = []
+                    [email],
+                )
+
                 for row in cur.fetchall():
                     record = {}
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
-                    results.append(record)
+                return record
 
-                return results
-
-    # list all users for admin 
+    # list all users for admin
     def get_all_users(self):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -88,7 +81,7 @@ class UserQueries:
 
                 return results
 
-    # get user detail 
+    # get user detail
     def get_user(self, id) -> Optional[UserOut]:
         try:
             with pool.connection() as conn:
@@ -133,7 +126,7 @@ class UserQueries:
     #                     """
     #                     INSERT INTO users (first, last, profile_pic, email, username, password, is_brewery_owner)
     #                     VALUES (%s, %s, %s, %s, %s, %s, %s)
-    #                     RETURNING id, first, last, profile_pic, email, username, is_brewery_owner 
+    #                     RETURNING id, first, last, profile_pic, email, username, is_brewery_owner
     #                     """,
     #                     params,
     #                 )
@@ -167,7 +160,7 @@ class UserQueries:
                     """,
                     params,
                 )
-                
+
                 record = None
                 row = cur.fetchone()
                 if row is not None:
@@ -176,8 +169,9 @@ class UserQueries:
                         record[column.name] = row[i]
                 return record
 
-
-    def update_user(self, user_id: int, user: UserIn) -> Union[UserOut, Error]:
+    def update_user(
+        self, user_id: int, user: UserIn, hashed_password: str
+    ) -> UserOutWithPassword:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -190,8 +184,9 @@ class UserQueries:
                         , email = %s
                         , username = %s
                         , password = %s
+                        , is_brewery_owner = %s
                         WHERE id = %s
-                        RETURNING id, first, last, profile_pic, email, username
+                        RETURNING id, first, last, profile_pic, email, username, password, is_brewery_owner
                         """,
                         [
                             user.first,
@@ -199,7 +194,8 @@ class UserQueries:
                             user.profile_pic,
                             user.email,
                             user.username,
-                            user.password,
+                            hashed_password,
+                            user.is_brewery_owner,
                             user_id,
                         ],
                     )
