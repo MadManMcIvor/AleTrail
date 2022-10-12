@@ -1,3 +1,7 @@
+## 10/11/22
+* Imported the react-bootstrap library and got the masonry to work on the breweries page.
+* Imported a react-carousel library and created some of the components for the beers page. I've mostly got it working but I'm still tweaking it though. 
+
 ## 10/10/22
 * Transformed the existing "under construction" React into the skeleton for our project. Played with a few different attempts to make masonry work on the breweries page"
 
