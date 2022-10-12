@@ -17,7 +17,6 @@ from queries.users import (
     UserIn,
     UserOut,
     UsersOut,
-    UserOutWithPassword,
     UserQueries,
     DuplicateAccountError,
 )

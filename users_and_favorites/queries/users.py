@@ -40,15 +40,6 @@ class UsersOut(BaseModel):
     users: list[UserOut]
 
 
-class AccountIn(BaseModel):
-    email: str
-    password: str
-
-
-class AccountOut(BaseModel):
-    email: str
-
-
 class UserQueries:
     def get(self, email) -> UserOutWithPassword:
         with pool.connection() as conn:
