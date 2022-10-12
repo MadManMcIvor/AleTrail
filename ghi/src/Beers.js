@@ -15,7 +15,9 @@ function Beers() {
     breweriesList = breweriesList.map(function(brewery) {
         return <div>
                 <h2>{brewery.name}</h2>
-                <BeerCardCarousel/>
+                <BeerCardCarousel
+                brewery_id = {brewery.brewery_id}
+                />
             </div>
     });
     
