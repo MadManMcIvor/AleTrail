@@ -24,6 +24,25 @@ class BreweryQueries:
                     breweries.append(brewery)
                 return breweries
 
+    # def get_brewery(self, brewery_id):
+    #     with pool.connection() as conn:
+    #         with conn.cursor() as cur:
+    #             cur.execute(
+    #                 """
+    #                 SELECT brew.id AS brewery_id, brew.name, brew.street,
+    #                     brew.city, brew.state, brew.zip_code,
+    #                     brew.phone, brew.image_url, brew.description,
+    #                     brew.website
+    #                 FROM breweries brew
+    #                 ORDER BY brew.name
+    #                 WHERE brew.id = %s
+    #                 """,
+    #                 [brewery_id],
+    #             )
+
+    #             row = cur.fetchone()
+    #             return self.brewery_record_to_dict(row, cur.description)
+
     # def create_brewery(self, brewery):
     #     id = None
     #     with pool.connection() as conn:

@@ -34,6 +34,18 @@ class BreweryOut(BaseModel):
 class BreweriesOut(BaseModel):
     breweries: list[BreweryOut]
 
+# @router.get("/brewery/{brewery_id}", response_model=BreweryOut)
+# def get_brewery(
+#     brewery_id: int,
+#     response: Response,
+#     queries: BreweryQueries = Depends()
+#     ):
+#     record = queries.get_brewery(brewery_id)
+#     if record is None:
+#         response.status_code = 404
+#     else:
+#         return record
+
 @router.get("/breweries", response_model=BreweriesOut)
 def get_breweries(queries: BreweryQueries = Depends()):
     return {"breweries": queries.get_breweries()}
