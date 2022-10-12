@@ -7,7 +7,7 @@ CREATE TABLE users (
     profile_pic TEXT,
     email TEXT NOT NULL UNIQUE,
     username VARCHAR(20) NOT NULL UNIQUE,
-    password VARCHAR(15) NOT NULL,
+    password TEXT NOT NULL,
     is_admin BOOLEAN DEFAULT FALSE,
     is_brewery_owner BOOLEAN DEFAULT FALSE
 );

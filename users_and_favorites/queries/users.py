@@ -34,16 +34,39 @@ class UserOut(BaseModel):
 class UserOutWithPassword(UserOut):
     hashed_password: str
 
-class LoginIn(BaseModel):
-    username: str
-    password: str 
-
 class UsersOut(BaseModel):
     users: list[UserOut]
 
 
-# list all users for admin 
+class AccountIn(BaseModel):
+    email: str 
+    password: str 
+
+class AccountOut(BaseModel):
+    email: str 
+
 class UserQueries:
+    def get(self, email) -> UserOutWithPassword:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                        SELECT email
+                        FROM users
+                        WHERE email = %s 
+                    """,
+                        [email],
+                    )
+                results = []
+                for row in cur.fetchall():
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                    results.append(record)
+
+                return results
+
+    # list all users for admin 
     def get_all_users(self):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -133,7 +156,7 @@ class UserQueries:
                     info.profile_pic,
                     info.email,
                     info.username,
-                    hashed_password(info.password),
+                    hashed_password,
                     info.is_brewery_owner,
                 ]
                 cur.execute(
@@ -144,6 +167,7 @@ class UserQueries:
                     """,
                     params,
                 )
+                
                 record = None
                 row = cur.fetchone()
                 if row is not None:

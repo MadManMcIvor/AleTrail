@@ -17,8 +17,6 @@ from queries.users import (
     UserIn,
     UserOut,
     UsersOut,
-    UserOutWithPassword,
-    LoginIn,
     UserQueries,
     DuplicateAccountError,
 )
@@ -55,11 +53,11 @@ def get_user(user_id: int, response: Response, queries: UserQueries = Depends())
         return record
 
 
-# @router.get("/protected", response_model=bool)
-# async def get_protected(
-#     account_data: dict = Depends(authenticator.get_current_account_data),
-# ):
-#     return True
+@router.get("/protected", response_model=bool)
+async def get_protected(
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    return True
 
 
 # @router.get("/api/vacations", response_model = bool)
@@ -73,13 +71,13 @@ def get_user(user_id: int, response: Response, queries: UserQueries = Depends())
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
-    account: UserOut = Depends(authenticator.try_get_current_account_data),
+    user: UserOut = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
     if authenticator.cookie_name in request.cookies:
         return {
             "access_token": request.cookies[authenticator.cookie_name],
             "type": "Bearer",
-            "account": account,
+            "user": user,
         }
 
 
@@ -100,7 +98,7 @@ async def create_account(
 ):
     hashed_password = authenticator.hash_password(info.password)
     try:
-        user = users.create(info, hashed_password)
+        user = users.create_account(info, hashed_password)
     except DuplicateAccountError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

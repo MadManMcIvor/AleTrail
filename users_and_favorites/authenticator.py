@@ -1,6 +1,8 @@
 import os
 from fastapi import Depends
 from jwtdown_fastapi.authentication import Authenticator
+
+
 from queries.users import UserQueries, UserOut, UserOutWithPassword
 
 
@@ -30,6 +32,7 @@ class AccountAuthenticator(Authenticator):
         # Return the username and the data for the cookie.
         # You must return TWO values from this method.
         return user.username, UserOut(**user.dict())
+
 
 
 authenticator = AccountAuthenticator(os.environ["SIGNING_KEY"])
