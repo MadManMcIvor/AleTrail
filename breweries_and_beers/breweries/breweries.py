@@ -56,3 +56,8 @@ def create_brewery(
     queries: BreweryQueries = Depends(), 
 ):
     return queries.create_brewery(brewery)
+
+@router.delete("/brewery/{brewery_id}", response_model=bool)
+def delete_brewery(brewery_id: int, queries: BreweryQueries = Depends()):
+    queries.delete_brewery(brewery_id)
+    return True
