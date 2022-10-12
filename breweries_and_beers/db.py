@@ -46,3 +46,106 @@ class BreweryQueries:
             brewery["id"] = brewery["brewery_id"]
 
         return brewery
+
+
+class BeerQueries:
+    def get_beers(self):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT b.beer_id, b.name, b.description, b.type,
+                    b.ibu, b.abv, b.website, b.brewery, b.image_url
+                    FROM beers.b
+                    ORDER BY b.name
+                    """
+                )
+                results = []
+                for row in cur.fetchall():
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                    results.append(record)
+
+                return results
+
+    def get_beer(self, id):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT id
+                    , name
+                    , description
+                    , type
+                    , ibu
+                    , abv
+                    , website
+                    , brewery
+                    , image_url
+                    WHERE id = %s
+                    """,
+                    [id],
+                )
+
+                record = None
+                row = cur.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+
+                return record
+
+    def create_beer(self, beer):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO beers (
+                    name
+                    , description
+                    , type
+                    , ibu
+                    , abv
+                    , brewery
+                    , image_url
+                    )
+                    VALUES (%s
+                    , %s
+                    , %s
+                    , %s
+                    , %s
+                    , %s
+                    , %s)
+                    RETURNING id
+                    """,
+                    [
+                        beer.name,
+                        beer.description,
+                        beer.type,
+                        beer.ibu,
+                        beer.abv,
+                        beer.brewery,
+                        beer.image_url,
+                    ],
+                )
+
+                record = None
+                row = cur.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                response = {
+                    "id": record["id"],
+                    "name": beer.name,
+                    "description": beer.description,
+                    "type": beer.type,
+                    "ibu": beer.ibu,
+                    "abv": beer.abv,
+                    "website": beer.website,
+                    "brewery": beer.brewery,
+                    "image_url": beer.image_url,
+                }
+                return response
