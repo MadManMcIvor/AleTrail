@@ -71,6 +71,17 @@ class BreweryQueries:
         if brewery_id is not None:
             return self.get_brewery(brewery_id)
 
+    def detele_brewery(self, brewery_id):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    DELETE FROM brewery
+                    WHERE brewery_id = %s
+                    """,
+                    [brewery_id],
+                )
+
     def brewery_record_to_dict(self, row, description):
         brewery = None
         if row is not None:
