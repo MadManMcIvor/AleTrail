@@ -175,7 +175,7 @@ class UserQueries:
                 return record
 
 
-    def update_user(self, user_id: int, user: UserIn) -> Union[UserOut, Error]:
+    def update_user(self, user_id: int, user: UserIn, hashed_password: str) -> UserOutWithPassword:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -188,8 +188,9 @@ class UserQueries:
                         , email = %s
                         , username = %s
                         , password = %s
+                        , is_brewery_owner = %s
                         WHERE id = %s
-                        RETURNING id, first, last, profile_pic, email, username
+                        RETURNING id, first, last, profile_pic, email, username, password, is_brewery_owner
                         """,
                         [
                             user.first,
@@ -197,7 +198,8 @@ class UserQueries:
                             user.profile_pic,
                             user.email,
                             user.username,
-                            user.password,
+                            hashed_password,
+                            user.is_brewery_owner, 
                             user_id,
                         ],
                     )

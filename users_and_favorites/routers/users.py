@@ -17,6 +17,7 @@ from queries.users import (
     UserIn,
     UserOut,
     UsersOut,
+    UserOutWithPassword,
     UserQueries,
     DuplicateAccountError,
 )
@@ -58,14 +59,6 @@ async def get_protected(
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     return True
-
-
-# @router.get("/api/vacations", response_model = bool)
-# async def get_protected(
-#     vacations: VacationQueries = Depends(),
-#     account_data: dict = Depends(authenticator.get_current_account_data),
-# ):
-#     return vacations.get_account_vacations(account_data)
 
 
 @router.get("/token", response_model=AccountToken | None)
@@ -110,19 +103,19 @@ async def create_account(
 
 
 
-@router.put("/users/{user_id}", response_model=Union[UserOut, Error])
-def update_user(
+@router.put("/users/{user_id}")
+async def update_user(
     user_id: int,
     user_in: UserIn,
     response: Response,
     queries: UserQueries = Depends(),
-) -> Union[Error, UserOut]:
-    # return queries.update_user(user_id, user_in)
-    record = queries.update_user(user_id, user_in)
-    if record is None:
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    hashed_password = authenticator.hash_password(user_in.password)
+    if account_data:
+        return queries.update_user(user_id, user_in, hashed_password)
+    else: 
         response.status_code = 404
-    else:
-        return record
 
 
 @router.delete("/users/{user_id}", response_model=bool)
