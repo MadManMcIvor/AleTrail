@@ -1,3 +1,9 @@
+## 10/11/22
+Got a functioning GET request for all breweries. Working now to POST request to create a brewery and GET request for a specific brewery. Will need to add a way to filter by city and add in associated beer tables later.
+
+## 10/10/22
+Worked on setting up backend for breweries
+
 ## 10/5/22
 Configured YAML file for each microservice, got docker up and running, added pgadmin
 
