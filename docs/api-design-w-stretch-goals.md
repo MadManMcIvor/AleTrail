@@ -308,19 +308,22 @@
 ## Users
 ### Get a detailed view of a User
 
-* Endpoint path: /user/{user_id}/
+* Endpoint path: /users/{user_id}/
 * Endpoint method: GET
 
 * Headers:
   * Authorization: Bearer token
 
-* Response: A detailed view of a brewery
+* Response: A detailed view of a user
 * Response shape:
     ```json
     {
         {
           "user_id": int,
-          "name": string,
+          "first": string,
+          "last": string,
+          "profile_pic": string,
+          "email": string,
           "username": string,
           "favorite_beers": [
             {
@@ -370,18 +373,20 @@
     ```
 ### Create a User/Sign Up
 
-* Endpoint path: /user/
+* Endpoint path: /users/
 * Endpoint method: POST
 
 * Headers:
   * Authorization: Bearer token
 
-* Response: Create a brewery
+* Response: Create a user 
 * Response shape:
     ```json
     {
       {
-          "name": string,
+          "first": string,
+          "last": string,
+          "email": string,
           "username": string,
           "password": string,
       }
@@ -390,18 +395,20 @@
 
 ### Update a User
 
-* Endpoint path: /user/{user_id}/
+* Endpoint path: /users/{user_id}/
 * Endpoint method: PUT
 
 * Headers:
   * Authorization: Bearer token
 
-* Response: Update a brewery
+* Response: Update a user 
 * Response shape:
     ```json
     {
       {
-          "name": string,
+          "first": string,
+          "last": string,
+          "email": string, 
           "username": string,
           "password": string,
       }
@@ -410,7 +417,7 @@
 
 ### Delete a User
 
-* Endpoint path: /user/{user_id}/
+* Endpoint path: /users/{user_id}/
 * Endpoint method: DELETE
 
 * Headers:
@@ -426,7 +433,7 @@
 
 ### Login
 
-* Endpoint path: /user/token
+* Endpoint path: /users/token
 * Endpoint method: POST
 
 * Request shape (form):
@@ -446,7 +453,7 @@
 
 ### Logout
 
-* Endpoint path: /user/token
+* Endpoint path: /users/token
 * Endpoint method: DELETE
 
 * Headers:
