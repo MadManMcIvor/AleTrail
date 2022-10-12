@@ -50,9 +50,9 @@ def get_brewery(
 def get_breweries(queries: BreweryQueries = Depends()):
     return {"breweries": queries.get_breweries()}
 
-# @router.post("/breweries", response_model=BreweryOut)
-# def create_brewery(
-#     brewery: BreweryIn, 
-#     queries: BreweryQueries = Depends(), 
-# ):
-#     return queries.create_brewery(brewery)
+@router.post("/breweries", response_model=BreweryOut)
+def create_brewery(
+    brewery: BreweryIn, 
+    queries: BreweryQueries = Depends(), 
+):
+    return queries.create_brewery(brewery)
