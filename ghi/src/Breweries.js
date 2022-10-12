@@ -1,4 +1,3 @@
-import React, { useState, useEffect} from 'react'
 import Masonry from 'react-masonry-css'
 import BreweryCard from './BreweryCard';
 

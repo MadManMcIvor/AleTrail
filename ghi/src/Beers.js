@@ -1,6 +1,5 @@
-import React, { useState, useEffect} from 'react';
-import Row from 'react-bootstrap/Row';
-import CardGroup from 'react-bootstrap/CardGroup';
+//import React, { useState, useEffect} from 'react';
+//import CardGroup from 'react-bootstrap/CardGroup';
 import BeerCardCarousel from './BeerCardCarousel';
 
 
@@ -13,20 +12,22 @@ function Beers() {
         {brewery_id: 5, name: 'High Five', image_url: 'https://images.pexels.com/photos/1267696/pexels-photo-1267696.jpeg?auto=compress&cs=tinysrgb&w=1600', description: 'Just a cool spot to come and drink some beers!' },
       ];
     
-    breweriesList = breweriesList.map(function(brewery){
-        return 
-        <>
-            <h2>{brewery.name}</h2>
-            <BeerCardCarousel/>
-        </>
-    });
-    console.log(breweriesList);
-      return (
-        <div>
-            <h1>Beers!</h1>
-            {breweriesList}
-        </div>
+    // Still geting this to work
+    
+    // breweriesList = breweriesList.map(function(brewery){
+    //     return 
+    //     <>
+    //         <h2>{brewery.name}</h2>
+    //         <BeerCardCarousel/>
+    //     </>
+    // });
+    // console.log(breweriesList);
+    //   return (
+    //     <div>
+    //         <h1>Beers!</h1>
+    //         {breweriesList}
+    //     </div>
         
-    )
+    // )
 }
 export default Beers;
