@@ -22,6 +22,7 @@ from queries.users import (
     DuplicateAccountError,
 )
 
+
 class AccountForm(BaseModel):
     username: str
     password: str
@@ -97,10 +98,9 @@ async def create_account(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Cannot create an account with those credentials",
         )
-    form = AccountForm(username=info.email, password= info.password)
+    form = AccountForm(username=info.email, password=info.password)
     token = await authenticator.login(response, request, form, users)
     return AccountToken(user=user, **token.dict())
-
 
 
 @router.put("/users/{user_id}")
@@ -114,7 +114,7 @@ async def update_user(
     hashed_password = authenticator.hash_password(user_in.password)
     if account_data:
         return queries.update_user(user_id, user_in, hashed_password)
-    else: 
+    else:
         response.status_code = 404
 
 

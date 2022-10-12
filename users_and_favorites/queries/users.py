@@ -29,21 +29,25 @@ class UserOut(BaseModel):
     profile_pic: Optional[str]
     email: str
     username: str
-    is_brewery_owner: bool  
+    is_brewery_owner: bool
+
 
 class UserOutWithPassword(UserOut):
     hashed_password: str
+
 
 class UsersOut(BaseModel):
     users: list[UserOut]
 
 
 class AccountIn(BaseModel):
-    email: str 
-    password: str 
+    email: str
+    password: str
+
 
 class AccountOut(BaseModel):
-    email: str 
+    email: str
+
 
 class UserQueries:
     def get(self, email) -> UserOutWithPassword:
@@ -55,16 +59,16 @@ class UserQueries:
                         FROM users
                         WHERE email = %s 
                     """,
-                        [email],
-                    )
-    
+                    [email],
+                )
+
                 for row in cur.fetchall():
                     record = {}
                     for i, column in enumerate(cur.description):
-                        record[column.name] = row[i]              
-                return record 
+                        record[column.name] = row[i]
+                return record
 
-    # list all users for admin 
+    # list all users for admin
     def get_all_users(self):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -86,7 +90,7 @@ class UserQueries:
 
                 return results
 
-    # get user detail 
+    # get user detail
     def get_user(self, id) -> Optional[UserOut]:
         try:
             with pool.connection() as conn:
@@ -131,7 +135,7 @@ class UserQueries:
     #                     """
     #                     INSERT INTO users (first, last, profile_pic, email, username, password, is_brewery_owner)
     #                     VALUES (%s, %s, %s, %s, %s, %s, %s)
-    #                     RETURNING id, first, last, profile_pic, email, username, is_brewery_owner 
+    #                     RETURNING id, first, last, profile_pic, email, username, is_brewery_owner
     #                     """,
     #                     params,
     #                 )
@@ -174,8 +178,9 @@ class UserQueries:
                         record[column.name] = row[i]
                 return record
 
-
-    def update_user(self, user_id: int, user: UserIn, hashed_password: str) -> UserOutWithPassword:
+    def update_user(
+        self, user_id: int, user: UserIn, hashed_password: str
+    ) -> UserOutWithPassword:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -199,7 +204,7 @@ class UserQueries:
                             user.email,
                             user.username,
                             hashed_password,
-                            user.is_brewery_owner, 
+                            user.is_brewery_owner,
                             user_id,
                         ],
                     )
