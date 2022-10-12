@@ -103,13 +103,13 @@ class BeerQueries:
                 cur.execute(
                     """
                     INSERT INTO beers (
-                    name
-                    , description
-                    , type
-                    , ibu
-                    , abv
-                    , brewery
-                    , image_url
+                    name,
+                    description,
+                    type,
+                    ibu,
+                    abv,
+                    brewery,
+                    image_url
                     )
                     VALUES (%s
                     , %s
@@ -118,7 +118,7 @@ class BeerQueries:
                     , %s
                     , %s
                     , %s)
-                    RETURNING id
+                    RETURNING beer_id
                     """,
                     [
                         beer.name,
@@ -138,7 +138,7 @@ class BeerQueries:
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
                 response = {
-                    "id": record["id"],
+                    "id": record["beer_id"],
                     "name": beer.name,
                     "description": beer.description,
                     "type": beer.type,

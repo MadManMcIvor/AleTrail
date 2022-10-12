@@ -2,8 +2,7 @@ DROP TABLE IF EXISTS breweries;
 DROP TABLE IF EXISTS beers;
 
 CREATE TABLE users_vo (
-    users_vo_id SERIAL NOT NULL PRIMARY KEY,
-
+    users_vo_id SERIAL NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE breweries (
@@ -19,8 +18,8 @@ CREATE TABLE breweries (
     website TEXT NULL
 );
 
-Add back later
-owner_id INTEGER REFERENCES users("id") ON DELETE CASCADE
+-- Add back later
+-- owner_id INTEGER REFERENCES users("id") ON DELETE CASCADE
 
 
 
@@ -37,6 +36,7 @@ CREATE TABLE beers (
 
 
 INSERT INTO breweries VALUES
+  (0, '1188 Brewing', '123 Address St', 'Bend', 'Oregon', '97701', '1234567890', null, 'A brewery in Bend, Oregon', null),
   (1, '10-56 Brewing Company', '400 Brown Cir', 'Sacramento', 'California', '46534', '6308165790', null, 'A brewery in Sacramento, California', null),
   (2, 'Big Sexy Brewing Company', '5861 88th St Ste 800', 'Sacramento', 'California', '95828', '9163747332', 'https://static.wixstatic.com/media/317ec9_55fb53d685e94e209ec42b88e77d43f9~mv2.png/v1/fill/w_241,h_83,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Logo%20Dark%20Gray.png', 'A brewery in Sacramento, California', 'http://www.bigsexybrewing.com'),
   (3, '10 Barrel Brewing Co', '62970 18th St', 'Bend', 'Oregon', '97701', '5415851007', 'https://10barrel.com/wp-content/themes/mx-theme/assets/img/logo-retina-white.png', 'A brewery in Bend, Oregon', 'https://10barrel.com/'),
