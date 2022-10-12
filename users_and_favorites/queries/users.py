@@ -19,7 +19,7 @@ class UserIn(BaseModel):
     email: str
     username: str
     password: str
-    is_brewery_owner: str
+    is_brewery_owner: bool
 
 
 class UserOut(BaseModel):
@@ -29,7 +29,7 @@ class UserOut(BaseModel):
     profile_pic: Optional[str]
     email: str
     username: str
-    is_brewery_owner: str  
+    is_brewery_owner: bool  
 
 class UserOutWithPassword(UserOut):
     hashed_password: str
@@ -51,20 +51,18 @@ class UserQueries:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                        SELECT email
+                        SELECT *
                         FROM users
                         WHERE email = %s 
                     """,
                         [email],
                     )
-                results = []
+    
                 for row in cur.fetchall():
                     record = {}
                     for i, column in enumerate(cur.description):
-                        record[column.name] = row[i]
-                    results.append(record)
-
-                return results
+                        record[column.name] = row[i]              
+                return record 
 
     # list all users for admin 
     def get_all_users(self):
@@ -167,7 +165,7 @@ class UserQueries:
                     """,
                     params,
                 )
-                
+
                 record = None
                 row = cur.fetchone()
                 if row is not None:

@@ -1,3 +1,6 @@
+## 10/11/22
+Today I created a signing key and continued to make corrections on the users endpoint because after adding the authentication, the swagger endpoints didn't work correctly. 
+
 ## 10/10/22 
 The endpoints for users CRUD works, but I need to include password. Today I continued working on my endpoints and made changes to the table to include password, is_admin, and is_brewery_owner. After the changes to the table, I can focus on authentication and testing out all the endpoint requests.  
 
