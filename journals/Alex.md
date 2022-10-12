@@ -1,3 +1,8 @@
+## 10/12/22
+* We figured out how to make merge requests and implemented a few of those.
+* Fixed the beers carousels
+* Added modals for both beers and breweries
+
 ## 10/11/22
 * Imported the react-bootstrap library and got the masonry to work on the breweries page.
 * Imported a react-carousel library and created some of the components for the beers page. I've mostly got it working but I'm still tweaking it though. 
