@@ -1,32 +1,32 @@
 import { NavLink } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
-function Nav() {
+function OurNav() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-success">
-      <div className="container-fluid">
-        <NavLink className="navbar-brand" to="/">AleTrail</NavLink>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/breweries">Breweries</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/beers">Beers</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/favorites">Favorites</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/settings">Settings</NavLink>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  )
+    <>
+      <Navbar bg="warning" variant="light" expand="md">
+        <Container>
+          <Navbar.Brand href="/breweries">AleTrail</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <NavLink className="nav-link" to="/breweries">Breweries</NavLink>
+                <NavLink className="nav-link" to="/beers">Beers</NavLink>
+                <NavLink className="nav-link" to="/favorites">Favorites</NavLink>
+              </Nav>
+              <Nav>
+                <NavLink className="nav-link" to="/settings">Settings</NavLink>
+                <NavLink className="nav-link" to="/login">Sign Up</NavLink>
+                <NavLink className="nav-link" to="/login">Login</NavLink>
+                <NavLink className="nav-link" to="/login">Logout</NavLink>
+              </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </>
+  );
 }
 
-export default Nav;
+export default OurNav;
