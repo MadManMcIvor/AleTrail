@@ -49,6 +49,18 @@ def get_brewery(
 def get_breweries(queries: BreweryQueries = Depends()):
     return {"breweries": queries.get_breweries()}
 
+@router.get("/breweries/{city}", response_model=BreweriesOut)
+def get_breweries(
+    city: str,
+    response: Response,
+    queries: BreweryQueries = Depends()
+    ):
+    record = queries.get_breweries_by_city(city)
+    if record is None:
+        response.status_code = 404
+    else:
+        return record
+
 @router.post("/breweries", response_model=BreweryOut)
 def create_brewery(
     brewery: BreweryIn, 
