@@ -1,3 +1,6 @@
+## 10/13/22
+Today I discussed with teammates and decided the is_brewery_owner is going to be a stretch goal. I modified the models and tested to make sure nothing is broken, unfortunately I got an error message. I was debugging and finally found that I did not remove %s from one of the endpoint. I'm going to start on the react signup page. 
+
 ## 10/12/22
 Today I asked for feedback from teammates and removed is_admin from the users table database. The testing data in the database is updated to have hashed password. After the changes, I deleted and rebuild the volume to test the database to make sure nothing is broken. Fixed more endpoints to be protected. 
 
