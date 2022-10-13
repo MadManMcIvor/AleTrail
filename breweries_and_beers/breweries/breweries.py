@@ -1,4 +1,3 @@
-from typing import Literal
 from fastapi import APIRouter, Depends, Response
 from pydantic import BaseModel
 from typing import Optional
@@ -50,12 +49,37 @@ def get_brewery(
 def get_breweries(queries: BreweryQueries = Depends()):
     return {"breweries": queries.get_breweries()}
 
+@router.get("/breweries/{city}", response_model=BreweriesOut)
+def get_breweries_by_city(
+    city: str,
+    response: Response,
+    queries: BreweryQueries = Depends()
+    ):
+    record = queries.get_breweries_by_city(city)
+    if record is None:
+        response.status_code = 404
+    else:
+        return {"breweries": record}
+
 @router.post("/breweries", response_model=BreweryOut)
 def create_brewery(
     brewery: BreweryIn, 
     queries: BreweryQueries = Depends(), 
 ):
     return queries.create_brewery(brewery)
+
+@router.put("/brewery/{brewery_id}", response_model=BreweryOut)
+def update_brewery(
+    brewery_id: int,
+    brewery_in: BreweryIn,
+    response: Response,
+    queries: BreweryQueries = Depends(),
+):
+    record = queries.update_brewery(brewery_id, brewery_in)
+    if record is None:
+        response.status_code = 404
+    else:
+        return record
 
 @router.delete("/brewery/{brewery_id}", response_model=bool)
 def delete_brewery(brewery_id: int, queries: BreweryQueries = Depends()):

@@ -24,6 +24,27 @@ class BreweryQueries:
                     breweries.append(brewery)
                 return breweries
 
+    def get_breweries_by_city(self, city):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT *
+                    FROM breweries brew
+                    WHERE brew.city = %s
+                    """,
+                    [city]
+                )
+
+                breweries = []
+                rows = cur.fetchall()
+                for row in rows:
+                    brewery = self.brewery_record_to_dict(row, cur.description)
+                    breweries.append(brewery)
+                print(breweries)
+                return breweries
+    
+
     def get_brewery(self, brewery_id):
         with pool.connection() as conn:
             with conn.cursor() as cur:
@@ -82,6 +103,47 @@ class BreweryQueries:
                     [brewery_id],
                 )
 
+    def update_brewery(self, brewery_id, brewery):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                params = [
+                    brewery.name,
+                    brewery.street,
+                    brewery.city,
+                    brewery.state,
+                    brewery.zip_code,
+                    brewery.phone,
+                    brewery.image_url,
+                    brewery.description,
+                    brewery.website,
+                    brewery_id
+                ]
+                cur.execute(
+                    """
+                    UPDATE breweries
+                    SET name = %s
+                        , street = %s
+                        , city = %s
+                        , state = %s
+                        , zip_code = %s
+                        , phone = %s
+                        , image_url = %s
+                        , description = %s
+                        , website = %s
+                    WHERE brewery_id = %s
+                    RETURNING brewery_id, name, street, city, state, zip_code, phone, image_url, description, website
+                    """,
+                    params,
+                )
+
+                record = None
+                row = cur.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                return record
+
     def brewery_record_to_dict(self, row, description):
         brewery = None
         if row is not None:
@@ -102,5 +164,4 @@ class BreweryQueries:
                 if column.name in brewery_fields:
                     brewery[column.name] = row[i]
             brewery["id"] = brewery["brewery_id"]
-
         return brewery
