@@ -18,7 +18,6 @@ class UserIn(BaseModel):
     email: str
     username: str
     password: str
-    is_brewery_owner: bool
 
 
 class UserOut(BaseModel):
@@ -28,7 +27,6 @@ class UserOut(BaseModel):
     profile_pic: Optional[str]
     email: str
     username: str
-    is_brewery_owner: bool
 
 
 class UserOutWithPassword(UserOut):
@@ -66,7 +64,7 @@ class UserQueries:
                 cur.execute(
                     """
                     SELECT id, first, last, profile_pic,
-                        email, profile_pic, username, is_brewery_owner  
+                        email, profile_pic, username 
                     FROM users
                     ORDER BY last, first
                 """
@@ -89,7 +87,7 @@ class UserQueries:
                     cur.execute(
                         """
                         SELECT id, first, last, profile_pic,
-                            email, username, is_brewery_owner 
+                            email, username 
                         FROM users
                         WHERE id = %s
                     """,
@@ -150,13 +148,12 @@ class UserQueries:
                     info.email,
                     info.username,
                     hashed_password,
-                    info.is_brewery_owner,
                 ]
                 cur.execute(
                     """
-                    INSERT INTO users (first, last, profile_pic, email, username, password, is_brewery_owner)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s)
-                    RETURNING id, first, last, profile_pic, email, username, password, is_brewery_owner 
+                    INSERT INTO users (first, last, profile_pic, email, username, password)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    RETURNING id, first, last, profile_pic, email, username, password 
                     """,
                     params,
                 )
@@ -184,9 +181,8 @@ class UserQueries:
                         , email = %s
                         , username = %s
                         , password = %s
-                        , is_brewery_owner = %s
                         WHERE id = %s
-                        RETURNING id, first, last, profile_pic, email, username, password, is_brewery_owner
+                        RETURNING id, first, last, profile_pic, email, username, password
                         """,
                         [
                             user.first,
@@ -195,7 +191,6 @@ class UserQueries:
                             user.email,
                             user.username,
                             hashed_password,
-                            user.is_brewery_owner,
                             user_id,
                         ],
                     )
