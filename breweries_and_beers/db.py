@@ -99,18 +99,18 @@ class BreweryQueries:
                 ]
                 cur.execute(
                     """
-                    UPDATE users
+                    UPDATE breweries
                     SET name = %s
-                    , street = %s
-                    , city = %s
-                    , state = %s
-                    , zip_code = %s
-                    , phone = %s
-                    , image_url = %s
-                    , description = %s
-                    , website = %s
-                    WHERE id = %s
-                    RETURNING id, name, state, zip_code, phone, image_url, description, website
+                        , street = %s
+                        , city = %s
+                        , state = %s
+                        , zip_code = %s
+                        , phone = %s
+                        , image_url = %s
+                        , description = %s
+                        , website = %s
+                    WHERE brewery_id = %s
+                    RETURNING brewery_id, name, street, city, state, zip_code, phone, image_url, description, website
                     """,
                     params,
                 )
