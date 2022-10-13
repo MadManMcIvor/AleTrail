@@ -1,3 +1,6 @@
+## 10/12/22
+Got most CRUD functions working and merged with main except update. Need to create an endpoint for updating a brewery, and need to update GET functions to include a list of all beers for that brewery.
+
 ## 10/11/22
 Got a functioning GET request for all breweries. Working now to POST request to create a brewery and GET request for a specific brewery. Will need to add a way to filter by city and add in associated beer tables later.
 
