@@ -1,10 +1,11 @@
 ## 10/13/22
-* 
+* Provided continuity between all three files of db.py, beers.py and breweries sql
+* Encountered another issue where, upon getting a list of beers, all required fields respond with validation errors. -_-
 
 ## 10/12/22
 * Created a post router and query for beers.
 * Ran into a table issue, and spent some time with an instructor solving this issue
-* Much pain later, the issue has been resolved. One can now post a beer
+* Much pain later, the issue has been resolved. One can now simply post a beer
 * The beer models, tables, and the db.py file all need to be consistent. I need to add a few properties
 
 ## 10/11/22

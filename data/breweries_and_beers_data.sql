@@ -31,7 +31,9 @@ CREATE TABLE beers (
     ibu SMALLINT NOT NULL,
     abv FLOAT NOT NULL,
     brewery INTEGER NOT NULL REFERENCES breweries("brewery_id") ON DELETE CASCADE,
-    image_url VARCHAR(300) NULL
+    image_url VARCHAR(300) NULL,
+    category TEXT NULL,
+    vegetarian_friendly TEXT NULL
 );
 
 
@@ -44,12 +46,12 @@ INSERT INTO breweries VALUES
   ;
 
 INSERT INTO beers VALUES
-(1, 'Batman Stout', 'A stout as dark as the dark knight himself!', 'Stout', 70, 5.11, 1, 'https://images.pexels.com/photos/5659755/pexels-photo-5659755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-(2, '805 Pale Ale', 'Our flagship beer, perfectly balanced mix of malty and hoppy', 'Pale Ale', 80, 5.21, 1, 'https://images.pexels.com/photos/5530264/pexels-photo-5530264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-(3, 'Orange Dream Sour', 'A farmhouse sour with hints of local oranges', 'Sour', 19, 6.50, 1, 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-(4, 'Batman Stout', 'A stout as dark as the dark knight himself!', 'Stout', 70, 5.11, 2, 'https://images.pexels.com/photos/5659755/pexels-photo-5659755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-(5, '805 Pale Ale', 'Our flagship beer, perfectly balanced mix of malty and hoppy', 'Pale Ale', 80, 5.21, 2, 'https://images.pexels.com/photos/5530264/pexels-photo-5530264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-(6, 'Orange Dream Sour', 'A farmhouse sour with hints of local oranges', 'Sour', 19, 6.50, 2, 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')
+(1, 'Batman Stout', 'A stout as dark as the dark knight himself!', 'Stout', 70, 5.11, 1, 'https://images.pexels.com/photos/5659755/pexels-photo-5659755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Stout', 'True'),
+(2, '805 Pale Ale', 'Our flagship beer, perfectly balanced mix of malty and hoppy', 'Pale Ale', 80, 5.21, 1, 'https://images.pexels.com/photos/5530264/pexels-photo-5530264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Ale', 'True'),
+(3, 'Orange Dream Sour', 'A farmhouse sour with hints of local oranges', 'Sour', 19, 6.50, 1, 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Sour', 'True'),
+(4, 'Batman Stout', 'A stout as dark as the dark knight himself!', 'Stout', 70, 5.11, 2, 'https://images.pexels.com/photos/5659755/pexels-photo-5659755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Stout', 'True'),
+(5, '805 Pale Ale', 'Our flagship beer, perfectly balanced mix of malty and hoppy', 'Pale Ale', 80, 5.21, 2, 'https://images.pexels.com/photos/5530264/pexels-photo-5530264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Ale', 'True'),
+(6, 'Orange Dream Sour', 'A farmhouse sour with hints of local oranges', 'Sour', 19, 6.50, 2, 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Sour', 'True')
 ;
 
 

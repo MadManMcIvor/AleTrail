@@ -112,10 +112,18 @@ class BeerQueries:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT b.beer_id, b.name, b.description, b.type,
-                    b.ibu, b.abv, b.website, b.brewery, b.image_url
-                    FROM beers.b
-                    ORDER BY b.name
+                    SELECT beer.beer_id,
+                    beer.name,
+                    beer.description,
+                    beer.type,
+                    beer.ibu,
+                    beer.abv,
+                    beer.brewery,
+                    beer.image_url,
+                    beer.category,
+                    beer.vegetarian_friendly
+                    FROM beers beer
+                    ORDER BY beer.name
                     """
                 )
                 results = []
@@ -132,15 +140,16 @@ class BeerQueries:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT id
-                    , name
-                    , description
-                    , type
-                    , ibu
-                    , abv
-                    , website
-                    , brewery
-                    , image_url
+                    SELECT id,
+                    name,
+                    description,
+                    type,
+                    ibu,
+                    abv,
+                    brewery,
+                    image_url,
+                    category,
+                    vegetarian_friendly
                     WHERE id = %s
                     """,
                     [id],
@@ -167,15 +176,19 @@ class BeerQueries:
                     ibu,
                     abv,
                     brewery,
-                    image_url
+                    image_url,
+                    category,
+                    vegetarian_friendly
                     )
-                    VALUES (%s
-                    , %s
-                    , %s
-                    , %s
-                    , %s
-                    , %s
-                    , %s)
+                    VALUES (%s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s)
                     RETURNING beer_id
                     """,
                     [
@@ -186,6 +199,8 @@ class BeerQueries:
                         beer.abv,
                         beer.brewery,
                         beer.image_url,
+                        beer.category,
+                        beer.vegetarian_friendly,
                     ],
                 )
 
@@ -202,8 +217,9 @@ class BeerQueries:
                     "type": beer.type,
                     "ibu": beer.ibu,
                     "abv": beer.abv,
-                    "website": beer.website,
                     "brewery": beer.brewery,
                     "image_url": beer.image_url,
+                    "category" : beer.category,
+                    "vegetarian_friendly" : beer.vegetarian_friendly,
                 }
                 return response

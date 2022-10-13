@@ -10,12 +10,10 @@ class BeerIn(BaseModel):
     type: str
     ibu: int
     abv: int
-    website: str
     brewery: int
     image_url: str
-    # category: str
-    # vegetarian_friendly: bool
-    # owner_id: int
+    category: str
+    vegetarian_friendly: bool
 
 class BeerOut(BaseModel):
     id: int
@@ -24,12 +22,10 @@ class BeerOut(BaseModel):
     type: str
     ibu: int
     abv: int
-    website: str
     brewery: int
     image_url: str
-    # category: str
-    # vegetarian_friendly: bool
-    # owner_id: int
+    category: str
+    vegetarian_friendly: bool
 
 class BeerList(BaseModel):
     beers: list[BeerOut]
