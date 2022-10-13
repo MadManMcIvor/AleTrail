@@ -1,6 +1,6 @@
 //import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Nav from './Nav';
+import OurNav from './Nav';
 import Breweries from './Breweries';
 import Beers from './Beers';
 import Favorites from './Favorites';
@@ -9,7 +9,7 @@ import Settings from './Settings';
 function App() {
   return (
     <BrowserRouter>
-      <Nav />
+      <OurNav />
       <div className="container">
         <Routes>
         <Route path="/" element={<Breweries/>} />
