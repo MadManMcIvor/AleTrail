@@ -82,6 +82,47 @@ class BreweryQueries:
                     [brewery_id],
                 )
 
+    def update_brewery(self, brewery_id, brewery):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                params = [
+                    brewery.name,
+                    brewery.street,
+                    brewery.city,
+                    brewery.state,
+                    brewery.zip_code,
+                    brewery.phone,
+                    brewery.image_url,
+                    brewery.description,
+                    brewery.website,
+                    brewery_id
+                ]
+                cur.execute(
+                    """
+                    UPDATE users
+                    SET name = %s
+                    , street = %s
+                    , city = %s
+                    , state = %s
+                    , zip_code = %s
+                    , phone = %s
+                    , image_url = %s
+                    , description = %s
+                    , website = %s
+                    WHERE id = %s
+                    RETURNING id, name, state, zip_code, phone, image_url, description, website
+                    """,
+                    params,
+                )
+
+                record = None
+                row = cur.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                return record
+
     def brewery_record_to_dict(self, row, description):
         brewery = None
         if row is not None:
