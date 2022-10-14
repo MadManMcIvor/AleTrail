@@ -1,17 +1,29 @@
 import Masonry from 'react-masonry-css'
 import BreweryCard from './BreweryCard';
+import React, { useEffect, useState } from 'react';
 
 function Breweries() {
-    var breweries = [
-        {brewery_id: 1, name: 'My First Item', image_url: 'https://images.pexels.com/photos/5858163/pexels-photo-5858163.jpeg?auto=compress&cs=tinysrgb&w=1600', description: 'Just a cool spot to come and drink some beers!', street: '1234 Main St.', city: 'Sacramento', state: 'CA', zip_code: '95818'},
-        {brewery_id: 2, name: 'Another item', image_url: 'https://images.pexels.com/photos/5864290/pexels-photo-5864290.jpeg?auto=compress&cs=tinysrgb&w=1600', description: 'Just a cool spot to come and drink some beers!', street: '1234 Main St.', city: 'Sacramento', state: 'CA', zip_code: '95818' },
-        {brewery_id: 3, name: 'Third Item', image_url: 'https://images.pexels.com/photos/5531894/pexels-photo-5531894.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', description: 'Just a cool spot to come and drink some beers!', street: '1234 Main St.', city: 'Sacramento', state: 'CA', zip_code: '95818'},
-        {brewery_id: 4, name: 'Here is the Fourth', image_url: 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1600', description: 'Just a cool spot to come and drink some beers!' },
-        {brewery_id: 5, name: 'High Five', image_url: 'https://images.pexels.com/photos/1267696/pexels-photo-1267696.jpeg?auto=compress&cs=tinysrgb&w=1600', description: 'Just a cool spot to come and drink some beers!', street: '1234 Main St.', city: 'Sacramento', state: 'CA', zip_code: '95818'},
-      ];
+  const [breweries, setBreweries] = useState([])
 
-      // Convert array to JSX items
-      breweries = breweries.map(function(brewery) {
+  // add breweries to state
+  useEffect(() => {
+    async function getBreweries() {
+      const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/breweries`
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        let formattedData = [];
+        data.breweries.map((obj) => {
+          return formattedData.push(obj);
+        });
+        setBreweries(formattedData);
+      }
+    }
+    getBreweries();
+  }, [])
+
+      // Convert breweries in state to brewery cards
+      let breweryCards = breweries.map(function(brewery) {
         return <div>
             <BreweryCard 
             brewery_id = {brewery.brewery_id}
@@ -28,6 +40,7 @@ function Breweries() {
             </div>
       });
 
+      // create the breakpoint for adjusting columns based on viewport size
       const breakpointColumnsObj = {
         default: 4,
         1100: 3,
@@ -37,12 +50,12 @@ function Breweries() {
 
       return (
         <div>
-            <h1 class="display-1">Breweries!</h1>
+            <h1 className="display-1">Breweries!</h1>
             <Masonry
                 breakpointCols={breakpointColumnsObj}
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column">
-                {breweries}
+               {breweryCards}
             </Masonry>
         </div>
         
