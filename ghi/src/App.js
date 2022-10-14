@@ -5,6 +5,7 @@ import Breweries from './Breweries';
 import Beers from './Beers';
 import Favorites from './Favorites';
 import Settings from './Settings';
+import SignupForm from './Signup';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="settings" >
           <Route path="" element={<Settings/>} />
         </Route>
+        <Route path="signup" element={<SignupForm />} /> 
         </Routes>
       </div>
     </BrowserRouter>
@@ -32,3 +34,4 @@ function App() {
 }
 
 export default App;
+

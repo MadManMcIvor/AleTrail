@@ -28,9 +28,9 @@ function OurNav() {
                 </Nav>
                 <Nav>
                   <NavLink className="nav-link" to="/settings">Settings</NavLink>
-                  <NavLink className="nav-link" to="/login">Sign Up</NavLink>
+                  <NavLink className="nav-link" to="/signup">Sign Up</NavLink>
                   <NavLink className="nav-link" to="/login">Login</NavLink>
-                  <NavLink className="nav-link" to="/login">Logout</NavLink>
+                  <NavLink className="nav-link" to="/logout">Logout</NavLink>
                 </Nav>
             </Navbar.Collapse>
           </Container>
