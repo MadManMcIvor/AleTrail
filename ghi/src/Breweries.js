@@ -5,36 +5,42 @@ import React, { useEffect, useState } from 'react';
 function Breweries() {
   const [breweries, setBreweries] = useState([])
 
+  // add breweries to state
   useEffect(() => {
     async function getBreweries() {
-      const url = '${process.env.REACT_APP_API}/breweries'
+      const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/breweries`
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
-        setBreweries(data);
+        let formattedData = [];
+        data.breweries.map((obj) => {
+          formattedData.push(obj);
+        });
+        setBreweries(formattedData);
       }
     }
     getBreweries();
   }, [])
 
-      // Convert array to JSX items
-      // breweries = breweries.map(function(brewery) {
-      //   return <div>
-      //       <BreweryCard 
-      //       brewery_id = {brewery.brewery_id}
-      //       name = {brewery.name}
-      //       street = {brewery.street}
-      //       city = {brewery.city}
-      //       state = {brewery.state}
-      //       zip_code = {brewery.zip_code}
-      //       phone = {brewery.phone}
-      //       image_url = {brewery.image_url}
-      //       description = {brewery.description}
-      //       website = {brewery.website}
-      //       />
-      //       </div>
-      // });
+      // Convert breweries in state to brewery cards
+      let breweryCards = breweries.map(function(brewery) {
+        return <div>
+            <BreweryCard 
+            brewery_id = {brewery.brewery_id}
+            name = {brewery.name}
+            street = {brewery.street}
+            city = {brewery.city}
+            state = {brewery.state}
+            zip_code = {brewery.zip_code}
+            phone = {brewery.phone}
+            image_url = {brewery.image_url}
+            description = {brewery.description}
+            website = {brewery.website}
+            />
+            </div>
+      });
 
+      // create the breakpoint for adjusting columns based on viewport size
       const breakpointColumnsObj = {
         default: 4,
         1100: 3,
@@ -49,7 +55,7 @@ function Breweries() {
                 breakpointCols={breakpointColumnsObj}
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column">
-                {breweries}
+               {breweryCards}
             </Masonry>
         </div>
         
