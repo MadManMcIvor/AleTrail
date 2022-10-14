@@ -14,8 +14,7 @@ function Breweries() {
         const data = await response.json();
         let formattedData = [];
         data.breweries.map((obj) => {
-          formattedData.push(obj);
-          return pass
+          return formattedData.push(obj);
         });
         setBreweries(formattedData);
       }
