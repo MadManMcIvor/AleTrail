@@ -15,6 +15,7 @@ function Breweries() {
         let formattedData = [];
         data.breweries.map((obj) => {
           formattedData.push(obj);
+          return pass
         });
         setBreweries(formattedData);
       }
