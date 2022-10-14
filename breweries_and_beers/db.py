@@ -173,18 +173,18 @@ class BeerQueries:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT beer.beer_id,
-                    beer.name,
-                    beer.description,
-                    beer.type,
-                    beer.ibu,
-                    beer.abv,
-                    beer.brewery,
-                    beer.image_url,
-                    beer.category,
-                    beer.vegetarian_friendly
+                    SELECT beer_id,
+                    name,
+                    description,
+                    type,
+                    ibu,
+                    abv,
+                    brewery,
+                    image_url,
+                    category,
+                    vegetarian_friendly
                     FROM beers beer
-                    ORDER BY beer.name
+                    ORDER BY name
                     """
                 )
                 results = []
