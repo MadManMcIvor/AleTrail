@@ -1,3 +1,6 @@
+## 10/13/22
+* Worked on the Navbar today. I switched it over to a react-bootstrap component rather than just the regular bootstrap how it was. I also added our logo and switched it be white. It took quite a while to figure out why the image wouldn't display for the logo. Turns out React gives it problems so I had to wrap it in a 'required' function.
+
 ## 10/12/22
 * We figured out how to make merge requests and implemented a few of those.
 * Fixed the beers carousels
