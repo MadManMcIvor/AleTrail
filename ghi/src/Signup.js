@@ -1,13 +1,13 @@
 import { useState} from 'react';
 
-function SignupForm(props){
+function SignupForm(){
     const [first, setFirst]= useState('');
     const [last, setLast] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername]= useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {  'first': first,
                         'last': last,
@@ -26,15 +26,15 @@ function SignupForm(props){
                 'Content-Type': 'application/json',
             },
         };
-        const response = fetch(signupUrl, fetchConfig);
+        const response = await fetch(signupUrl, fetchConfig);
         if (response.ok) {
+               // await login(username, password);
                 setFirst('');
                 setLast('');
                 setEmail('');
                 setUsername('');
                 setPassword('');
-              }
-        else {
+              } else {
             console.log("Cannot create account")
         }
         }
