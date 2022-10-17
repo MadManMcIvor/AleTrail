@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, Response
 from pydantic import BaseModel
 from typing import Optional
+from authenticator import authenticator
 
 from db import BreweryQueries
 
@@ -29,6 +30,7 @@ class BreweryOut(BaseModel):
     image_url: Optional[str]
     description: Optional[str]
     website: Optional[str]
+    beers: Optional[str]
 
 class BreweriesOut(BaseModel):
     breweries: list[BreweryOut]
@@ -37,7 +39,7 @@ class BreweriesOut(BaseModel):
 def get_brewery(
     brewery_id: int,
     response: Response,
-    queries: BreweryQueries = Depends()
+    queries: BreweryQueries = Depends(),
     ):
     record = queries.get_brewery(brewery_id)
     if record is None:
@@ -64,9 +66,12 @@ def get_breweries_by_city(
 @router.post("/breweries", response_model=BreweryOut)
 def create_brewery(
     brewery: BreweryIn, 
-    queries: BreweryQueries = Depends(), 
+    queries: BreweryQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data), 
 ):
-    return queries.create_brewery(brewery)
+    if account_data:
+        return queries.create_brewery(brewery)
+
 
 @router.put("/brewery/{brewery_id}", response_model=BreweryOut)
 def update_brewery(
@@ -74,14 +79,23 @@ def update_brewery(
     brewery_in: BreweryIn,
     response: Response,
     queries: BreweryQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    record = queries.update_brewery(brewery_id, brewery_in)
-    if record is None:
-        response.status_code = 404
-    else:
-        return record
+    if account_data:
+        record = queries.update_brewery(brewery_id, brewery_in)
+        if record is None:
+            response.status_code = 404
+        else:
+            return record
+
 
 @router.delete("/brewery/{brewery_id}", response_model=bool)
-def delete_brewery(brewery_id: int, queries: BreweryQueries = Depends()):
-    queries.delete_brewery(brewery_id)
-    return True
+def delete_brewery(
+    brewery_id: int, 
+    queries: BreweryQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    if account_data:
+        queries.delete_brewery(brewery_id)
+        return True
+
