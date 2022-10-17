@@ -6,6 +6,7 @@ import Beers from './Beers';
 import Favorites from './Favorites';
 import Settings from './Settings';
 import SignupForm from './Signup';
+import LoginPage from './Login';
 import { AuthProvider, useToken } from './LoginToken';
 
 function GetToken() {
@@ -38,6 +39,7 @@ function App() {
               <Route path="" element={<Settings/>} />
             </Route>
             <Route path="signup" element={<SignupForm />} /> 
+            <Route path="login" element={<LoginPage />} />
             </Routes>
           </div>
           </AuthProvider>
