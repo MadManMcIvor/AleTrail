@@ -1,6 +1,5 @@
 import { useState} from 'react';
 
-
 function SignupForm(props){
     const [first, setFirst]= useState('');
     const [last, setLast] = useState('');
@@ -8,6 +7,37 @@ function SignupForm(props){
     const [username, setUsername]= useState('');
     const [password, setPassword] = useState('');
 
+    const handleSubmit = e => {
+        e.preventDefault();
+        const data = {  'first': first,
+                        'last': last,
+                        'profile_pic': '',
+                        'email': email,
+                        'username': username,
+                        'password': password };
+        console.log(data);
+        console.log(JSON.stringify(data));
+        console.log('first:', first);
+        const signupUrl = `${process.env.REACT_APP_USERS_AND_FAVORITES_API_HOST}/users`
+        const fetchConfig = {
+            method: "post",
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        const response = fetch(signupUrl, fetchConfig);
+        if (response.ok) {
+                setFirst('');
+                setLast('');
+                setEmail('');
+                setUsername('');
+                setPassword('');
+              }
+        else {
+            console.log("Cannot create account")
+        }
+        }
 
     return( 
         <>
@@ -15,7 +45,7 @@ function SignupForm(props){
                 <div className="offset-3 col-6">
                     <div className="shadow p-4 mt-4">
                         <h1>Create Your Account</h1>
-                        <form>
+                        <form onSubmit = {handleSubmit}>
                             <div className="mb-3">
                                 <label htmlFor="first" className="form-label">First name</label>
                                 <input value = {first} onChange={ e => setFirst(e.target.value)} required type="text" className="form-control" id="first" placeholder="First name" />
