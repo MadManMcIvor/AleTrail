@@ -1,5 +1,7 @@
 import { useState} from 'react';
 import { useToken } from './LoginToken';
+import SignupErrorModal from './SignupErrorModal';
+
 
 function SignupForm(){
     const [first, setFirst]= useState('');
@@ -8,6 +10,8 @@ function SignupForm(){
     const [username, setUsername]= useState('');
     const [password, setPassword] = useState('');
     const [token, login] = useToken();
+    const [modalShow, setModalShow] = useState(false);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,12 +41,17 @@ function SignupForm(){
                 setUsername('');
                 setPassword('');
               } else {
+            setModalShow(true);
             console.log("Cannot create account")
         }
         }
 
     return( 
         <>
+        <SignupErrorModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        />
          <div className="row">
                 <div className="offset-3 col-6">
                     <div className="shadow p-4 mt-4">

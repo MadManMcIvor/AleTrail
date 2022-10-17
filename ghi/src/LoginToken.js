@@ -75,7 +75,7 @@ export function useToken() {
 
   async function logout() {
     if (token) {
-      const url = `${process.env.REACT_APP_USERS_AND_FAVORITES_API_HOST}/api/token/refresh/logout/`;
+      const url = `${process.env.REACT_APP_USERS_AND_FAVORITES_API_HOST}/token`;
       await fetch(url, { method: "delete", credentials: "include" });
       internalToken = null;
       setToken(null);
@@ -123,16 +123,17 @@ export function useToken() {
     return false;
   }
 
-  async function update(username, password, email, firstName, lastName) {
-    const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
+  async function update(first, last, profile_pic, email, username, password) {
+    const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/users`;
     const response = await fetch(url, {
-      method: "post",
+      method: "put",
       body: JSON.stringify({
-        username,
-        password,
-        email,
-        first_name: firstName,
-        last_name: lastName,
+        first: first,
+        last: last,
+        profile_pic: profile_pic,
+        email: email,
+        username: username,
+        password: password,
       }),
       headers: {
         "Content-Type": "application/json",
