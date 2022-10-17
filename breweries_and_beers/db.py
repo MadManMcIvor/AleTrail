@@ -196,12 +196,12 @@ class BeerQueries:
 
                 return results
 
-    def get_beer(self, id):
+    def get_beer(self, beer_id):
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT id,
+                    SELECT beer_id,
                     name,
                     description,
                     type,
@@ -211,9 +211,10 @@ class BeerQueries:
                     image_url,
                     category,
                     vegetarian_friendly
-                    WHERE id = %s
+                    FROM beers beer
+                    WHERE beer_id = %s
                     """,
-                    [id],
+                    [beer_id],
                 )
 
                 record = None
@@ -272,7 +273,7 @@ class BeerQueries:
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
                 response = {
-                    "id": record["beer_id"],
+                    "beer_id": record["beer_id"],
                     "name": beer.name,
                     "description": beer.description,
                     "type": beer.type,
@@ -284,3 +285,55 @@ class BeerQueries:
                     "vegetarian_friendly" : beer.vegetarian_friendly,
                 }
                 return response
+
+    def update_beer(self, beer_id, beer):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                params = [
+                    beer.name,
+                    beer.description,
+                    beer.type,
+                    beer.ibu,
+                    beer.abv,
+                    beer.brewery,
+                    beer.image_url,
+                    beer.category,
+                    beer.vegetarian_friendly,
+                    beer_id
+                ]
+                cur.execute(
+                    """
+                    UPDATE beers
+                    SET name = %s
+                    , description = %s
+                    , type = %s
+                    , ibu = %s
+                    , abv = %s
+                    , brewery = %s
+                    , image_url = %s
+                    , category = %s
+                    , vegetarian_friendly = %s
+                    WHERE beer_id = %s
+                    RETURNING beer_id, name, description, type, ibu, abv, brewery, image_url, category, vegetarian_friendly
+                    """,
+                    params,
+                )
+
+                record = None
+                row = cur.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                return record
+
+    def delete_beer(self, beer_id):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    DELETE FROM beers
+                    WHERE beer_id = %s
+                    """,
+                    [beer_id],
+                )
