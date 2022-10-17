@@ -1,3 +1,8 @@
+## 10/14/22
+* Still having issues with the list view
+* Found our logo and provided it to the team
+* Worked with the team on a few problems outside of my scope of the project. Took a break from my section for a while today
+
 ## 10/13/22
 * Provided continuity between all three files of db.py, beers.py and breweries sql
 * Encountered another issue where, upon getting a list of beers, all required fields respond with validation errors. -_-

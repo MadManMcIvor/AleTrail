@@ -16,7 +16,7 @@ class BeerIn(BaseModel):
     vegetarian_friendly: bool
 
 class BeerOut(BaseModel):
-    id: int
+    beer_id: int
     name: str
     description: str
     type: str
@@ -33,7 +33,7 @@ class BeerList(BaseModel):
 # class BeerDelete(BaseModel):
 #     result: bool
 
-@router.get("/beers", response_model=BeerOut)
+@router.get("/beers", response_model=BeerList)
 def get_beers(queries: BeerQueries = Depends()):
     return {"beers": queries.get_beers()}
 
