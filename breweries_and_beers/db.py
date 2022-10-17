@@ -1,5 +1,6 @@
 import os
 from psycopg_pool import ConnectionPool
+from pprint import pprint
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
@@ -12,9 +13,13 @@ class BreweryQueries:
                     SELECT brew.brewery_id, brew.name, brew.street,
                         brew.city, brew.state, brew.zip_code,
                         brew.phone, brew.image_url, brew.description,
-                        brew.website
-                    FROM breweries brew
-                    ORDER BY brew.name
+                        brew.website, beers.beer_id, beers.name AS beers
+                    FROM beers
+                    RIGHT JOIN breweries brew ON(beers.brewery = brew.brewery_id)
+                    GROUP BY brew.brewery_id, brew.name, brew.street,
+                        brew.city, brew.state, brew.zip_code,
+                        brew.phone, brew.image_url, brew.description,
+                        brew.website, beers.beer_id, beers
                     """
                 )
                 breweries = []
@@ -22,6 +27,7 @@ class BreweryQueries:
                 for row in rows:
                     brewery = self.brewery_record_to_dict(row, cur.description)
                     breweries.append(brewery)
+                self.consolidate_beers(breweries)
                 return breweries
 
     def get_breweries_by_city(self, city):
@@ -41,7 +47,6 @@ class BreweryQueries:
                 for row in rows:
                     brewery = self.brewery_record_to_dict(row, cur.description)
                     breweries.append(brewery)
-                print(breweries)
                 return breweries
     
 
@@ -159,9 +164,28 @@ class BreweryQueries:
                 "image_url",
                 "description",
                 "website",
+                "beers",
             ]
+            
             for i, column in enumerate(description):
                 if column.name in brewery_fields:
                     brewery[column.name] = row[i]
             brewery["id"] = brewery["brewery_id"]
+
         return brewery
+
+    def consolidate_beers(self, breweries):
+        # pprint(breweries)
+        # print(len(breweries))
+        output = []
+        brewery_ids = {}
+        for i in range(len(breweries)):
+            if breweries[i]["brewery_id"] not in brewery_ids:
+                brewery_ids[i] = (breweries[i]["brewery_id"])
+                output.append(breweries[i])
+
+        pprint(output)
+        # print(brewery_ids)
+            # for j in range(i+1,len(breweries)):
+            #     if breweries[i]["brewery_id"] == breweries[j]["brewery_id"]:
+            #         print(breweries[i]["brewery_id"], breweries[j]["brewery_id"])

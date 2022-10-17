@@ -1,3 +1,9 @@
+## 10/14/22
+Worked on adding a list of beers associated with a brewery when using brewery API endpoints.
+
+## 10/13/22
+Added Update endpoint and an endpoint to get a brewery by specific city. Need to go back and update every endpoint to join the beer table for a list of beers that have the brewery id.
+
 ## 10/12/22
 Got most CRUD functions working and merged with main except update. Need to create an endpoint for updating a brewery, and need to update GET functions to include a list of all beers for that brewery.
 
