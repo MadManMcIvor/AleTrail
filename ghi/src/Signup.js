@@ -1,4 +1,5 @@
 import { useState} from 'react';
+import { useToken } from './LoginToken';
 
 function SignupForm(){
     const [first, setFirst]= useState('');
@@ -6,6 +7,7 @@ function SignupForm(){
     const [email, setEmail] = useState('');
     const [username, setUsername]= useState('');
     const [password, setPassword] = useState('');
+    const [token, login] = useToken();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,7 +30,7 @@ function SignupForm(){
         };
         const response = await fetch(signupUrl, fetchConfig);
         if (response.ok) {
-               // await login(username, password);
+                await login(email, password);
                 setFirst('');
                 setLast('');
                 setEmail('');
