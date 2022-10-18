@@ -3,6 +3,8 @@ stages:
   - build
   - deploy
 
+variables:
+  SIGNING_KEY: ""
 
 ## BUILD
 build-front-end-job:
