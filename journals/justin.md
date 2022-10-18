@@ -1,3 +1,7 @@
+
+## 10/17/22
+Created a test that needs to be implemented into yml file. Added authentication for breweries PUT, POST, and DELETE methods.
+
 ## 10/14/22
 Worked on adding a list of beers associated with a brewery when using brewery API endpoints.
 
