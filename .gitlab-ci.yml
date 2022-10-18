@@ -62,11 +62,11 @@ deploy-breweries-and-beers-api-image-job:  # RENAME THIS
     - docker tag ${CI_REGISTRY_IMAGE}/breweries_and_beers:latest registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
     - docker push registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
 
-release-fastapi-api-image-job:  # RENAME THIS
+release-breweries-and-beers-api-image-job:  # RENAME THIS
   stage: deploy
   image: node:10.17-alpine
   needs:
-    - deploy-fastapi-api-image-job
+    - deploy-breweries-and-beers-api-image-job
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   before_script:
