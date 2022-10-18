@@ -1,3 +1,9 @@
+## 10/17/22
+* Pair programmed with Julie all day. We set up the signup page, the login page, and the logout page on the front end. We made modals for the logout, and error messages when attempting to login or signup. It took a long time to figure out how to integrate the features, but feels like we're in a good place now.
+
+## 10/14/22
+* Linked up the brewery list API to the front-end and deleted the dummy data.
+
 ## 10/13/22
 * Worked on the Navbar today. I switched it over to a react-bootstrap component rather than just the regular bootstrap how it was. I also added our logo and switched it be white. It took quite a while to figure out why the image wouldn't display for the logo. Turns out React gives it problems so I had to wrap it in a 'required' function.
 
