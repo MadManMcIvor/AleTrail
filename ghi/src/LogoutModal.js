@@ -10,6 +10,7 @@ function LogoutModal(props) {
         console.log(token);
         try {
         await logout();
+        props.onHide();
         } catch(error){
           console.log(error);
           console.log("There was an error logging out.");
