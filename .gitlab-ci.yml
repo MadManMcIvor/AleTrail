@@ -26,7 +26,7 @@ breweries-and-beers-unit-test-job:
   stage: test
   script:
   - cd breweries_and_beers
-  - pip install requirements.txt
+  - pip install -r requirements.txt
   - python -m pytest
 
 build-breweries-and-beers-api-image-job:  # RENAME THIS
