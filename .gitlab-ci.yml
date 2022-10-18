@@ -4,6 +4,7 @@ stages:
   - deploy
 
 variables:
+  DATABASE_URL: ""
   SIGNING_KEY: ""
 
 ## BUILD
