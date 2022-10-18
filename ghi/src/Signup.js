@@ -21,9 +21,6 @@ function SignupForm(){
                         'email': email,
                         'username': username,
                         'password': password };
-        console.log(data);
-        console.log(JSON.stringify(data));
-        console.log('first:', first);
         const signupUrl = `${process.env.REACT_APP_USERS_AND_FAVORITES_API_HOST}/users`
         const fetchConfig = {
             method: "post",
@@ -32,18 +29,19 @@ function SignupForm(){
                 'Content-Type': 'application/json',
             },
         };
-        const response = await fetch(signupUrl, fetchConfig);
-        if (response.ok) {
-                await login(email, password);
-                setFirst('');
-                setLast('');
-                setEmail('');
-                setUsername('');
-                setPassword('');
-              } else {
-            setModalShow(true);
-            console.log("Cannot create account")
-        }
+        try {
+            const response = await fetch(signupUrl, fetchConfig);
+            if (response.ok) {
+                    await login(email, password);
+                    setFirst('');
+                    setLast('');
+                    setEmail('');
+                    setUsername('');
+                    setPassword('');
+                }} catch(e) {
+                setModalShow(true);
+                console.log("Cannot create account")
+            }
         }
 
     return( 
@@ -87,6 +85,5 @@ function SignupForm(){
 }
 
 export default SignupForm; 
-
 
 

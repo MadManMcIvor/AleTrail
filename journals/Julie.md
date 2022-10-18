@@ -1,3 +1,6 @@
+## 10/17/22
+Today I did pair programming with Alex. We were able to get the signup page and login page with token to work. We're created a logout modal with pop up confirming logout. 
+
 ## 10/14/22 
 Today I created the layout for the signup form. I'm still trying to figure out how to implement authentication for the front end while using the functional based component. 
 
