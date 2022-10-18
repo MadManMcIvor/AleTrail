@@ -1,3 +1,12 @@
+## 10/13/22
+Today I discussed with teammates and decided the is_brewery_owner is going to be a stretch goal. I modified the models and tested to make sure nothing is broken, unfortunately I got an error message. I was debugging and finally found that I did not remove %s from one of the endpoint. I'm going to start on the react signup page. 
+
+## 10/12/22
+Today I asked for feedback from teammates and removed is_admin from the users table database. The testing data in the database is updated to have hashed password. After the changes, I deleted and rebuild the volume to test the database to make sure nothing is broken. Fixed more endpoints to be protected. 
+
+## 10/11/22
+Today I created a signing key and continued to make corrections on the users endpoint because after adding the authentication, the swagger endpoints didn't work correctly. 
+
 ## 10/10/22 
 The endpoints for users CRUD works, but I need to include password. Today I continued working on my endpoints and made changes to the table to include password, is_admin, and is_brewery_owner. After the changes to the table, I can focus on authentication and testing out all the endpoint requests.  
 

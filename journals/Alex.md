@@ -1,3 +1,15 @@
+## 10/13/22
+* Worked on the Navbar today. I switched it over to a react-bootstrap component rather than just the regular bootstrap how it was. I also added our logo and switched it be white. It took quite a while to figure out why the image wouldn't display for the logo. Turns out React gives it problems so I had to wrap it in a 'required' function.
+
+## 10/12/22
+* We figured out how to make merge requests and implemented a few of those.
+* Fixed the beers carousels
+* Added modals for both beers and breweries
+
+## 10/11/22
+* Imported the react-bootstrap library and got the masonry to work on the breweries page.
+* Imported a react-carousel library and created some of the components for the beers page. I've mostly got it working but I'm still tweaking it though. 
+
 ## 10/10/22
 * Transformed the existing "under construction" React into the skeleton for our project. Played with a few different attempts to make masonry work on the breweries page"
 

@@ -1,11 +1,36 @@
+## 10/18/22
+* Merged with main branch today
+
+## 10/17/22
+* Finally got the list view issue solved
+* Completed the rest of the back end for beers
+* One issue: I have to go into pgadmin every time and use the query tool to get the tables to populate
+
+## 10/14/22
+* Still having issues with the list view
+* Found our logo and provided it to the team
+* Worked with the team on a few problems outside of my scope of the project. Took a break from my section for a while today
+
+## 10/13/22
+* Provided continuity between all three files of db.py, beers.py and breweries sql
+* Encountered another issue where, upon getting a list of beers, all required fields respond with validation errors. -_-
+
+## 10/12/22
+* Created a post router and query for beers.
+* Ran into a table issue, and spent some time with an instructor solving this issue
+* Much pain later, the issue has been resolved. One can now simply post a beer
+* The beer models, tables, and the db.py file all need to be consistent. I need to add a few properties
+
 ## 10/11/22
-* 
+* Created the model for BeerIn and BeerOut
+* Created a router to get a list of beers
+* Created some beer queries for getting the list as well as a detail query
 
 ## 10/10/22
-* Started officially working on the backend for beers.
+* Started officially working on the backend for beers
 
 ## 10/6/22
-* Had to miss today due to some personal matters. Team was aware in advance.
+* Had to miss today due to some personal matters. Team was aware in advance
 
 ## 10/5/22
 * Configured YAML file for each microservice, got docker up and running, added pgadmin
@@ -13,9 +38,9 @@
 
 
 ## 10/4/22
-* Reworked our APIs Doc as a team to reflect a re-scoped MVP - we're switching to just breweries, beers, favorites, and users. Making reviews a stretch goal if we can get to it.
+* Reworked our APIs Doc as a team to reflect a re-scoped MVP - we're switching to just breweries, beers, favorites, and users. Making reviews a stretch goal if we can get to it
 * We each created our own issues to get us started and figure out our roles. I'm taking the React/frontend side of the project to start
-* We got the main project up to speed so everyone can create test branches with a base layout set.
+* We got the main project up to speed so everyone can create test branches with a base layout set
 
 ## 10/3/22
 * Got front end and Heroku working, finished the API list, worked on creating issues
@@ -27,4 +52,4 @@
 * Worked on the API document. Worked on deploying the project to Heroku
 
 ## 9/28/22
-* Created the gitlab group and the project. Finishing up our wire frames and discussing how to divide the project amongst ourselves.
+* Created the gitlab group and the project. Finishing up our wire frames and discussing how to divide the project amongst ourselves

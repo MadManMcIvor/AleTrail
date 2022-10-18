@@ -1,3 +1,22 @@
+
+## 10/17/22
+Created a test that needs to be implemented into yml file. Added authentication for breweries PUT, POST, and DELETE methods.
+
+## 10/14/22
+Worked on adding a list of beers associated with a brewery when using brewery API endpoints.
+
+## 10/13/22
+Added Update endpoint and an endpoint to get a brewery by specific city. Need to go back and update every endpoint to join the beer table for a list of beers that have the brewery id.
+
+## 10/12/22
+Got most CRUD functions working and merged with main except update. Need to create an endpoint for updating a brewery, and need to update GET functions to include a list of all beers for that brewery.
+
+## 10/11/22
+Got a functioning GET request for all breweries. Working now to POST request to create a brewery and GET request for a specific brewery. Will need to add a way to filter by city and add in associated beer tables later.
+
+## 10/10/22
+Worked on setting up backend for breweries
+
 ## 10/5/22
 Configured YAML file for each microservice, got docker up and running, added pgadmin
 

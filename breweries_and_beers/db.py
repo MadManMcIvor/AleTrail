@@ -1,5 +1,6 @@
 import os
 from psycopg_pool import ConnectionPool
+from pprint import pprint
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
@@ -12,9 +13,13 @@ class BreweryQueries:
                     SELECT brew.brewery_id, brew.name, brew.street,
                         brew.city, brew.state, brew.zip_code,
                         brew.phone, brew.image_url, brew.description,
-                        brew.website
-                    FROM breweries brew
-                    ORDER BY brew.name
+                        brew.website, beers.beer_id, beers.name AS beers
+                    FROM beers
+                    RIGHT JOIN breweries brew ON(beers.brewery = brew.brewery_id)
+                    GROUP BY brew.brewery_id, brew.name, brew.street,
+                        brew.city, brew.state, brew.zip_code,
+                        brew.phone, brew.image_url, brew.description,
+                        brew.website, beers.beer_id, beers
                     """
                 )
                 breweries = []
@@ -22,7 +27,127 @@ class BreweryQueries:
                 for row in rows:
                     brewery = self.brewery_record_to_dict(row, cur.description)
                     breweries.append(brewery)
+                self.consolidate_beers(breweries)
                 return breweries
+
+    def get_breweries_by_city(self, city):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT *
+                    FROM breweries brew
+                    WHERE brew.city = %s
+                    """,
+                    [city]
+                )
+
+                breweries = []
+                rows = cur.fetchall()
+                for row in rows:
+                    brewery = self.brewery_record_to_dict(row, cur.description)
+                    breweries.append(brewery)
+                return breweries
+    
+
+    def get_brewery(self, brewery_id):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT brew.brewery_id, brew.name, brew.street,
+                        brew.city, brew.state, brew.zip_code,
+                        brew.phone, brew.image_url, brew.description,
+                        brew.website
+                    FROM breweries brew
+                    WHERE brew.brewery_id = %s
+                    """,
+                    [brewery_id],
+                )
+
+                row = cur.fetchone()
+                return self.brewery_record_to_dict(row, cur.description)
+
+    def create_brewery(self, brewery):
+        brewery_id = None
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO breweries (
+                        name, street, city, state, zip_code, phone, image_url, description, website
+                    )
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    RETURNING brewery_id
+                    """,
+                    [
+                        brewery.name,
+                        brewery.street,
+                        brewery.city,
+                        brewery.state,
+                        brewery.zip_code,
+                        brewery.phone,
+                        brewery.image_url,
+                        brewery.description,
+                        brewery.website,
+                    ],
+                )
+                row = cur.fetchone()
+                brewery_id = row[0]
+        if brewery_id is not None:
+            return self.get_brewery(brewery_id)
+
+    def delete_brewery(self, brewery_id):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    DELETE FROM breweries
+                    WHERE brewery_id = %s
+                    """,
+                    [brewery_id],
+                )
+
+    def update_brewery(self, brewery_id, brewery):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                params = [
+                    brewery.name,
+                    brewery.street,
+                    brewery.city,
+                    brewery.state,
+                    brewery.zip_code,
+                    brewery.phone,
+                    brewery.image_url,
+                    brewery.description,
+                    brewery.website,
+                    brewery_id
+                ]
+                cur.execute(
+                    """
+                    UPDATE breweries
+                    SET name = %s
+                        , street = %s
+                        , city = %s
+                        , state = %s
+                        , zip_code = %s
+                        , phone = %s
+                        , image_url = %s
+                        , description = %s
+                        , website = %s
+                    WHERE brewery_id = %s
+                    RETURNING brewery_id, name, street, city, state, zip_code, phone, image_url, description, website
+                    """,
+                    params,
+                )
+
+                record = None
+                row = cur.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                return record
 
     def brewery_record_to_dict(self, row, description):
         brewery = None
@@ -39,13 +164,31 @@ class BreweryQueries:
                 "image_url",
                 "description",
                 "website",
+                "beers",
             ]
+            
             for i, column in enumerate(description):
                 if column.name in brewery_fields:
                     brewery[column.name] = row[i]
             brewery["id"] = brewery["brewery_id"]
 
         return brewery
+
+    def consolidate_beers(self, breweries):
+        # pprint(breweries)
+        # print(len(breweries))
+        output = []
+        brewery_ids = {}
+        for i in range(len(breweries)):
+            if breweries[i]["brewery_id"] not in brewery_ids:
+                brewery_ids[i] = (breweries[i]["brewery_id"])
+                output.append(breweries[i])
+
+        pprint(output)
+        # print(brewery_ids)
+            # for j in range(i+1,len(breweries)):
+            #     if breweries[i]["brewery_id"] == breweries[j]["brewery_id"]:
+            #         print(breweries[i]["brewery_id"], breweries[j]["brewery_id"])
 
 
 class BeerQueries:
@@ -54,10 +197,18 @@ class BeerQueries:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT b.beer_id, b.name, b.description, b.type,
-                    b.ibu, b.abv, b.website, b.brewery, b.image_url
-                    FROM beers.b
-                    ORDER BY b.name
+                    SELECT beer_id,
+                    name,
+                    description,
+                    type,
+                    ibu,
+                    abv,
+                    brewery,
+                    image_url,
+                    category,
+                    vegetarian_friendly
+                    FROM beers beer
+                    ORDER BY name
                     """
                 )
                 results = []
@@ -69,23 +220,25 @@ class BeerQueries:
 
                 return results
 
-    def get_beer(self, id):
+    def get_beer(self, beer_id):
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                    SELECT id
-                    , name
-                    , description
-                    , type
-                    , ibu
-                    , abv
-                    , website
-                    , brewery
-                    , image_url
-                    WHERE id = %s
+                    SELECT beer_id,
+                    name,
+                    description,
+                    type,
+                    ibu,
+                    abv,
+                    brewery,
+                    image_url,
+                    category,
+                    vegetarian_friendly
+                    FROM beers beer
+                    WHERE beer_id = %s
                     """,
-                    [id],
+                    [beer_id],
                 )
 
                 record = None
@@ -103,22 +256,26 @@ class BeerQueries:
                 cur.execute(
                     """
                     INSERT INTO beers (
-                    name
-                    , description
-                    , type
-                    , ibu
-                    , abv
-                    , brewery
-                    , image_url
+                    name,
+                    description,
+                    type,
+                    ibu,
+                    abv,
+                    brewery,
+                    image_url,
+                    category,
+                    vegetarian_friendly
                     )
-                    VALUES (%s
-                    , %s
-                    , %s
-                    , %s
-                    , %s
-                    , %s
-                    , %s)
-                    RETURNING id
+                    VALUES (%s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s,
+                    %s)
+                    RETURNING beer_id
                     """,
                     [
                         beer.name,
@@ -128,6 +285,8 @@ class BeerQueries:
                         beer.abv,
                         beer.brewery,
                         beer.image_url,
+                        beer.category,
+                        beer.vegetarian_friendly,
                     ],
                 )
 
@@ -138,14 +297,67 @@ class BeerQueries:
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
                 response = {
-                    "id": record["id"],
+                    "beer_id": record["beer_id"],
                     "name": beer.name,
                     "description": beer.description,
                     "type": beer.type,
                     "ibu": beer.ibu,
                     "abv": beer.abv,
-                    "website": beer.website,
                     "brewery": beer.brewery,
                     "image_url": beer.image_url,
+                    "category" : beer.category,
+                    "vegetarian_friendly" : beer.vegetarian_friendly,
                 }
                 return response
+
+    def update_beer(self, beer_id, beer):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                params = [
+                    beer.name,
+                    beer.description,
+                    beer.type,
+                    beer.ibu,
+                    beer.abv,
+                    beer.brewery,
+                    beer.image_url,
+                    beer.category,
+                    beer.vegetarian_friendly,
+                    beer_id
+                ]
+                cur.execute(
+                    """
+                    UPDATE beers
+                    SET name = %s
+                    , description = %s
+                    , type = %s
+                    , ibu = %s
+                    , abv = %s
+                    , brewery = %s
+                    , image_url = %s
+                    , category = %s
+                    , vegetarian_friendly = %s
+                    WHERE beer_id = %s
+                    RETURNING beer_id, name, description, type, ibu, abv, brewery, image_url, category, vegetarian_friendly
+                    """,
+                    params,
+                )
+
+                record = None
+                row = cur.fetchone()
+                if row is not None:
+                    record = {}
+                    for i, column in enumerate(cur.description):
+                        record[column.name] = row[i]
+                return record
+
+    def delete_beer(self, beer_id):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                    DELETE FROM beers
+                    WHERE beer_id = %s
+                    """,
+                    [beer_id],
+                )
