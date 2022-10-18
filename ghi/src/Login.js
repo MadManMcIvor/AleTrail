@@ -1,17 +1,16 @@
 import { useState} from 'react';
 import { useToken } from './LoginToken';
-import { useAuthContext } from './LoginToken';
 import LoginErrorModal from './LoginErrorModal';
-import { useNavigate } from 'react-router-dom';
+
 
 
 
   function LoginPage(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [token, login] = useToken();
+    const [_, login] = useToken();
     const [modalShow, setModalShow] = useState(false);
-    const nav = useNavigate();
+
 
 
 
