@@ -1,8 +1,21 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useToken } from './LoginToken';
 
 function LogoutModal(props) {
-  return (
+    const [token, login, logout] = useToken();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(token);
+        try {
+        await logout();
+        } catch(error){
+          console.log(error);
+          console.log("There was an error logging out.");
+        }}
+
+    return (
     <Modal
     {...props}
       size="lg"
@@ -16,7 +29,7 @@ function LogoutModal(props) {
       </Modal.Header>
       <Modal.Body>
         <h4>Are you sure?</h4>
-        <Button onClick={props.onHide}>Logout!</Button>
+        <Button onClick={handleSubmit}>Logout!</Button>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>
