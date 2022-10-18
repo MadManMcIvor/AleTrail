@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from authenticator import authenticator
 from routers import users, favorites_router
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
