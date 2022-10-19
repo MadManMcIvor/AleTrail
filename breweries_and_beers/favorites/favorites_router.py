@@ -1,0 +1,34 @@
+from urllib import response
+from typing import List
+from queries.favorites_queries import (
+    BreweryFavoriteIn, 
+    BreweryFavoriteOut,
+    BeerFavoriteIn, 
+    BreweryFavoritesRepository,
+    )
+
+from fastapi import (
+    Depends,
+    HTTPException,
+    status,
+    Response,
+    APIRouter,
+    Request,
+)
+
+router = APIRouter()
+
+@router.post("/favorites/breweries", response_model=BreweryFavoriteOut)
+def create_brewery_favorite(
+    brewery_favorite: BreweryFavoriteIn,
+    repo: BreweryFavoritesRepository = Depends()
+    ):
+    return repo.create(brewery_favorite)
+
+@router.get("/favorites/breweries", response_model=List[BreweryFavoriteOut])
+def get_all_brewery_favorites_by_user(
+    repo: BreweryFavoritesRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    id= account_data.user_id
+    return repo.get_all(id)

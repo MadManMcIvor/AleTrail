@@ -1,4 +1,7 @@
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS brewery_favorites;
+DROP TABLE IF EXISTS beer_favorites;
+
 
 CREATE TABLE users (
     id SERIAL NOT NULL UNIQUE,
@@ -10,6 +13,32 @@ CREATE TABLE users (
     password TEXT NOT NULL,
     is_brewery_owner BOOLEAN DEFAULT FALSE
 );
+
+CREATE TABLE brewery_favorites (
+    brewery_favorite_id SERIAL PRIMARY KEY NOT NULL,
+    user_id  INTEGER NOT NULL,
+    brewery_id INTEGER NOT NULL
+);
+
+CREATE TABLE beer_favorites (
+    beer_favorite_id SERIAL PRIMARY KEY NOT NULL,
+    user_id  INTEGER NOT NULL,
+    beer_id INTEGER NOT NULL
+);
+
+INSERT INTO brewery_favorites VALUES
+  (1, 2, 2),
+  (2, 2, 3),
+  (3, 2, 1)
+  ;
+
+INSERT INTO beer_favorites VALUES
+  (1, 2, 2),
+  (2, 2, 3),
+  (3, 2, 1)
+  ;
+
+
 
 # the password is password 
 INSERT INTO users VALUES
@@ -27,3 +56,5 @@ INSERT INTO users VALUES
 
 
 SELECT setval('users_id_seq', (SELECT MAX(id) + 1 FROM users));
+SELECT setval('brewery_favorites_brewery_favorite_id_seq', (SELECT MAX(brewery_favorite_id) + 1 FROM brewery_favorites));
+SELECT setval('beer_favorites_beer_favorite_id_seq', (SELECT MAX(beer_favorite_id) + 1 FROM beer_favorites));
