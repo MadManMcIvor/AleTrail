@@ -1,8 +1,10 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image';
+import FavoriteIcon from './FavoriteIcon';
 
 function BreweryCardModal(props) {
+
   return (
     <Modal
       {...props}
@@ -24,6 +26,7 @@ function BreweryCardModal(props) {
         </p>
       </Modal.Body>
       <Modal.Footer>
+        <FavoriteIcon></FavoriteIcon>
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
