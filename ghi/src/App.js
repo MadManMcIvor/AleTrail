@@ -8,6 +8,7 @@ import Settings from './Settings';
 import SignupForm from './Signup';
 import LoginPage from './Login';
 import { AuthProvider, useToken } from './LoginToken';
+import PrivateRoute from './PrivateRoute';
 
 function GetToken() {
   // Get token from JWT cookie (if already logged in)
@@ -33,7 +34,11 @@ function App() {
               <Route path="" element={<Beers/>} />
             </Route>
             <Route path="favorites" >
-              <Route path="" element={<Favorites/>} />
+              <Route path="" element={
+                <PrivateRoute>
+                  <Favorites/>
+                </PrivateRoute>
+                } />
             </Route>
             <Route path="settings" >
               <Route path="" element={<Settings/>} />
