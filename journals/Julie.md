@@ -1,3 +1,6 @@
+## 10/18/22 
+This morning I did pair programming with Alex and was able to get the error message pop up when trying to create an account with the same email. I was able to hide the favorites page by having the page redirects to login page if there's no token. 
+
 ## 10/17/22
 Today I did pair programming with Alex. We were able to get the signup page and login page with token to work. We're created a logout modal with pop up confirming logout. 
 
