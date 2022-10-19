@@ -1,6 +1,5 @@
 import os
 from psycopg_pool import ConnectionPool
-from pprint import pprint
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
