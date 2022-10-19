@@ -30,7 +30,6 @@ class BreweryOut(BaseModel):
     image_url: Optional[str]
     description: Optional[str]
     website: Optional[str]
-    beers: Optional[str]
 
 class BreweriesOut(BaseModel):
     breweries: list[BreweryOut]
