@@ -3,7 +3,8 @@ import Modal from 'react-bootstrap/Modal';
 import { useToken } from './LoginToken';
 
 function LogoutModal(props) {
-    const [token, login, logout] = useToken();
+    const token = useToken()[0];
+    const logout = useToken()[2];
 
     const handleSubmit = async (e) => {
         e.preventDefault();

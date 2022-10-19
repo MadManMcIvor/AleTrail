@@ -9,7 +9,7 @@ function SignupForm(){
     const [email, setEmail] = useState('');
     const [username, setUsername]= useState('');
     const [password, setPassword] = useState('');
-    const [token, login] = useToken();
+    const login = useToken()[1];
     const [modalShow, setModalShow] = useState(false);
 
 
@@ -85,6 +85,5 @@ function SignupForm(){
 }
 
 export default SignupForm; 
-
 
 
