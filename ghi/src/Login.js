@@ -1,6 +1,5 @@
 import { useState} from 'react';
 import { useToken } from './LoginToken';
-import { useAuthContext } from './LoginToken';
 import LoginErrorModal from './LoginErrorModal';
 
 
@@ -8,7 +7,7 @@ import LoginErrorModal from './LoginErrorModal';
   function LoginPage(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [token, login] = useToken();
+    const login = useToken()[1];
     const [modalShow, setModalShow] = useState(false);
 
 
