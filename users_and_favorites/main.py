@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from authenticator import authenticator
-from routers import users
+from routers import users, favorites_router
 from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
@@ -19,4 +20,5 @@ app.add_middleware(
 )
 
 app.include_router(users.router)
+app.include_router(favorites_router.router)
 app.include_router(authenticator.router)
