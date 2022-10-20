@@ -311,24 +311,6 @@
           "profile_pic": string,
           "email": string,
           "username": string,
-          "favorite_beers": [
-            {
-            "href": /{city}/breweries/{brewery_id}/beers/{beer_id}/,
-            "image_url": string,
-            "name": string,
-            "beer_id": string,
-            "created_on": date,
-          }
-          ],
-          "favorite_breweries": [
-            {
-            "href": /{city}/breweries/{brewery_id}/,
-            "image_url": string,
-            "name": string,
-            "brewery_id": string,
-            "created_on": date,
-          }
-          ],
         }
     }
     ```
