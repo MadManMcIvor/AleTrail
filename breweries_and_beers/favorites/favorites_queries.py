@@ -126,21 +126,21 @@ class BeerFavoritesRepository:
                 with conn.cursor() as cur:
                     result = cur.execute(
                         """
-                        SELECT fav.brewery_favorite_id, 
+                        SELECT fav.beer_favorite_id, 
                             fav.user_id, 
-                            fav.brewery_id, 
-                            brew.name,
-                            brew.street, 
-                            brew.city, 
-                            brew.state, 
-                            brew.zip_code, 
-                            brew.phone, 
-                            brew.image_url, 
+                            fav.beer_id, 
+                            brew.name, 
                             brew.description, 
-                            brew.website 
-                        FROM brewery_favorites AS fav
-                        INNER JOIN breweries AS brew
-                        ON (fav.brewery_id = brew.brewery_id)
+                            brew.type,
+                            brew.ibu,
+                            brew.abv,
+                            brew.brewery,
+                            brew.image_url,
+                            brew.category,
+                            brew.vegetarian_friendly 
+                        FROM beer_favorites AS fav
+                        INNER JOIN beers AS brew
+                        ON (fav.beer_id = brew.beer_id)
                         WHERE fav.user_id = %s;
                         """,
                         [user_id]
@@ -148,25 +148,25 @@ class BeerFavoritesRepository:
                     temp_list = [item for item in result]
                     return [
                         BeerFavoriteJoinOut(
-                            brewery_favorite_id=record[0],
+                            beer_favorite_id=record[0],
                             user_id=record[1],
-                            brewery_id=record[2],
+                            beer_id=record[2],
                             name=record[3],
-                            street=record[4],
-                            city=record[5],
-                            state=record[6],
-                            zip_code=record[7],
-                            phone=record[8],
+                            description=record[4],
+                            type=record[5],
+                            ibu=record[6],
+                            abv=record[7],
+                            brewery=record[8],
                             image_url=record[9],
-                            description=record[10],
-                            website=record[11]
+                            category=record[10],
+                            vegetarian_friendly=record[11],
                         ) for record in temp_list
                     ]
         except Exception:
             return {'message:' 'Could not get all brewery favorites'}
 
 
-    def create(self, brewery_favorite: BeerFavoriteIn) -> BeerFavoriteOut:
+    def create(self, beer_favorite: BeerFavoriteIn) -> BeerFavoriteOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 result = cur.execute(
@@ -184,6 +184,6 @@ class BeerFavoritesRepository:
                 )
                 row = result.fetchone()
                 beer_favorite_id = row[0]
-                old_data = brewery_favorite.dict()
+                old_data = beer_favorite.dict()
                 return BeerFavoriteOut(beer_favorite_id=beer_favorite_id, **old_data)
     
