@@ -25,12 +25,12 @@ beer = {
     "name": "str",
     "description": "str",
     "type": "str",
-    "ibu": "int",
+    "ibu": "str",
     "abv": 0,
-    "brewery": "int",
+    "brewery": "str",
     "image_url": "str",
     "category": "str",
-    "vegetarian_friendly": "bool",
+    "vegetarian_friendly": "str",
 }
 
 def test_get_beers_empty():
