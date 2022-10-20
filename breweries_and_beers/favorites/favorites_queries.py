@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from breweries_and_beers.db import pool
+from db import pool
 from typing import List, Optional
 
 class BreweryFavoriteIn(BaseModel):
@@ -11,7 +11,7 @@ class BreweryFavoriteOut(BaseModel):
     user_id: int
     brewery_id: int
 
-class BreweryFavoriteJoin(BaseModel):
+class BreweryFavoriteJoinOut(BaseModel):
     brewery_favorite_id: int
     user_id: int
     brewery_id: int
@@ -24,7 +24,6 @@ class BreweryFavoriteJoin(BaseModel):
     image_url: Optional[str]
     description: Optional[str]
     website: Optional[str]
-    beers: Optional[str]
 
 
 class BeerFavoriteIn(BaseModel):
@@ -38,26 +37,47 @@ class BeerFavoriteOut(BaseModel):
 
 
 class BreweryFavoritesRepository:
-    def get_all(self, user_id) -> List[BreweryFavoriteOut]:
+    def get_all(self, user_id) -> List[BreweryFavoriteJoinOut]:
         try:
-            print("LOOOOOOK HERE!!! USER ID:", user_id)
             with pool.connection() as conn:
                 with conn.cursor() as cur:
                     result = cur.execute(
                         """
-                        SELECT * 
-                        FROM brewery_favorites as fav
-                        WHERE fav.user_id = %s; 
+                        SELECT fav.brewery_favorite_id, 
+                            fav.user_id, 
+                            fav.brewery_id, 
+                            brew.name,
+                            brew.street, 
+                            brew.city, 
+                            brew.state, 
+                            brew.zip_code, 
+                            brew.phone, 
+                            brew.image_url, 
+                            brew.description, 
+                            brew.website 
+                        FROM brewery_favorites AS fav
+                        INNER JOIN breweries AS brew
+                        ON (fav.brewery_id = brew.brewery_id)
+                        WHERE fav.user_id = %s;
                         """,
                         [user_id]
                     )
-                    print("LOOOOOOK HERE!!! CUR:", cur)
+                    temp_list = [item for item in result]
                     return [
-                        BreweryFavoriteOut(
+                        BreweryFavoriteJoinOut(
                             brewery_favorite_id=record[0],
                             user_id=record[1],
                             brewery_id=record[2],
-                        ) for record in cur
+                            name=record[3],
+                            street=record[4],
+                            city=record[5],
+                            state=record[6],
+                            zip_code=record[7],
+                            phone=record[8],
+                            image_url=record[9],
+                            description=record[10],
+                            website=record[11]
+                        ) for record in temp_list
                     ]
         except Exception:
             return {'message:' 'Could not get all brewery favorites'}
@@ -83,12 +103,4 @@ class BreweryFavoritesRepository:
                 brewery_favorite_id = row[0]
                 old_data = brewery_favorite.dict()
                 return BreweryFavoriteOut(brewery_favorite_id=brewery_favorite_id, **old_data)
-
-
-#   SELECT fav.brewery_favorite_id, brew.brewery_id, brew.name, brew.street,
-#                         brew.city, brew.state, brew.zip_code,
-#                         brew.phone, brew.image_url, brew.description,
-#                         brew.website
-#                         FROM users_and_favorites.brewery_favorites AS f
-#                         INNER JOIN breweries_and_beers.breweries AS brew
-#                             ON (fav.brewery_id = brew.brewery_id)
+    

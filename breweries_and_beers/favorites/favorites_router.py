@@ -1,10 +1,12 @@
 from urllib import response
 from typing import List
-from queries.favorites_queries import (
+from authenticator import authenticator
+from favorites.favorites_queries import (
     BreweryFavoriteIn, 
     BreweryFavoriteOut,
     BeerFavoriteIn, 
     BreweryFavoritesRepository,
+    BreweryFavoriteJoinOut,
     )
 
 from fastapi import (
@@ -25,10 +27,10 @@ def create_brewery_favorite(
     ):
     return repo.create(brewery_favorite)
 
-@router.get("/favorites/breweries", response_model=List[BreweryFavoriteOut])
+@router.get("/favorites/breweries", response_model=List[BreweryFavoriteJoinOut])
 def get_all_brewery_favorites_by_user(
     repo: BreweryFavoritesRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
-):
-    id= account_data.user_id
-    return repo.get_all(id)
+):    
+    user_id= account_data['id']
+    return repo.get_all(user_id)
