@@ -38,6 +38,14 @@ def get_all_brewery_favorites_by_user(
     user_id= account_data['id']
     return repo.get_all(user_id)
 
+@router.delete("/favorites/breweries/{brewery_favorite_id}", response_model=bool)
+def delete_brewery_favorite(
+    brewery_favorite_id: int,
+    repo: BreweryFavoritesRepository = Depends(),
+) -> bool:
+    return repo.delete(brewery_favorite_id)
+ 
+
 @router.post("/favorites/beers", response_model=BeerFavoriteOut)
 def create_beer_favorite(
     beer_favorite: BeerFavoriteIn,
@@ -52,3 +60,10 @@ def get_all_beer_favorites_by_user(
 ):    
     user_id= account_data['id']
     return repo.get_all(user_id)
+
+@router.delete("/favorites/beers/{beer_favorite_id}", response_model=bool)
+def delete_beer_favorite(
+    beer_favorite_id: int,
+    repo: BeerFavoritesRepository = Depends(),
+) -> bool:
+    return repo.delete(beer_favorite_id)

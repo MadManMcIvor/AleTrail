@@ -116,6 +116,23 @@ class BreweryFavoritesRepository:
                 old_data = brewery_favorite.dict()
                 return BreweryFavoriteOut(brewery_favorite_id=brewery_favorite_id, **old_data)
     
+    def delete(self, brewery_favorite_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM brewery_favorites
+                        WHERE brewery_favorite_id = %s
+                        """,
+                        [brewery_favorite_id]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
+
+
 
 
 class BeerFavoritesRepository:
@@ -187,3 +204,18 @@ class BeerFavoritesRepository:
                 old_data = beer_favorite.dict()
                 return BeerFavoriteOut(beer_favorite_id=beer_favorite_id, **old_data)
     
+    def delete(self, beer_favorite_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM beer_favorites
+                        WHERE beer_favorite_id = %s
+                        """,
+                        [beer_favorite_id]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
