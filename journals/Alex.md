@@ -1,3 +1,8 @@
+## 10/18/22
+* We fixed the pop up for the signup page error modal.
+* Made the logout modal actually log the user out and redirect them afterwards.
+* Started working on the favorites FastAPI ends points
+
 ## 10/17/22
 * Pair programmed with Julie all day. We set up the signup page, the login page, and the logout page on the front end. We made modals for the logout, and error messages when attempting to login or signup. It took a long time to figure out how to integrate the features, but feels like we're in a good place now.
 
