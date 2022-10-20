@@ -1,31 +1,32 @@
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends, Response
 from db import BeerQueries
+from typing import Optional
 
 router = APIRouter()
 
 class BeerIn(BaseModel):
     name: str
-    description: str
+    description: Optional[str]
     type: str
     ibu: int
-    abv: int
+    abv: float
     brewery: int
-    image_url: str
-    category: str
-    vegetarian_friendly: bool
+    image_url: Optional[str]
+    category: Optional[str]
+    vegetarian_friendly: Optional[bool]
 
 class BeerOut(BaseModel):
     beer_id: int
     name: str
-    description: str
+    description: Optional[str]
     type: str
     ibu: int
-    abv: int
+    abv: float
     brewery: int
-    image_url: str
-    category: str
-    vegetarian_friendly: bool
+    image_url: Optional[str]
+    category: Optional[str]
+    vegetarian_friendly: Optional[bool]
 
 class BeerList(BaseModel):
     beers: list[BeerOut]
