@@ -78,6 +78,13 @@ release-breweries-and-beers-api-image-job:  # RENAME THIS
   script:
     - heroku container:release web --app $HEROKU_FASTAPI_APP
 
+users_and_favorites-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+  - cd users_and_favorites 
+  - pip install -r requirements.txt
+  - python -m pytest
 
 
 ## DEPLOY THE UI
