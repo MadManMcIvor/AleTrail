@@ -1,3 +1,11 @@
+## 10/20/22
+
+
+## 10/19/22
+Continued working on implementing favorite icons and got it prepped for end points. Cleaned up breweries of unused functions, variables, and imports.
+
+## 10/18/22
+Added a favorites icon to brewerycardmodal and beercardmodal to use with favorites endpoints ocne they are donw. Finished implementing brewery unit test into yml file. 
 
 ## 10/17/22
 Created a test that needs to be implemented into yml file. Added authentication for breweries PUT, POST, and DELETE methods.
