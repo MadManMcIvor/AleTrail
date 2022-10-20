@@ -3,9 +3,11 @@ import "react-multi-carousel/lib/styles.css";
 import BeerCard from './BeerCard';
 import BreweryCard from './BreweryCard';
 import React, { useEffect, useState } from 'react';
+import { useToken } from './LoginToken';
 
 function Favorites() {
-    const [breweries, setBreweries] = useState([])
+    const [breweries, setBreweries] = useState([]);
+    const token = useToken()[0];
 
     let beers = [
         {beer_id: 1, name:'Batman Stout', desciption: 'A stout as dark as the dark knight himself!', type: 'Stout', ibu: 70, abv: 5.11, brewery: 1, image_url: 'https://images.pexels.com/photos/5659755/pexels-photo-5659755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
@@ -18,10 +20,11 @@ function Favorites() {
 
     useEffect(() => {
         async function getBreweries() {
-          const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/breweries`
+          const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries`
           const response = await fetch(url);
           if (response.ok) {
             const data = await response.json();
+            console.log(data)
             let formattedData = [];
             data.breweries.map((obj) => {
               return formattedData.push(obj);
@@ -30,6 +33,7 @@ function Favorites() {
           }
         }
         getBreweries();
+        console.log(token)
       }, [])
 
     // Convert array to JSX items

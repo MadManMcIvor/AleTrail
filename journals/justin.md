@@ -1,5 +1,5 @@
 ## 10/20/22
-
+Discussed with team about project MVP, deadline, and favorites endpoint. Helped point out and resolve bug with favorites endpoint by working with Alex. Discussed taking away favourites star and replacing it with text that just adds to favorite. A user will be able to remove from favorites in favorites tab. Plan to get this implemented over the weekend and have MVP ready by monday. 
 
 ## 10/19/22
 Continued working on implementing favorite icons and got it prepped for end points. Cleaned up breweries of unused functions, variables, and imports.
