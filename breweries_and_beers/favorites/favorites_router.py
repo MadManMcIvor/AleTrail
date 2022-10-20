@@ -4,9 +4,12 @@ from authenticator import authenticator
 from favorites.favorites_queries import (
     BreweryFavoriteIn, 
     BreweryFavoriteOut,
-    BeerFavoriteIn, 
     BreweryFavoritesRepository,
     BreweryFavoriteJoinOut,
+    BeerFavoriteIn,
+    BeerFavoriteOut, 
+    BeerFavoritesRepository,
+    BeerFavoriteJoinOut,
     )
 
 from fastapi import (
@@ -34,3 +37,10 @@ def get_all_brewery_favorites_by_user(
 ):    
     user_id= account_data['id']
     return repo.get_all(user_id)
+
+@router.post("/favorites/beers", response_model=BeerFavoriteOut)
+def create_beer_favorite(
+    beer_favorite: BeerFavoriteIn,
+    repo: BeerFavoritesRepository = Depends()
+    ):
+    return repo.create(beer_favorite)
