@@ -100,11 +100,11 @@ class BreweryFavoritesRepository:
             with conn.cursor() as cur:
                 result = cur.execute(
                     """
-                    INSERT INTO beer_favorites
-                        (user_id, beer_id)
+                    INSERT INTO brewery_favorites
+                        (user_id, brewery_id)
                     VALUES
                         (%s, %s)
-                    RETURNING beer_favorite_id;
+                    RETURNING brewery_favorite_id;
                     """,
                     [
                         brewery_favorite.user_id, 

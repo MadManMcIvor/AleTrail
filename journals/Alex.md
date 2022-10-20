@@ -1,3 +1,6 @@
+## 10/19/22 
+* Finished creating end points for beer and brewery favorites (create, delete, view favorites by user)
+
 ## 10/18/22
 * We fixed the pop up for the signup page error modal.
 * Made the logout modal actually log the user out and redirect them afterwards.
