@@ -11,6 +11,7 @@ CREATE TABLE users (
     is_brewery_owner BOOLEAN DEFAULT FALSE
 );
 
+
 # the password is password 
 INSERT INTO users VALUES
   (1, 'James', 'Smith', null, 'James@gmail.com', 'Jsmith', '$2b$12$dmCjJWYHBVDVQGdpW8Jn6ur0mZq9GT7XfJx0Ocl6xAxuRh4y/2unC', false),
@@ -24,6 +25,5 @@ INSERT INTO users VALUES
   (9, 'Will', 'Smith', null, 'Will@gmail.com', 'Wsmith', '$2b$12$OweMtrSL1XY.wcwRCsY06.RNC41o64j/8X4C1WI/N.s1VJ.D.MZ9W', false),
   (10, 'Yuri', 'Miller', null, 'Yuri@gmail.com', 'Ymiller', '$2b$12$yLtujk.cPIgsphM0f1jEPOlm6nJ0L3gh.w7H4ERDSPDIO8gAuCBHK', false)
   ;
-
 
 SELECT setval('users_id_seq', (SELECT MAX(id) + 1 FROM users));

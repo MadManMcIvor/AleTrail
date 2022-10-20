@@ -1,5 +1,7 @@
-DROP TABLE IF EXISTS breweries;
+DROP TABLE IF EXISTS brewery_favorites;
+DROP TABLE IF EXISTS beer_favorites;
 DROP TABLE IF EXISTS beers;
+DROP TABLE IF EXISTS breweries;
 
 CREATE TABLE users_vo (
     users_vo_id SERIAL NOT NULL PRIMARY KEY
@@ -21,19 +23,17 @@ CREATE TABLE breweries (
 -- Add back later
 -- owner_id INTEGER REFERENCES users("id") ON DELETE CASCADE
 
-
-
 CREATE TABLE beers (
     beer_id SERIAL NOT NULL UNIQUE,
     name VARCHAR(150) NOT NULL,
-    description TEXT NOT NULL,
+    description TEXT NULL,
     type VARCHAR(150) NOT NULL,
     ibu SMALLINT NOT NULL,
     abv FLOAT NOT NULL,
     brewery INTEGER NOT NULL REFERENCES breweries("brewery_id") ON DELETE CASCADE,
     image_url VARCHAR(300) NULL,
-    category TEXT NULL,
-    vegetarian_friendly TEXT NULL
+    category VARCHAR(300) NULL,
+    vegetarian_friendly VARCHAR(300) NULL
 );
 
 
@@ -54,7 +54,33 @@ INSERT INTO beers VALUES
 (6, 'Orange Dream Sour', 'A farmhouse sour with hints of local oranges', 'Sour', 19, 6.50, 2, 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Sour', 'True')
 ;
 
+CREATE TABLE brewery_favorites (
+    brewery_favorite_id SERIAL PRIMARY KEY NOT NULL,
+    user_id  INTEGER NOT NULL,
+    brewery_id INTEGER NOT NULL REFERENCES breweries("brewery_id") ON DELETE CASCADE
+);
+
+CREATE TABLE beer_favorites (
+    beer_favorite_id SERIAL PRIMARY KEY NOT NULL,
+    user_id  INTEGER NOT NULL,
+    beer_id INTEGER NOT NULL REFERENCES beers("beer_id") ON DELETE CASCADE
+);
+
+INSERT INTO brewery_favorites VALUES
+  (1, 2, 2),
+  (2, 2, 3),
+  (3, 2, 1)
+  ;
+
+INSERT INTO beer_favorites VALUES
+  (1, 2, 2),
+  (2, 2, 3),
+  (3, 2, 1)
+  ;
+
 
 SELECT setval('breweries_brewery_id_seq', (SELECT MAX(brewery_id) + 1 FROM breweries));
 SELECT setval('beers_beer_id_seq', (SELECT MAX(beer_id) + 1 FROM beers));
+SELECT setval('brewery_favorites_brewery_favorite_id_seq', (SELECT MAX(brewery_favorite_id) + 1 FROM brewery_favorites));
+SELECT setval('beer_favorites_beer_favorite_id_seq', (SELECT MAX(beer_favorite_id) + 1 FROM beer_favorites));
 

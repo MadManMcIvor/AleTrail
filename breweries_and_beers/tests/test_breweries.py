@@ -31,7 +31,6 @@ brewery = {
     "image_url": "str",
     "description": "str",
     "website": "str",
-    "beers": "str"
 }
 
 def test_get_breweries_empty():
