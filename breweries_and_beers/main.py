@@ -20,8 +20,5 @@ app.add_middleware(
 )
 
 app.include_router(breweries.router)
-<<<<<<< HEAD
 app.include_router(favorites_router.router)
-=======
 app.include_router(beers.router)
->>>>>>> main

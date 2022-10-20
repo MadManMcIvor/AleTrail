@@ -35,20 +35,18 @@ class BeerFavoriteOut(BaseModel):
     beer_id: int
 
 class BeerFavoriteJoinOut(BaseModel):
-    brewery_favorite_id: int
+    beer_favorite_id: int
     user_id: int
-    brewery_id: int
+    beer_id: int
     name: str
-    street: str
     description: str
     type: str
     ibu: int
     abv: float
-    brewery: str
+    brewery: int
     image_url: str
     category: str
-    vegetarian_friendly: str
-
+    vegetarian_friendly: bool
 
 class BreweryFavoritesRepository:
     def get_all(self, user_id) -> List[BreweryFavoriteJoinOut]:
