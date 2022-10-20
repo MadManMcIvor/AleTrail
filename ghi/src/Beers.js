@@ -1,11 +1,8 @@
 import Masonry from 'react-masonry-css'
-import BeerCardCarousel from './BeerCardCarousel';
 import BeerCard from './BeerCard';
-import getBreweries from './Breweries.js';
 import React, { useEffect, useState } from 'react';
 
 function Beers() {
-    let breweriesList = getBreweries()
     const [beers, setBeers] = useState([])
 
 
