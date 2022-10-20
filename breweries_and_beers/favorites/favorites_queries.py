@@ -40,13 +40,14 @@ class BeerFavoriteJoinOut(BaseModel):
     brewery_id: int
     name: str
     street: str
-    city: str
-    state: str
-    zip_code: int
-    phone: Optional[str]
-    image_url: Optional[str]
-    description: Optional[str]
-    website: Optional[str]
+    description: str
+    type: str
+    ibu: int
+    abv: float
+    brewery: str
+    image_url: str
+    category: str
+    vegetarian_friendly: str
 
 
 class BreweryFavoritesRepository:
@@ -146,6 +147,7 @@ class BeerFavoritesRepository:
                         [user_id]
                     )
                     temp_list = [item for item in result]
+                    print(temp_list)
                     return [
                         BeerFavoriteJoinOut(
                             beer_favorite_id=record[0],

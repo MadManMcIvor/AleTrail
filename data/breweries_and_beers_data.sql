@@ -2,8 +2,7 @@ DROP TABLE IF EXISTS breweries;
 DROP TABLE IF EXISTS beers;
 
 CREATE TABLE users_vo (
-    users_vo_id SERIAL NOT NULL PRIMARY KEY,
-
+    users_vo_id SERIAL NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE breweries (
@@ -19,8 +18,8 @@ CREATE TABLE breweries (
     website TEXT NULL
 );
 
-Add back later
-owner_id INTEGER REFERENCES users("id") ON DELETE CASCADE
+-- Add back later
+-- owner_id INTEGER REFERENCES users("id") ON DELETE CASCADE
 
 
 
@@ -33,12 +32,18 @@ CREATE TABLE beers (
     abv FLOAT NOT NULL,
     brewery INTEGER NOT NULL REFERENCES breweries("brewery_id") ON DELETE CASCADE,
     image_url VARCHAR(300) NULL,
+<<<<<<< HEAD
     category VARCHAR(300) NULL,
     vegetarian_friendly BOOLEAN
+=======
+    category TEXT NULL,
+    vegetarian_friendly TEXT NULL
+>>>>>>> main
 );
 
 
 INSERT INTO breweries VALUES
+  (0, '1188 Brewing', '123 Address St', 'Bend', 'Oregon', '97701', '1234567890', null, 'A brewery in Bend, Oregon', null),
   (1, '10-56 Brewing Company', '400 Brown Cir', 'Sacramento', 'California', '46534', '6308165790', null, 'A brewery in Sacramento, California', null),
   (2, 'Big Sexy Brewing Company', '5861 88th St Ste 800', 'Sacramento', 'California', '95828', '9163747332', 'https://static.wixstatic.com/media/317ec9_55fb53d685e94e209ec42b88e77d43f9~mv2.png/v1/fill/w_241,h_83,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Logo%20Dark%20Gray.png', 'A brewery in Sacramento, California', 'http://www.bigsexybrewing.com'),
   (3, '10 Barrel Brewing Co', '62970 18th St', 'Bend', 'Oregon', '97701', '5415851007', 'https://10barrel.com/wp-content/themes/mx-theme/assets/img/logo-retina-white.png', 'A brewery in Bend, Oregon', 'https://10barrel.com/'),
@@ -46,12 +51,12 @@ INSERT INTO breweries VALUES
   ;
 
 INSERT INTO beers VALUES
-(1, 'Batman Stout', 'A stout as dark as the dark knight himself!', 'Stout', 70, 5.11, 1, 'https://images.pexels.com/photos/5659755/pexels-photo-5659755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-(2, '805 Pale Ale', 'Our flagship beer, perfectly balanced mix of malty and hoppy', 'Pale Ale', 80, 5.21, 1, 'https://images.pexels.com/photos/5530264/pexels-photo-5530264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-(3, 'Orange Dream Sour', 'A farmhouse sour with hints of local oranges', 'Sour', 19, 6.50, 1, 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-(4, 'Batman Stout', 'A stout as dark as the dark knight himself!', 'Stout', 70, 5.11, 2, 'https://images.pexels.com/photos/5659755/pexels-photo-5659755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-(5, '805 Pale Ale', 'Our flagship beer, perfectly balanced mix of malty and hoppy', 'Pale Ale', 80, 5.21, 2, 'https://images.pexels.com/photos/5530264/pexels-photo-5530264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-(6, 'Orange Dream Sour', 'A farmhouse sour with hints of local oranges', 'Sour', 19, 6.50, 2, 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')
+(1, 'Batman Stout', 'A stout as dark as the dark knight himself!', 'Stout', 70, 5.11, 1, 'https://images.pexels.com/photos/5659755/pexels-photo-5659755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Stout', 'True'),
+(2, '805 Pale Ale', 'Our flagship beer, perfectly balanced mix of malty and hoppy', 'Pale Ale', 80, 5.21, 1, 'https://images.pexels.com/photos/5530264/pexels-photo-5530264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Ale', 'True'),
+(3, 'Orange Dream Sour', 'A farmhouse sour with hints of local oranges', 'Sour', 19, 6.50, 1, 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Sour', 'True'),
+(4, 'Batman Stout', 'A stout as dark as the dark knight himself!', 'Stout', 70, 5.11, 2, 'https://images.pexels.com/photos/5659755/pexels-photo-5659755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Stout', 'True'),
+(5, '805 Pale Ale', 'Our flagship beer, perfectly balanced mix of malty and hoppy', 'Pale Ale', 80, 5.21, 2, 'https://images.pexels.com/photos/5530264/pexels-photo-5530264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Ale', 'True'),
+(6, 'Orange Dream Sour', 'A farmhouse sour with hints of local oranges', 'Sour', 19, 6.50, 2, 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'Sour', 'True')
 ;
 
 

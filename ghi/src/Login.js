@@ -4,13 +4,11 @@ import LoginErrorModal from './LoginErrorModal';
 
 
 
-
   function LoginPage(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [_, login] = useToken();
+    const login = useToken()[1];
     const [modalShow, setModalShow] = useState(false);
-
 
 
 

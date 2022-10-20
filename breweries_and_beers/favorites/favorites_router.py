@@ -44,3 +44,11 @@ def create_beer_favorite(
     repo: BeerFavoritesRepository = Depends()
     ):
     return repo.create(beer_favorite)
+
+@router.get("/favorites/beers", response_model=List[BeerFavoriteJoinOut])
+def get_all_beer_favorites_by_user(
+    repo: BeerFavoritesRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):    
+    user_id= account_data['id']
+    return repo.get_all(user_id)
