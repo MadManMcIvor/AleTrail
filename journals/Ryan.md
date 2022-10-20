@@ -1,5 +1,7 @@
 ## 10/18/22
+* Made sure everything worked properly
 * Merged with main branch today
+* Began work on implementing back end into front end
 
 ## 10/17/22
 * Finally got the list view issue solved

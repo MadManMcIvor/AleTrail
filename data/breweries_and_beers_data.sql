@@ -32,13 +32,8 @@ CREATE TABLE beers (
     abv FLOAT NOT NULL,
     brewery INTEGER NOT NULL REFERENCES breweries("brewery_id") ON DELETE CASCADE,
     image_url VARCHAR(300) NULL,
-<<<<<<< HEAD
-    category VARCHAR(300) NULL,
-    vegetarian_friendly BOOLEAN
-=======
     category TEXT NULL,
     vegetarian_friendly TEXT NULL
->>>>>>> main
 );
 
 
