@@ -12,45 +12,22 @@ from favorites.favorites_queries import BreweryFavoritesRepository
 
 client = TestClient(app)
 
-class MockEmptyBreweryFavoritesQueries:
-    def get_breweries(self):
-        return []
+class MockInvalidTokenBreweryFavoritesQueries:
+    def get_all(self):
+        return invalid_token_response
 
-class MockBreweryFavoritesQueries:
-    def get_breweries(self):
-        return [brewery_favorite]
 
-brewery_favorite = {
-    "brewery_favorite_id": 1,
-    "user_id": 1,
-    "brewery_id": 0,
-    "name": "string",
-    "street": "string",
-    "city": "string",
-    "state": "string",
-    "zip_code": 0,
-    "phone": "string",
-    "image_url": "string",
-    "description": "string",
-    "website": "string"
-  }
+invalid_token_response = {
+  "detail": "Invalid token"
+}
 
-def test_get_breweries__favorites_empty():
-    app.dependency_overrides[BreweryFavoritesRepository] = MockEmptyBreweryFavoritesQueries
+def test_get_breweries_favorites_invalid_token():
+    app.dependency_overrides[BreweryFavoritesRepository] = MockInvalidTokenBreweryFavoritesQueries
 
     response = client.get('/favorites/breweries')
+    print(response)
 
-    assert response.status_code == 200
-    assert response.json() == {[]}
-
-    app.dependency_overrides = {}
-
-def test_get_breweries_favorites():
-    app.dependency_overrides[BreweryFavoritesRepository] = MockBreweryFavoritesQueries
-
-    response = client.get('/favorites/breweries')
-
-    assert response.status_code == 200
-    assert response.json() == { [brewery_favorite] }
+    assert response.status_code == 401
+    assert response.json() == invalid_token_response
 
     app.dependency_overrides = {}
