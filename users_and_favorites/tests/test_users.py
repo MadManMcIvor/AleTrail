@@ -13,6 +13,7 @@ from queries.users import UserQueries
 
 client = TestClient(app)
 
+# Currently these 2 tests only pass locally because token is from local 
 class TestEmptyUserQueries:
     def get_all_users(self):
         return []
@@ -32,7 +33,8 @@ user = {
 
 
 headers = {
-    "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0MmU3YzBjOC1lZDVlLTQ4ZjUtYTRmNy1iMjg0NzE0ZThjNzciLCJleHAiOjE2NjYzMDczOTcsInN1YiI6Im1hY3lAbWFpbC5jb20iLCJhY2NvdW50Ijp7ImlkIjoxMiwiZmlyc3QiOiJNYWN5IiwibGFzdCI6IlNob3AiLCJwcm9maWxlX3BpYyI6bnVsbCwiZW1haWwiOiJtYWN5QG1haWwuY29tIiwidXNlcm5hbWUiOiJtYWN5IiwiaXNfYnJld2VyeV9vd25lciI6ZmFsc2V9fQ.27gCnpxF6-B7LlQaOGZb8xKEFGjnROCLCSo_rKuAfn4"
+
+    "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwNWVjNjBjOS05N2RkLTRmNDEtOWU4YS05MDY5NjczODUzZTEiLCJleHAiOjE2NjYzMTgxMDksInN1YiI6Im1hY3lAbWFpbC5jb20iLCJhY2NvdW50Ijp7ImlkIjoxMiwiZmlyc3QiOiJNYWN5IiwibGFzdCI6IlNob3AiLCJwcm9maWxlX3BpYyI6bnVsbCwiZW1haWwiOiJtYWN5QG1haWwuY29tIiwidXNlcm5hbWUiOiJtYWN5IiwiaXNfYnJld2VyeV9vd25lciI6ZmFsc2V9fQ.wWATPZUKJZpJHtbRHRWpfJ7tz4BZ6ljcNvP_WXdG5_k"
 }
 
 def test_get_all_users_empty():
@@ -53,8 +55,5 @@ def test_get_all_users():
 
 
     app.dependency_overrides = {} 
-
-    
-
 
     
