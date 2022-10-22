@@ -33,7 +33,7 @@ function Favorites() {
               });
               setBeers(formattedData);
             }
-          }
+          }     
 
         getBeers();
         getBreweries();

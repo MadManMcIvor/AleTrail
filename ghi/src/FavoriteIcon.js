@@ -26,7 +26,7 @@ function FavoriteIcon(props) {
 
   return (
     <div className='favorite' onClick={updateFav}>
-        <RenderStar></RenderStar>
+        <RenderStar/>
     </div>
   );
 }

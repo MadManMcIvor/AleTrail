@@ -30,6 +30,7 @@ function BreweryCard(props) {
                 image_url = {props.image_url}
                 description = {props.description}
                 website = {props.website}
+                fav = {props.fav}
             />
         </div>
         

@@ -26,7 +26,7 @@ function BeerCardModal(props) {
         <h5>Abv: {props.abv}</h5>
       </Modal.Body>
       <Modal.Footer>
-        <FavoriteIcon></FavoriteIcon>
+        <FavoriteIcon true></FavoriteIcon>
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
