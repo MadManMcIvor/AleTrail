@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from db import pool
 from typing import List, Optional
+from pprint import pprint
 
 class BreweryFavoriteIn(BaseModel):
     user_id: int
@@ -75,6 +76,7 @@ class BreweryFavoritesRepository:
                         [user_id]
                     )
                     temp_list = [item for item in result]
+                    pprint(temp_list)
                     return [
                         BreweryFavoriteJoinOut(
                             brewery_favorite_id=record[0],
