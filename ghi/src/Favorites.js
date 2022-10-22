@@ -3,7 +3,6 @@ import "react-multi-carousel/lib/styles.css";
 import BeerCard from './BeerCard';
 import BreweryCard from './BreweryCard';
 import React, { useEffect, useState } from 'react';
-import { useToken } from './LoginToken';
 
 function Favorites() {
     const [breweries, setBreweries] = useState([]);
