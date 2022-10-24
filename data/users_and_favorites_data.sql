@@ -11,7 +11,7 @@ CREATE TABLE users (
     is_brewery_owner BOOLEAN DEFAULT FALSE
 );
 
-
+# is_brewery_owner is a stretch goal 
 # the password is password 
 INSERT INTO users VALUES
   (1, 'James', 'Smith', null, 'James@gmail.com', 'Jsmith', '$2b$12$dmCjJWYHBVDVQGdpW8Jn6ur0mZq9GT7XfJx0Ocl6xAxuRh4y/2unC', false),
