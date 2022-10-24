@@ -29,12 +29,12 @@ function Breweries() {
   useEffect(() => {
 
     async function getBreweries() {
-      let favData = []
+      let favData = [];
       const favUrl = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries`
       const favResponse = await fetch(favUrl, { method: "GET", credentials: "include" });
       if (favResponse.ok) {
         const data = await favResponse.json();
-        favData = Array.from(data)
+        favData = Array.from(data);
       };
       const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/breweries`
       const response = await fetch(url);
