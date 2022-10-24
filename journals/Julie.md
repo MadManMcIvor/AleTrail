@@ -1,3 +1,9 @@
+## 10/20/22 
+Today I continued working on unit test. I'm able to get the tests to pass locally, but the tests won't pass on gitlab because the database is not set up on the actual site yet. 
+
+## 10/19/22
+Today I worked on writing unit test for users. When I ran the pytest, I got a test failed with 401 error and realized I need to include the token as part of the test. I'm still trying to figure out how to include it in the test for it to pass. 
+
 ## 10/18/22 
 This morning I did pair programming with Alex and was able to get the error message pop up when trying to create an account with the same email. I was able to hide the favorites page by having the page redirects to login page if there's no token. 
 
