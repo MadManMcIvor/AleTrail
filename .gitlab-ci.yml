@@ -121,7 +121,7 @@ release-breweries-and-beers-api-image-job:
   script:
     - heroku container:release web --app $HEROKU_FASTAPI_APP
 
-  release-users-and-favorites-api-image-job: 
+release-users-and-favorites-api-image-job: 
   stage: deploy
   image: node:10.17-alpine
   needs:
