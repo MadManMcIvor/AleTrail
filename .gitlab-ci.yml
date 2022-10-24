@@ -66,6 +66,7 @@ build-users-and-favorites-api-image-job:
   image: docker:20.10.16
   needs:
     - users_and_favorites-unit-test-job
+    services:
     - docker:20.10.16-dind
   script:
     - cd users_and_favorites
