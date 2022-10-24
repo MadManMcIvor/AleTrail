@@ -1,3 +1,10 @@
+## 10/21/22
+* got my unit test working.
+
+## 10/20/22
+* Moved my mock data over from the users and favorites file to the beers and breweries file, fixed a bug in the create brewery favorite endpoint, and tweaked some of the beers models so they more accurately match what we were looking for.
+* Started on my unit test for the favorites back end.
+
 ## 10/19/22 
 * Finished creating end points for beer and brewery favorites (create, delete, view favorites by user)
 
