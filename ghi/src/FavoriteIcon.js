@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 function FavoriteIcon(props) {
 
-    const [fav, setFav] = useState(false)
+    const [fav, setFav] = useState(props.fav)
 
     function RenderStar () {
-        if(fav === false){
+        if(fav === 0){
             return (
                 <img src="/empty-star-icon.png" alt="Not a favorite"width="50"></img>
             )
@@ -17,7 +17,7 @@ function FavoriteIcon(props) {
     }
 
     function updateFav(boolean){
-        if(fav === false){
+        if(boolean === 0){
             setFav(true)
         }else{
             setFav(false)
@@ -26,7 +26,7 @@ function FavoriteIcon(props) {
 
   return (
     <div className='favorite' onClick={updateFav}>
-        <RenderStar/>
+        <RenderStar />
     </div>
   );
 }

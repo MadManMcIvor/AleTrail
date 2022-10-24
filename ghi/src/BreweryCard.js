@@ -5,7 +5,7 @@ import BreweryCardModal from './BreweryCardModal';
 function BreweryCard(props) {
     
     const [modalShow, setModalShow] = useState(false);
-
+    // console.log(props)
 
     return (
         <div key={props.brewery_id}>

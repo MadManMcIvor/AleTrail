@@ -6,8 +6,29 @@ function Breweries() {
   const [breweries, setBreweries] = useState([])
   const [breweryFavs, setBreweryFavs] = useState([])
 
+  async function addFavsToBreweries(brew) {
+    // creates a list of all brewery_ids in Favorite breweries
+    let favs = [];
+    for(let i = 0; i < breweryFavs.length; i++){
+      if(!(breweryFavs[i]["brewery_id"] in favs)){
+        favs.push(breweryFavs[i]["brewery_id"]);
+      }
+      console.log("FAVS", favs)
+    }
+    // compares brewery id to list of brew. ids from favorites and add true or false to object depending if in list or not
+    for(let i = 0; i < brew.length; i++){
+      if(favs.includes(brew[i]["brewery_id"])){
+        brew[i]["fav"] = 1;
+      }else{
+        brew[i]["fav"] = 0;
+      }
+    }
+    setBreweries(brew);
+  };
+
   // add breweries to state
   useEffect(() => {
+
     async function getBreweryFavs() {
       const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries`
       const response = await fetch(url, { method: "GET", credentials: "include" });
@@ -26,33 +47,13 @@ function Breweries() {
         data.breweries.map((obj) => {
           return formattedData.push(obj);
         });
-        setBreweries(formattedData);
+        addFavsToBreweries(formattedData);
       }
     }
 
-    function addFavsToBreweries() {
-      // creates a list of all brewery_ids in Favorite Breweries
-      let favs = [];
-      for(let i = 0; i < breweryFavs.length; i++){
-        if(!(breweryFavs[i]["brewery_id"] in favs)){
-          favs.push(breweryFavs[i]["brewery_id"])
-        }
-      }
-      // compares brewery id to list of brew. ids from favorites and add true or false to object depending if in list or not
-      for(let i = 0; i < breweries.length; i++){
-        if(favs.includes(breweries[i]["brewery_id"])){
-          breweries[i]["fav"] = true;
-        }else{
-          breweries[i]["fav"] = false;
-        }
-      }
-      
-    };
-
     getBreweryFavs();
     getBreweries();
-    addFavsToBreweries();
-    console.log(breweries);
+    console.log("BREWERIES", breweries);
   }, []);
 
       // Convert breweries in state to brewery cards
