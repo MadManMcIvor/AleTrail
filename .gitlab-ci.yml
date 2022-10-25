@@ -4,9 +4,9 @@ stages:
   - deploy
 
 variables:
-  DATABASE_URL: ""
+  BREWERIES_BEERS_DATABASE_URL: ""
+  USERS_DATABASE_URL: ""
   SIGNING_KEY: ""
-
 
 # TEST
 breweries-and-beers-unit-test-job:
