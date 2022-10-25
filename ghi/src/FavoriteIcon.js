@@ -17,22 +17,41 @@ function FavoriteIcon(props) {
     };
 
     async function updateFav(){
-        console.log(fav)
+        const bodyData = JSON.stringify({
+            'user_id': 8,
+            'brewery_id': 1
+        })
         if(fav === 0){
             const favUrl = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries`
-            const favResponse = await fetch(favUrl, { method: "POST", credentials: "include" });
+            const favResponse = await fetch(favUrl, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: bodyData
+            });
             if (favResponse.ok) {
-                const data = await favResponse.json();
-                favData = Array.from(data);
                 setFav(1);
             };
         }else{
-            const favUrl = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries`
-            const favResponse = await fetch(favUrl, { method: "DELETE", credentials: "include" });
-            if (favResponse.ok) {
-                const data = await favResponse.json();
-                favData = Array.from(data);
-                setFav(0);
+            const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries`
+            const response = await fetch(url, { method: "GET", credentials: "include" });
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data)
+                for(let i=0; i < data.length; i++){
+                    if(data[i]["brewery_id"] == props.brewery_id){
+                        const fav_id = data[i]["brewery_favorite_id"];
+                        const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries/${fav_id}`
+                        const response = await fetch(url, { method: "DELETE", headers: {
+                            'accept': 'application/json'
+                        }});
+                        if(response.ok){
+                            setFav(0);
+                        };
+                    };
+                };
             };
         };
     };

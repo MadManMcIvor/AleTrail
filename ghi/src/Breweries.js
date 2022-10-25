@@ -8,18 +8,20 @@ function Breweries() {
   async function addFavsToBreweries(brew, favData) {
     // creates a list of all brewery_ids in Favorite breweries
     let favs = [];
+    const user_id = favData[0]["user_id"]
     for(let i = 0; i < favData.length; i++){
-      if(!(favData[i]["brewery_id"] in favs)){
+      if(!(favs.includes(favData[i]["brewery_id"]))){
         favs.push(favData[i]["brewery_id"]);
       };
-      console.log("FAVS", favs)
     };
     // compares brewery id to list of brew. ids from favorites and add true or false to object depending if in list or not
     for(let i = 0; i < brew.length; i++){
       if(favs.includes(brew[i]["brewery_id"])){
         brew[i]["fav"] = 1;
+        brew[i]["user_id"] = user_id;
       }else{
         brew[i]["fav"] = 0;
+        brew[i]["user_id"] = user_id;
       };
     };
     setBreweries(brew);
@@ -35,16 +37,19 @@ function Breweries() {
       if (favResponse.ok) {
         const data = await favResponse.json();
         favData = Array.from(data);
+        
       };
       const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/breweries`
       const response = await fetch(url);
+      let formattedData = [];
       if (response.ok) {
         const data = await response.json();
-        let formattedData = [];
         data.breweries.map((obj) => {
           return formattedData.push(obj);
         });
         addFavsToBreweries(formattedData, favData);
+        }else{
+          setBreweries(formattedData)
         };
     };
 
@@ -67,6 +72,7 @@ function Breweries() {
             description = {brewery.description}
             website = {brewery.website}
             fav = {brewery.fav}
+            user_id = {brewery.user_id}
             />
             </div>
       });

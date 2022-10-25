@@ -31,6 +31,7 @@ function BreweryCard(props) {
                 description = {props.description}
                 website = {props.website}
                 fav = {props.fav}
+                user_id = {props.user_id}
             />
         </div>
         
