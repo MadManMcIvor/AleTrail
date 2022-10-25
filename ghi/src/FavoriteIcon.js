@@ -39,7 +39,6 @@ function FavoriteIcon(props) {
             const response = await fetch(url, { method: "GET", credentials: "include" });
             if (response.ok) {
                 const data = await response.json();
-                console.log(data)
                 for(let i=0; i < data.length; i++){
                     if(data[i]["brewery_id"] == props.brewery_id){
                         const fav_id = data[i]["brewery_favorite_id"];

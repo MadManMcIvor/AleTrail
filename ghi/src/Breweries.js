@@ -49,14 +49,13 @@ function Breweries() {
         });
         addFavsToBreweries(formattedData, favData);
         }else{
-          setBreweries(formattedData)
+          setBreweries(formattedData);
         };
     };
 
     getBreweries();
   }, []);
   
-  console.log("BREWERIES", breweries);
       // Convert breweries in state to brewery cards
       let breweryCards = breweries.map(function(brewery) {
         return <div key={brewery.brewery_id}>
