@@ -1,5 +1,13 @@
 fastapi[all]==0.81.0
 uvicorn[standard]==0.17.6
-psycopg[binary,pool]==3.1.3
-jwtdown-fastapi==0.2.0
-pytest==7.2.0
+psycopg[binary,pool]==3.1.2
+jwtdown-fastapi>=0.2.0
+pytest==7.1.2
+
+
+# Previously working requirements
+# fastapi[all]==0.81.0
+# uvicorn[standard]==0.17.6
+# psycopg[binary,pool]==3.0.14
+# jwtdown-fastapi>=0.2.0
+# pytest==7.1.2
