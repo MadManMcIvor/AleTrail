@@ -71,6 +71,7 @@ function Beers() {
         image_url = {beer.image_url}
         category = {beer.category}
         vegetarian_friendly = {beer.vegetarian_friendly}
+        
         />
         </div>
   });
