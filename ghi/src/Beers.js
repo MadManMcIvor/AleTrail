@@ -24,7 +24,7 @@ function Beers() {
   }, [])
 
   let beerCards = beers.map(function(beer) {
-    return <div>
+    return <div key={beer.beer_id}>
         <BeerCard 
         beer_id = {beer.beer_id}
         name = {beer.name}
