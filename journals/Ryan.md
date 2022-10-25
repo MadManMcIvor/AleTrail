@@ -1,3 +1,13 @@
+## 10/18/22
+* Made sure everything worked properly
+* Merged with main branch today
+* Began work on implementing back end into front end
+
+## 10/17/22
+* Finally got the list view issue solved
+* Completed the rest of the back end for beers
+* One issue: I have to go into pgadmin every time and use the query tool to get the tables to populate
+
 ## 10/14/22
 * Still having issues with the list view
 * Found our logo and provided it to the team
