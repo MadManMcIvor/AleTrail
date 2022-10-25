@@ -33,7 +33,6 @@ function OurNav() {
                   <NavLink className="nav-link" to="/favorites"><h3>Favorites</h3></NavLink>
                 </Nav>
                 <Nav>
-                  <NavLink className="nav-link" to="/settings">Settings</NavLink>
                   <NavLink className="nav-link" to="/signup">Sign Up</NavLink>
                   <NavLink className="nav-link" to="/login">Login</NavLink>
                   <NavLink className="nav-link" onClick={() => setModalShow(true)}>Logout</NavLink>

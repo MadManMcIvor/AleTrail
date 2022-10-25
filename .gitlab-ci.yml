@@ -7,12 +7,30 @@ variables:
   DATABASE_URL: ""
   SIGNING_KEY: ""
 
+
+# TEST
+breweries-and-beers-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd breweries_and_beers
+    - pip install -r requirements.txt
+    - python -m pytest
+
+users_and_favorites-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd users_and_favorites 
+    - pip install -r requirements.txt
+    - python -m pytest
+
+
 ## BUILD
 build-front-end-job:
   stage: build
   image: node:lts-bullseye
   variables:
-    # PUBLIC_URL: https://dgb-galv.gitlab.io/apis-with-sql
     PUBLIC_URL: https://aletrail.gitlab.io/ale-trail-alpha
     REACT_APP_API_HOST: https://aletrail.herokuapp.com
   script:
@@ -24,17 +42,7 @@ build-front-end-job:
     paths:
       - ghi/build/
 
-breweries-and-beers-unit-test-job:
-  image: python:3-bullseye
-  stage: test
-  script:
-  - cd breweries_and_beers
-  - pip install -r requirements.txt
-  - python -m pytest
-
-build-breweries-and-beers-api-image-job:  # RENAME THIS
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+build-breweries-and-beers-api-image-job: 
   stage: build
   image: docker:20.10.16
   needs:
@@ -49,7 +57,23 @@ build-breweries-and-beers-api-image-job:  # RENAME THIS
     - docker push ${CI_REGISTRY_IMAGE}/breweries_and_beers:$CI_JOB_ID
     - docker push ${CI_REGISTRY_IMAGE}/breweries_and_beers:latest
 
-deploy-breweries-and-beers-api-image-job:  # RENAME THIS
+build-users-and-favorites-api-image-job: 
+  stage: build
+  image: docker:20.10.16
+  needs:
+    - users_and_favorites-unit-test-job
+  services:
+    - docker:20.10.16-dind
+  script:
+    - cd users_and_favorites
+    - docker build -t ${CI_REGISTRY_IMAGE}/users_and_favorites:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/users_and_favorites:latest ${CI_REGISTRY_IMAGE}/users_and_favorites:$CI_JOB_ID
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push ${CI_REGISTRY_IMAGE}/users_and_favorites:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/users_and_favorites:latest
+
+## DEPLOY
+deploy-breweries-and-beers-api-image-job:  
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: deploy
@@ -65,7 +89,23 @@ deploy-breweries-and-beers-api-image-job:  # RENAME THIS
     - docker tag ${CI_REGISTRY_IMAGE}/breweries_and_beers:latest registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
     - docker push registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
 
-release-breweries-and-beers-api-image-job:  # RENAME THIS
+deploy-users-and-favorites-api-image-job:  
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: deploy
+  image: docker:20.10.16
+  needs:
+    - build-users-and-favorites-api-image-job
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+    - docker pull ${CI_REGISTRY_IMAGE}/users_and_favorites:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/users_and_favorites:latest registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
+    - docker push registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
+
+release-breweries-and-beers-api-image-job: 
   stage: deploy
   image: node:10.17-alpine
   needs:
@@ -78,6 +118,18 @@ release-breweries-and-beers-api-image-job:  # RENAME THIS
   script:
     - heroku container:release web --app $HEROKU_FASTAPI_APP
 
+release-users-and-favorites-api-image-job: 
+  stage: deploy
+  image: node:10.17-alpine
+  needs:
+    - deploy-users-and-favorites-api-image-job
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  before_script:
+    - apk add curl bash
+    - curl https://cli-assets.heroku.com/install.sh | sh
+  script:
+    - heroku container:release web --app $HEROKU_FASTAPI_APP
 
 
 ## DEPLOY THE UI

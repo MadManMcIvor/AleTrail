@@ -1,7 +1,6 @@
 import { useState} from 'react';
-import { useToken } from './LoginToken';
+import { useToken} from './LoginToken';
 import LoginErrorModal from './LoginErrorModal';
-
 
 
   function LoginPage(){
@@ -9,7 +8,7 @@ import LoginErrorModal from './LoginErrorModal';
     const [password, setPassword] = useState('');
     const login = useToken()[1];
     const [modalShow, setModalShow] = useState(false);
-
+    const [hidePassword, setHidePassword] = useState(false);
 
 
     const handleSubmit = async (e) => {
@@ -22,6 +21,12 @@ import LoginErrorModal from './LoginErrorModal';
         setModalShow(true);
       }
       }
+
+      const toggleBtn = (e) => {
+          e.preventDefault();
+          setHidePassword(prevState => !prevState);
+      }
+
 
     return( 
         <>
@@ -40,8 +45,12 @@ import LoginErrorModal from './LoginErrorModal';
                             </div>               
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">Password</label>
-                                <input value = {password} onChange={ e => setPassword(e.target.value)} required type="text" className="form-control" id="password" placeholder="password" />
-                            </div>             
+                                <input value = {password} onChange={ e => setPassword(e.target.value)} required type={hidePassword ? "text" : "password"} className="form-control" id="password" placeholder="password" />
+                            </div> 
+                            <button className="btn" onClick = {(e) => toggleBtn(e)}>
+                              {hidePassword ? "Hide password" : "View password"
+                              }
+                            </button>         
                             <button type="submit" className="btn btn-primary">Login</button>
                         </form>
                     </div>
