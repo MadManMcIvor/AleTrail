@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from authenticator import authenticator
-from routers import users
+from users_and_favorites.routers import users
 from fastapi.middleware.cors import CORSMiddleware
 
 
