@@ -4,7 +4,6 @@ import OurNav from './Nav';
 import Breweries from './Breweries';
 import Beers from './Beers';
 import Favorites from './Favorites';
-import Settings from './Settings';
 import SignupForm from './Signup';
 import LoginPage from './Login';
 import { AuthProvider, useToken } from './LoginToken';
@@ -39,9 +38,6 @@ function App() {
                   <Favorites/>
                 </PrivateRoute>
                 } />
-            </Route>
-            <Route path="settings" >
-              <Route path="" element={<Settings/>} />
             </Route>
             <Route path="signup" element={<SignupForm />} /> 
             <Route path="login" element={<LoginPage />} />
