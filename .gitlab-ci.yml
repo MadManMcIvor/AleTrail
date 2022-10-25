@@ -1,5 +1,5 @@
 stages:
-  # - test
+  - test
   - build
   - deploy
 
@@ -8,22 +8,22 @@ variables:
   SIGNING_KEY: ""
 
 
-## TEST
-# breweries-and-beers-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   script:
-#     - cd breweries_and_beers
-#     - pip install -r requirements.txt
-#     - python -m pytest
+# TEST
+breweries-and-beers-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd breweries_and_beers
+    - pip install -r requirements.txt
+    - python -m pytest
 
-# users_and_favorites-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   script:
-#     - cd users_and_favorites 
-#     - pip install -r requirements.txt
-#     - python -m pytest
+users_and_favorites-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd users_and_favorites 
+    - pip install -r requirements.txt
+    - python -m pytest
 
 
 ## BUILD
@@ -47,8 +47,8 @@ build-breweries-and-beers-api-image-job:
   #   - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: build
   image: docker:20.10.16
-  # needs:
-  #   - breweries-and-beers-unit-test-job
+  needs:
+    - breweries-and-beers-unit-test-job
   services:
     - docker:20.10.16-dind
   script:
@@ -64,8 +64,8 @@ build-users-and-favorites-api-image-job:
   #   - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: build
   image: docker:20.10.16
-  # needs:
-  #   - users_and_favorites-unit-test-job
+  needs:
+    - users_and_favorites-unit-test-job
   services:
     - docker:20.10.16-dind
   script:
