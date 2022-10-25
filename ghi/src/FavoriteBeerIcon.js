@@ -41,7 +41,7 @@ function FavoriteIcon(props) {
                 const data = await response.json();
                 for(let i=0; i < data.length; i++){
                     if(data[i]["beer_id"] === props.beer_id){
-                        const fav_id = data[i]["brewery_favorite_id"];
+                        const fav_id = data[i]["beer_favorite_id"];
                         const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/beers/${fav_id}`
                         const response = await fetch(url, { method: "DELETE", headers: {
                             'accept': 'application/json'

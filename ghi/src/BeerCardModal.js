@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image';
-import FavoriteIcon from './FavoriteIcon';
+import FavoriteBeerIcon from './FavoriteBeerIcon';
 
 function BeerCardModal(props) {
   return (
@@ -26,8 +26,10 @@ function BeerCardModal(props) {
         <h5>Abv: {props.abv}</h5>
       </Modal.Body>
       <Modal.Footer>
-        <FavoriteIcon fav = {props.fav}
-        user_id = {props.user_id} />
+        <FavoriteBeerIcon 
+        fav = {props.fav}
+        user_id = {props.user_id} 
+        beer_id = {props.beer_id}/>
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
