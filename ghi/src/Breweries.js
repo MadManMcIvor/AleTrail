@@ -7,25 +7,30 @@ function Breweries() {
 
   async function addFavsToBreweries(brew, favData) {
     // creates a list of all brewery_ids in Favorite breweries
-    let favs = [];
-    const user_id = favData[0]["user_id"]
-    for(let i = 0; i < favData.length; i++){
-      if(!(favs.includes(favData[i]["brewery_id"]))){
-        favs.push(favData[i]["brewery_id"]);
+    if(favData.length > 0){
+      let favs = [];
+      const user_id = favData[0]["user_id"]
+      for(let i = 0; i < favData.length; i++){
+        if(!(favs.includes(favData[i]["brewery_id"]))){
+          favs.push(favData[i]["brewery_id"]);
+        };
       };
-    };
-    // compares brewery id to list of brew. ids from favorites and add true or false to object depending if in list or not
-    for(let i = 0; i < brew.length; i++){
-      if(favs.includes(brew[i]["brewery_id"])){
-        brew[i]["fav"] = 1;
-        brew[i]["user_id"] = user_id;
-      }else{
-        brew[i]["fav"] = 0;
-        brew[i]["user_id"] = user_id;
+      // compares brewery id to list of brew. ids from favorites and add true or false to object depending if in list or not
+      for(let i = 0; i < brew.length; i++){
+        if(favs.includes(brew[i]["brewery_id"])){
+          brew[i]["fav"] = 1;
+          brew[i]["user_id"] = user_id;
+        }else{
+          brew[i]["fav"] = 0;
+          brew[i]["user_id"] = user_id;
+        };
       };
+      setBreweries(brew);
+    }else{
+      setBreweries(brew);
     };
-    setBreweries(brew);
   };
+    
 
   // add breweries to state
   useEffect(() => {
