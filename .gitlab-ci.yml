@@ -43,8 +43,8 @@ build-front-end-job:
       - ghi/build/
 
 build-breweries-and-beers-api-image-job: 
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  # rules:
+  #   - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: build
   image: docker:20.10.16
   # needs:
@@ -60,8 +60,8 @@ build-breweries-and-beers-api-image-job:
     - docker push ${CI_REGISTRY_IMAGE}/breweries_and_beers:latest
 
 build-users-and-favorites-api-image-job: 
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  # rules:
+  #   - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   stage: build
   image: docker:20.10.16
   # needs:
