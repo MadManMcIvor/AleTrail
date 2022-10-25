@@ -28,8 +28,8 @@ function BeerCard(props) {
            description = {props.description}
            ibu = {props.ibu}
            abv = {props.abv}
-           fav = {beer.fav}
-           user_id = {beer.user_id}
+           fav = {props.fav}
+           user_id = {props.user_id}
         />
       </>
     );
