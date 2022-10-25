@@ -1,5 +1,5 @@
 stages:
-  - test
+  # - test
   - build
   - deploy
 
@@ -9,21 +9,21 @@ variables:
 
 
 ## TEST
-breweries-and-beers-unit-test-job:
-  image: python:3-bullseye
-  stage: test
-  script:
-    - cd breweries_and_beers
-    - pip install -r requirements.txt
-    - python -m pytest
+# breweries-and-beers-unit-test-job:
+#   image: python:3-bullseye
+#   stage: test
+#   script:
+#     - cd breweries_and_beers
+#     - pip install -r requirements.txt
+#     - python -m pytest
 
-users_and_favorites-unit-test-job:
-  image: python:3-bullseye
-  stage: test
-  script:
-    - cd users_and_favorites 
-    - pip install -r requirements.txt
-    - python -m pytest
+# users_and_favorites-unit-test-job:
+#   image: python:3-bullseye
+#   stage: test
+#   script:
+#     - cd users_and_favorites 
+#     - pip install -r requirements.txt
+#     - python -m pytest
 
 
 ## BUILD
