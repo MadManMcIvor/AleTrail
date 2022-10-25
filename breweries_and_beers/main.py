@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from breweries import breweries
+import breweries
 from favorites import favorites_router
 from fastapi.middleware.cors import CORSMiddleware
-from beers import beers
+import beers
 
 app = FastAPI()
 
