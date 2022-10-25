@@ -19,7 +19,7 @@ function FavoriteIcon(props) {
     async function updateFav(){
         const bodyData = JSON.stringify({
             'user_id': props.user_id,
-            'brewery_id': props.beer_id
+            'beer_id': props.beer_id
         })
         if(fav === 0){
             const favUrl = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/beers`

@@ -5,19 +5,19 @@ import React, { useEffect, useState } from 'react';
 function Beers() {
     const [beers, setBeers] = useState([])
 
-    async function addFavsToBreweries(brew, favData) {
+    async function addFavsToBeers(brew, favData) {
       // creates a list of all brewery_ids in Favorite breweries
       if(favData.length > 0){
         let favs = [];
         const user_id = favData[0]["user_id"]
         for(let i = 0; i < favData.length; i++){
-          if(!(favs.includes(favData[i]["brewery_id"]))){
-            favs.push(favData[i]["brewery_id"]);
+          if(!(favs.includes(favData[i]["beer_id"]))){
+            favs.push(favData[i]["beer_id"]);
           };
         };
         // compares brewery id to list of brew. ids from favorites and add true or false to object depending if in list or not
         for(let i = 0; i < brew.length; i++){
-          if(favs.includes(brew[i]["brewery_id"])){
+          if(favs.includes(brew[i]["beer_id"])){
             brew[i]["fav"] = 1;
             brew[i]["user_id"] = user_id;
           }else{
@@ -49,7 +49,7 @@ function Beers() {
         data.beers.map((obj) => {
           return formattedData.push(obj);
         });
-        addFavsToBreweries(formattedData, favData);
+        addFavsToBeers(formattedData, favData);
       }else{
         setBeers(formattedData);
       };
@@ -71,7 +71,9 @@ function Beers() {
         image_url = {beer.image_url}
         category = {beer.category}
         vegetarian_friendly = {beer.vegetarian_friendly}
-        
+        fav = {beer.fav}
+        user_id = {beer.user_id}
+
         />
         </div>
   });

@@ -26,7 +26,8 @@ function BeerCardModal(props) {
         <h5>Abv: {props.abv}</h5>
       </Modal.Body>
       <Modal.Footer>
-        <FavoriteIcon true></FavoriteIcon>
+        <FavoriteIcon fav = {beer.fav}
+        user_id = {beer.user_id} />
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
