@@ -26,7 +26,9 @@ function BreweryCardModal(props) {
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <FavoriteIcon></FavoriteIcon>
+        <FavoriteIcon fav={props.fav}
+        brewery_id={props.brewery_id}
+        user_id = {props.user_id} />
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>

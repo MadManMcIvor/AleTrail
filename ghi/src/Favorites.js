@@ -5,36 +5,44 @@ import BreweryCard from './BreweryCard';
 import React, { useEffect, useState } from 'react';
 
 function Favorites() {
-    const [breweries, setBreweries] = useState([])
-
-    let beers = [
-        {beer_id: 1, name:'Batman Stout', desciption: 'A stout as dark as the dark knight himself!', type: 'Stout', ibu: 70, abv: 5.11, brewery: 1, image_url: 'https://images.pexels.com/photos/5659755/pexels-photo-5659755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
-        {beer_id: 2, name:'805 Pale Ale', desciption: 'Our flagship beer, perfectly balanced mix of malty and hoppy', type: 'Pale Ale', ibu: 80, abv: 5.21, brewery: 1, image_url: 'https://images.pexels.com/photos/5530264/pexels-photo-5530264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
-        {beer_id: 3, name:'Orange Dream Sour', desciption: 'A farmhouse sour with hints of local oranges', type: 'Sour', ibu: 19, abv: 6.50, brewery: 1, image_url: 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
-        {beer_id: 4, name:'Batman Stout', desciption: 'A stout as dark as the dark knight himself!', type: 'Stout', ibu: 70, abv: 5.11, brewery: 2, image_url: 'https://images.pexels.com/photos/5659755/pexels-photo-5659755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
-        {beer_id: 5, name:'805 Pale Ale', desciption: 'Our flagship beer, perfectly balanced mix of malty and hoppy', type: 'Pale Ale', ibu: 80, abv: 5.21, brewery: 2, image_url: 'https://images.pexels.com/photos/5530264/pexels-photo-5530264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
-        {beer_id: 6, name:'Orange Dream Sour', desciption: 'A farmhouse sour with hints of local oranges', type: 'Sour', ibu: 19, abv: 6.50, brewery: 2, image_url: 'https://images.pexels.com/photos/1269025/pexels-photo-1269025.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
-    ]
+    const [breweries, setBreweries] = useState([]);
+    const [beers, setBeers] = useState([]);
 
     useEffect(() => {
-        async function getBreweries() {
-          const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/breweries`
-          const response = await fetch(url);
-          if (response.ok) {
-            const data = await response.json();
-            let formattedData = [];
-            data.breweries.map((obj) => {
-              return formattedData.push(obj);
-            });
-            setBreweries(formattedData);
-          }
+      async function getBreweries() {
+        const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries`
+        const response = await fetch(url, { method: "GET", credentials: "include" });
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data)
+          let formattedData = [];
+          data.map((obj) => {
+            return formattedData.push(obj);
+          });
+          setBreweries(formattedData);
         }
+      }
+
+        async function getBeers() {
+            const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/beers`
+            const response = await fetch(url, { method: "GET", credentials: "include" });
+            if (response.ok) {
+              const data = await response.json();
+              let formattedData = [];
+              data.map((obj) => {
+                return formattedData.push(obj);
+              });
+              setBeers(formattedData);
+            }
+          }     
+
+        getBeers();
         getBreweries();
       }, [])
 
     // Convert array to JSX items
-    beers = beers.map(function(beer) {
-        return <div>
+    let beerCards = beers.map(function(beer) {
+        return <div key={beer.beer_id}>
             <BeerCard 
             beer_id = {beer.beer_id}
             name = {beer.name}
@@ -47,7 +55,7 @@ function Favorites() {
     });
 
     let breweryCards = breweries.map(function(brewery) {
-        return <div>
+        return <div key={brewery.brewery_id}>
             <BreweryCard
             brewery_id = {brewery.brewery_id}
             name = {brewery.name}
@@ -59,6 +67,8 @@ function Favorites() {
             image_url = {brewery.image_url}
             description = {brewery.description}
             website = {brewery.website}
+            fav = {brewery.fav}
+            user_id = {brewery.user_id}
             />
             </div>
       });
@@ -103,7 +113,7 @@ function Favorites() {
                 dotListClass="custom-dot-list-style"
                 itemClass="carousel-item-padding-40-px"
                 >
-                {beers}
+                {beerCards}
                 </Carousel>
             </div>
             <h1>Favorites Breweries!</h1>
