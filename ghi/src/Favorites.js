@@ -8,20 +8,51 @@ function Favorites() {
     const [breweries, setBreweries] = useState([]);
     const [beers, setBeers] = useState([]);
 
+    async function addFavsToBreweries(brew, favData) {
+      // creates a list of all brewery_ids in Favorite breweries
+      let favs = [];
+      const user_id = favData[0]["user_id"]
+      for(let i = 0; i < favData.length; i++){
+        if(!(favs.includes(favData[i]["brewery_id"]))){
+          favs.push(favData[i]["brewery_id"]);
+        };
+      };
+      // compares brewery id to list of brew. ids from favorites and add true or false to object depending if in list or not
+      for(let i = 0; i < brew.length; i++){
+        if(favs.includes(brew[i]["brewery_id"])){
+          brew[i]["fav"] = 1;
+          brew[i]["user_id"] = user_id;
+        }else{
+          brew[i]["fav"] = 0;
+          brew[i]["user_id"] = user_id;
+        };
+      };
+      setBreweries(brew);
+    };
+
     useEffect(() => {
-        async function getBreweries() {
-          const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries`
-          const response = await fetch(url, { method: "GET", credentials: "include" });
-          if (response.ok) {
-            const data = await response.json();
-            console.log(data)
-            let formattedData = [];
-            data.map((obj) => {
-              return formattedData.push(obj);
-            });
-            setBreweries(formattedData);
-          }
-        }
+      async function getBreweries() {
+        let favData = [];
+        const favUrl = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries`
+        const favResponse = await fetch(favUrl, { method: "GET", credentials: "include" });
+        if (favResponse.ok) {
+          const data = await favResponse.json();
+          favData = Array.from(data);
+          
+        };
+        const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/breweries`
+        const response = await fetch(url);
+        let formattedData = [];
+        if (response.ok) {
+          const data = await response.json();
+          data.breweries.map((obj) => {
+            return formattedData.push(obj);
+          });
+          addFavsToBreweries(formattedData, favData);
+          }else{
+            setBreweries(formattedData)
+          };
+      };
 
         async function getBeers() {
             const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/beers`
@@ -42,7 +73,7 @@ function Favorites() {
 
     // Convert array to JSX items
     let beerCards = beers.map(function(beer) {
-        return <div>
+        return <div key={beer.beer_id}>
             <BeerCard 
             beer_id = {beer.beer_id}
             name = {beer.name}
@@ -55,7 +86,7 @@ function Favorites() {
     });
 
     let breweryCards = breweries.map(function(brewery) {
-        return <div>
+        return <div key={brewery.brewery_id}>
             <BreweryCard
             brewery_id = {brewery.brewery_id}
             name = {brewery.name}
