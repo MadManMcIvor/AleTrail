@@ -10,7 +10,7 @@ variables:
 
 # TEST
 breweries-and-beers-unit-test-job:
-  image: python:3-alpine
+  image: python:3-bullseye
   stage: test
   script:
     - cd breweries_and_beers
@@ -18,7 +18,7 @@ breweries-and-beers-unit-test-job:
     - python -m pytest
 
 users_and_favorites-unit-test-job:
-  image: python:3-alpine
+  image: python:3-bullseye
   stage: test
   script:
     - cd users_and_favorites 
