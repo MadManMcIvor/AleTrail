@@ -1,3 +1,6 @@
+## 10/24/22
+Merged user test into main. Merged hide and view password function in login page into main. Worked with Alex and made changes to docker-compose.yaml file. 
+
 ## 10/20/22 
 Today I continued working on unit test. I'm able to get the tests to pass locally, but the tests won't pass on gitlab because the database is not set up on the actual site yet. 
 
