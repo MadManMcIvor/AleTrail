@@ -25,7 +25,7 @@ services:
     volumes:
       - ./breweries_and_beers:/app
     environment:
-      BREWERIES_BEERS_DATABASE_URL: postgresql://breweries_and_beers:password@postgres/breweries_and_beers
+      DATABASE_URL: postgresql://breweries_and_beers:password@postgres/breweries_and_beers
       WAIT_HOSTS: postgres:5432 
       SIGNING_KEY: ${SIGNING_KEY}
 
@@ -38,7 +38,7 @@ services:
     volumes:
       - ./users_and_favorites:/app
     environment:
-      USERS_DATABASE_URL: postgresql://users_and_favorites:password@postgres/users_and_favorites
+      DATABASE_URL: postgresql://users_and_favorites:password@postgres/users_and_favorites
       WAIT_HOSTS: postgres:5432 
       SIGNING_KEY: ${SIGNING_KEY}
     

@@ -1,3 +1,12 @@
+## 10/25/22 
+* Had a bug arise that was really odd. The same code that was passing test yesterday wasn’t passing today. After a few hours of troubleshooting we figure it out. We needed to remove the ‘binary’ from the pyscopg requirements.
+* Worked on deployment the rest of the day
+
+## 10/24/22 
+* Helped Justin on a frontend issue. He was having trouble trying to get the favorites to register on the breweries page so that they’d show a star that’d be lit up. Worked on that for about an hour or so before he got it working. 
+
+* Then I worked with Julie on cleaning up the project a bit and working on gitlab CI stuff. We got the deployment mostly working, I think. Or at least the pipelines didn’t break. We still need to add data via beekeeper directly to the data base.
+
 ## 10/21/22
 * got my unit test working.
 

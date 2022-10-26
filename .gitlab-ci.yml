@@ -4,8 +4,7 @@ stages:
   - deploy
 
 variables:
-  BREWERIES_BEERS_DATABASE_URL: ""
-  USERS_DATABASE_URL: ""
+  DATABASE_URL: ""
   SIGNING_KEY: ""
 
 # TEST
@@ -32,7 +31,8 @@ build-front-end-job:
   image: node:lts-bullseye
   variables:
     PUBLIC_URL: https://aletrail.gitlab.io/ale-trail-alpha
-    REACT_APP_API_HOST: https://aletrail.herokuapp.com
+    REACT_APP_BREWERIES_AND_BEERS_API_HOST: https://aletrail.herokuapp.com
+    REACT_APP_USERS_AND_FAVORITES_API_HOST: https://aletrail-users-api.herokuapp.com
   script:
     - cd ghi
     - npm install
@@ -100,10 +100,10 @@ deploy-users-and-favorites-api-image-job:
     - docker:20.10.16-dind
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+    - docker login --username=_ --password=$HEROKU_API_KEY_USERS registry.heroku.com
     - docker pull ${CI_REGISTRY_IMAGE}/users_and_favorites:latest
-    - docker tag ${CI_REGISTRY_IMAGE}/users_and_favorites:latest registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
-    - docker push registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/users_and_favorites:latest registry.heroku.com/$HEROKU_FASTAPI_APP_USERS_API/web:latest
+    - docker push registry.heroku.com/$HEROKU_FASTAPI_APP_USERS_API/web:latest
 
 release-breweries-and-beers-api-image-job: 
   stage: deploy
@@ -129,7 +129,8 @@ release-users-and-favorites-api-image-job:
     - apk add curl bash
     - curl https://cli-assets.heroku.com/install.sh | sh
   script:
-    - heroku container:release web --app $HEROKU_FASTAPI_APP
+    - heroku container:release web --app $HEROKU_FASTAPI_APP_USERS_API
+
 
 
 ## DEPLOY THE UI
