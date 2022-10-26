@@ -1,3 +1,6 @@
+## 10/25/22
+This morning we ran into to some issue with our pipeline on gitlab. It was fine the previous day, but suddenly stopped working. We only caught the problem when another team member merge main to their branch. It was an error with psycopg and in the end we had to delete “binary” from it for the pipeline to work again. We worked on heroku deployment and ran into some blockers. After class, I worked on touching up wireframe.
+
 ## 10/24/22
 Merged user test into main. Merged hide and view password function in login page into main. Worked with Alex and made changes to docker-compose.yaml file. 
 

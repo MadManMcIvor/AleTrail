@@ -18,7 +18,7 @@ function SignupForm(){
         const data = {  'first': first,
                         'last': last,
                         'profile_pic': '',
-                        'email': email,
+                        'email': email.toLowerCase(),
                         'username': username,
                         'password': password };
         const signupUrl = `${process.env.REACT_APP_USERS_AND_FAVORITES_API_HOST}/users`
