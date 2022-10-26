@@ -1,7 +1,7 @@
 import os
 from psycopg_pool import ConnectionPool
 
-pool = ConnectionPool(conninfo=os.environ["BREWERIES_BEERS_DATABASE_URL"])
+pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 class BreweryQueries:
     def get_breweries(self):
