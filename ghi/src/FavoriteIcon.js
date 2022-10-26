@@ -7,11 +7,11 @@ function FavoriteIcon(props) {
     function RenderStar () {
         if(fav === 0){
             return (
-                <img src="/empty-star-icon.png" alt="Not a favorite"width="50"></img>
+                <img src={require('./images/empty-star-icon.png')} alt="Not a favorite"width="50"></img>
             );
         }else{
             return(
-                <img src="/star-icon.png" alt="Is a favorite" width="50"></img>
+                <img src={require('./images/star-icon.png')} alt="Is a favorite" width="50"></img>
             );
         };
     };
