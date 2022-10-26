@@ -4,11 +4,14 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import LogoutModal from './LogoutModal';
 import { useState } from 'react';
+import { useToken } from './LoginToken';
 
 
 
 function OurNav() {
   const [modalShow, setModalShow] = useState(false);
+  const [token] = useToken()
+
 
   return (
     <>
@@ -30,12 +33,12 @@ function OurNav() {
                 <Nav className="me-auto">
                   <NavLink className="nav-link" to="/breweries"><h3>Breweries</h3></NavLink>
                   <NavLink className="nav-link" to="/beers"><h3>Beers</h3></NavLink>
-                  <NavLink className="nav-link" to="/favorites"><h3>Favorites</h3></NavLink>
+                  <NavLink className={token ? 'nav-link' : 'd-none'}  to="/favorites"><h3>Favorites</h3></NavLink>
                 </Nav>
                 <Nav>
-                  <NavLink className="nav-link" to="/signup">Sign Up</NavLink>
-                  <NavLink className="nav-link" to="/login">Login</NavLink>
-                  <NavLink className="nav-link" onClick={() => setModalShow(true)}>Logout</NavLink>
+                  <NavLink className={token ? 'd-none' : 'nav-link'} to="/signup">Sign Up</NavLink>
+                  <NavLink className={token ? 'd-none' : 'nav-link'} to="/login">Login</NavLink>
+                  <NavLink className={token ? 'nav-link' : 'd-none'} onClick={() => setModalShow(true)}>Logout</NavLink>
                 </Nav>
             </Navbar.Collapse>
           </Container>
