@@ -14,7 +14,6 @@ function Favorites() {
         const response = await fetch(url, { method: "GET", credentials: "include" });
         if (response.ok) {
           const data = await response.json();
-          console.log(data)
           let formattedData = [];
           data.map((obj) => {
             return formattedData.push(obj);
