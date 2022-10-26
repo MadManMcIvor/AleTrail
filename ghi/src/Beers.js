@@ -69,8 +69,6 @@ function Beers() {
           return formattedData.push(obj);
         });
         addFavsToBeers(formattedData, favData);
-      }else{
-        setBeers(formattedData);
       };
     };
 

@@ -71,7 +71,7 @@ function Breweries() {
           return formattedData.push(obj);
         });
         addFavsToBreweries(formattedData, favData);
-        };
+      };
     };
     getBreweries();
   }, []);
