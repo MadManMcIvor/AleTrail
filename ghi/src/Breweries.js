@@ -1,9 +1,11 @@
 import Masonry from 'react-masonry-css'
 import BreweryCard from './BreweryCard';
 import React, { useEffect, useState } from 'react';
+import { useToken } from './LoginToken';
 
 function Breweries() {
   const [breweries, setBreweries] = useState([])
+  const [token] = useToken()
 
   async function addFavsToBreweries(brew, favData) {
     // creates a list of all brewery_ids in Favorite breweries
@@ -43,6 +45,8 @@ function Breweries() {
         const data = await favResponse.json();
         favData = Array.from(data);
         
+      }else{
+
       };
       const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/breweries`
       const response = await fetch(url);
@@ -90,16 +94,20 @@ function Breweries() {
       };
 
       return (
-        <div>
+        <>
+          <div className={token ? 'd-none' : 'alert alert-warning'} role="alert">
+            Please log-in to favorite breweries
+          </div>
+          <div>
             <h1 className="display-1">Breweries!</h1>
             <Masonry
                 breakpointCols={breakpointColumnsObj}
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column">
-               {breweryCards}
+              {breweryCards}
             </Masonry>
-        </div>
-        
+          </div>
+        </>
     )
 }
 

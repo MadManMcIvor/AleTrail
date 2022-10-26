@@ -1,9 +1,11 @@
 import Masonry from 'react-masonry-css'
 import BeerCard from './BeerCard';
 import React, { useEffect, useState } from 'react';
+import { useToken } from './LoginToken';
 
 function Beers() {
     const [beers, setBeers] = useState([])
+    const [token] = useToken()
 
     async function addFavsToBeers(brew, favData) {
       // creates a list of all brewery_ids in Favorite breweries
@@ -86,16 +88,20 @@ function Beers() {
   };
     
     return (
-      <div>
-          <h1 className="display-1">Beers!</h1>
-          <Masonry
-              breakpointCols={breakpointColumnsObj}
-              className="my-masonry-grid"
-              columnClassName="my-masonry-grid_column">
-             {beerCards}
-          </Masonry>
-      </div>
-      
+      <>
+        <div className={token ? 'd-none' : 'alert alert-warning'} role="alert">
+            Please log-in to favorite beers
+        </div>
+        <div>
+            <h1 className="display-1">Beers!</h1>
+            <Masonry
+                breakpointCols={breakpointColumnsObj}
+                className="my-masonry-grid"
+                columnClassName="my-masonry-grid_column">
+              {beerCards}
+            </Masonry>
+        </div>
+      </>
   )
 }
 export default Beers;
