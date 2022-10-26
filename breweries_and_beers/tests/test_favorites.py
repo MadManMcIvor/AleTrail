@@ -9,6 +9,8 @@ sys.path.append(abs_dir)
 
 from main import app
 from favorites.favorites_queries import BreweryFavoritesRepository
+from authenticator import authenticator
+
 
 client = TestClient(app)
 
@@ -31,3 +33,49 @@ def test_get_breweries_favorites_invalid_token():
     assert response.json() == invalid_token_response
 
     app.dependency_overrides = {}
+
+
+class MockBreweryFavoritesQueries:
+  def get_all(self, user_id):
+      return [brewery_favorite]
+
+brewery_favorite =  {
+    "brewery_favorite_id": 0,
+    "user_id": 0,
+    "brewery_id": 0,
+    "name": "string",
+    "street": "string",
+    "city": "string",
+    "state": "string",
+    "zip_code": 0,
+    "phone": "string",
+    "image_url": "string",
+    "description": "string",
+    "website": "string"
+  }
+
+
+mock_user = {
+  "id": 0,
+  "first": "string",
+  "last": "string",
+  "profile_pic": "string",
+  "email": "string",
+  "username": "string"
+}
+
+def account_override():
+    return mock_user
+
+
+def test_get_breweries_favorites_by_user():
+  app.dependency_overrides[BreweryFavoritesRepository] = MockBreweryFavoritesQueries
+  app.dependency_overrides[authenticator.try_get_current_account_data] = account_override
+
+  response = client.get('/favorites/breweries')
+
+  assert response.status_code == 200
+  assert response.json() == [brewery_favorite]
+
+  app.dependency_overrides = {}
+
