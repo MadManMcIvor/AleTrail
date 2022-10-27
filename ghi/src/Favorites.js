@@ -27,7 +27,7 @@ function Favorites() {
 
         async function getBeers() {
             const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/beers`
-            const response = await fetch(url, { method: "GET", credentials: "include" });
+            const response = await fetch(url, { method: "GET", headers: { Authorization: `Bearer ${token}` }});
             if (response.ok) {
               const data = await response.json();
               let formattedData = [];
