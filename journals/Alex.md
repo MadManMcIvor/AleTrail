@@ -1,3 +1,14 @@
+## 10/27/22
+* Justin, Julie, and I worked with Andrew to help figure out the issue on the frontend authentication. We figured it out finally. It was an error with the token since it was coming from a different domain. We had to switch the fetch from including credentials to using headers bearer token.
+* Worked as a group on the readme and cleaning up the project.
+
+## 10/26/22
+* Made a separate Heroku app for the users. Linked up everything on the gitlab ci yml file and made all the necessary corrections. Got it deployed successfully!!!!!! 
+
+* I tweaked some of the seed data so it’s looks better on the website. Also, added the data to our Heroku’s data base so it created the tables and has data there.
+
+* Julie, Justin, and I worked on a bug for the rest of the day. The favoriting is having authentication issues on the deployed site, but not locally and we can’t figure it out!
+
 ## 10/25/22 
 * Had a bug arise that was really odd. The same code that was passing test yesterday wasn’t passing today. After a few hours of troubleshooting we figure it out. We needed to remove the ‘binary’ from the pyscopg requirements.
 * Worked on deployment the rest of the day

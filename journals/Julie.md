@@ -1,3 +1,6 @@
+## 10/27/22 
+This morning we worked on getting the frontend authentication to work on the deployed site. We're working on readme file. 
+
 ## 10/26/22
 Today we continued to get our application deployed on heroku. We ran into authentication issue. I made change to the signup/login so that it converts the email to lowercase. I had to correct my unit test and I worked on updating readme. 
 

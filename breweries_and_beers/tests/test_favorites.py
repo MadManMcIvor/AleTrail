@@ -27,7 +27,6 @@ def test_get_breweries_favorites_invalid_token():
     app.dependency_overrides[BreweryFavoritesRepository] = MockInvalidTokenBreweryFavoritesQueries
 
     response = client.get('/favorites/breweries')
-    print(response)
 
     assert response.status_code == 401
     assert response.json() == invalid_token_response
