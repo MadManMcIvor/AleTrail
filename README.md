@@ -8,6 +8,7 @@ A single-page application for finding local breweries and beers.
 - [AleTrail](#aletrail)
   - [Table of Contents](#table-of-contents)
   - [Members](#members)
+  - [MVP](#mvp)
   - [Deployed application](#deployed-application)
   - [Intended market](#intended-market)
   - [Functionality](#functionality)
@@ -26,6 +27,13 @@ A single-page application for finding local breweries and beers.
 
 ---
 
+## MVP
+* Authentication
+* Brewery list page w/ detail card
+* Beer list page w/ detail cards
+* Favorites page to view saved breweries and beers
+
+---
 ## Deployed application 
 Website: https://aletrail.gitlab.io/ale-trail-alpha/
 
