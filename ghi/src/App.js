@@ -21,33 +21,33 @@ function GetToken() {
 
 function App() {
   return (
-   
+
     <BrowserRouter basename={basename}>
       <AuthProvider>
-      <GetToken />
-          <OurNav />
-          <div className="container">
-            <Routes>
-            <Route path="/" element={<Breweries/>} />
+        <GetToken />
+        <OurNav />
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<Breweries />} />
             <Route path="breweries" >
-              <Route path="" element={<Breweries/>} />
+              <Route path="" element={<Breweries />} />
             </Route>
             <Route path="beers" >
-              <Route path="" element={<Beers/>} />
+              <Route path="" element={<Beers />} />
             </Route>
             <Route path="favorites" >
               <Route path="" element={
                 <PrivateRoute>
-                  <Favorites/>
+                  <Favorites />
                 </PrivateRoute>
-                } />
+              } />
             </Route>
-            <Route path="signup" element={<SignupForm />} /> 
+            <Route path="signup" element={<SignupForm />} />
             <Route path="login" element={<LoginPage />} />
-            </Routes>
-          </div>
-          </AuthProvider>
-      </BrowserRouter>
+          </Routes>
+        </div>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

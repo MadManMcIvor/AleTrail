@@ -4,14 +4,14 @@ import Modal from 'react-bootstrap/Modal';
 function SignupErrorModal(props) {
   return (
     <Modal
-    {...props}
+      {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-        <h1>Error</h1>
+          <h1>Error</h1>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

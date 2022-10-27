@@ -14,21 +14,21 @@ function BreweryCardModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-        <h1>{props.name}</h1>
+          <h1>{props.name}</h1>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Image fluid={true} src={props.image_url}/>
+        <Image fluid={true} src={props.image_url} />
         <h4>Address: {props.street}, {props.city}, {props.state} {props.zip_code}</h4>
         <h4>Description</h4>
         <p>
-            {props.description}
+          {props.description}
         </p>
       </Modal.Body>
       <Modal.Footer>
         <FavoriteIcon fav={props.fav}
-        brewery_id={props.brewery_id}
-        user_id = {props.user_id} />
+          brewery_id={props.brewery_id}
+          user_id={props.user_id} />
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>

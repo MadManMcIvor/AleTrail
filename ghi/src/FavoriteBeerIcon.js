@@ -5,24 +5,24 @@ function FavoriteIcon(props) {
     const [token] = useToken()
     const [fav, setFav] = useState(props.fav);
 
-    function RenderStar () {
-        if(fav === 0){
+    function RenderStar() {
+        if (fav === 0) {
             return (
-                <img src={require('./images/empty-star-icon.png')} alt="Not a favorite"width="50"></img>
+                <img src={require('./images/empty-star-icon.png')} alt="Not a favorite" width="50"></img>
             );
-        }else{
-            return(
+        } else {
+            return (
                 <img src={require('./images/star-icon.png')} alt="Is a favorite" width="50"></img>
             );
         };
     };
 
-    async function updateFav(){
+    async function updateFav() {
         const bodyData = JSON.stringify({
             'user_id': props.user_id,
             'beer_id': props.beer_id
         })
-        if(fav === 0){
+        if (fav === 0) {
             const favUrl = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/beers`
             const favResponse = await fetch(favUrl, {
                 method: 'POST',
@@ -35,19 +35,21 @@ function FavoriteIcon(props) {
             if (favResponse.ok) {
                 setFav(1);
             };
-        }else{
+        } else {
             const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/beers`
-            const response = await fetch(url, { method: "GET", headers: { Authorization: `Bearer ${token}` }});
+            const response = await fetch(url, { method: "GET", headers: { Authorization: `Bearer ${token}` } });
             if (response.ok) {
                 const data = await response.json();
-                for(let i=0; i < data.length; i++){
-                    if(data[i]["beer_id"] === props.beer_id){
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i]["beer_id"] === props.beer_id) {
                         const fav_id = data[i]["beer_favorite_id"];
                         const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/beers/${fav_id}`
-                        const response = await fetch(url, { method: "DELETE", headers: {
-                            'accept': 'application/json'
-                        }});
-                        if(response.ok){
+                        const response = await fetch(url, {
+                            method: "DELETE", headers: {
+                                'accept': 'application/json'
+                            }
+                        });
+                        if (response.ok) {
                             setFav(0);
                         };
                     };
@@ -56,11 +58,11 @@ function FavoriteIcon(props) {
         };
     };
 
-  return (
-    <div className='favorite' onClick={updateFav}>
-        <RenderStar />
-    </div>
-  );
+    return (
+        <div className='favorite' onClick={updateFav}>
+            <RenderStar />
+        </div>
+    );
 };
 
 export default FavoriteIcon;
