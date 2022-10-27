@@ -10,7 +10,7 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:3000",
-    os.environ.get("CORS_HOST", "REACT_APP_USERS_AND_FAVORITES_API_HOST")
+    os.environ.get("CORS_HOST", "REACT_APP_USERS_AND_FAVORITES_API_HOST"),
 ]
 
 app.add_middleware(

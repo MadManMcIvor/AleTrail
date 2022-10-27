@@ -3,6 +3,7 @@ from psycopg_pool import ConnectionPool
 
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
+
 class BreweryQueries:
     def get_breweries(self):
         with pool.connection() as conn:
@@ -30,7 +31,7 @@ class BreweryQueries:
                     FROM breweries brew
                     WHERE brew.city = %s
                     """,
-                    [city]
+                    [city],
                 )
 
                 breweries = []
@@ -39,7 +40,6 @@ class BreweryQueries:
                     brewery = self.brewery_record_to_dict(row, cur.description)
                     breweries.append(brewery)
                 return breweries
-    
 
     def get_brewery(self, brewery_id):
         with pool.connection() as conn:
@@ -112,7 +112,7 @@ class BreweryQueries:
                     brewery.image_url,
                     brewery.description,
                     brewery.website,
-                    brewery_id
+                    brewery_id,
                 ]
                 cur.execute(
                     """
@@ -157,13 +157,14 @@ class BreweryQueries:
                 "website",
                 "beers",
             ]
-            
+
             for i, column in enumerate(description):
                 if column.name in brewery_fields:
                     brewery[column.name] = row[i]
             brewery["id"] = brewery["brewery_id"]
 
         return brewery
+
 
 class BeerQueries:
     def get_beers(self):
@@ -279,8 +280,8 @@ class BeerQueries:
                     "abv": beer.abv,
                     "brewery": beer.brewery,
                     "image_url": beer.image_url,
-                    "category" : beer.category,
-                    "vegetarian_friendly" : beer.vegetarian_friendly,
+                    "category": beer.category,
+                    "vegetarian_friendly": beer.vegetarian_friendly,
                 }
                 return response
 
@@ -297,7 +298,7 @@ class BeerQueries:
                     beer.image_url,
                     beer.category,
                     beer.vegetarian_friendly,
-                    beer_id
+                    beer_id,
                 ]
                 cur.execute(
                     """

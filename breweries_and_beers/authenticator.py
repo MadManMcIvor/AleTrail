@@ -2,7 +2,6 @@ import os
 from jwtdown_fastapi.authentication import Authenticator
 
 
-
 class AccountAuthenticator(Authenticator):
     async def get_account_data():
         pass

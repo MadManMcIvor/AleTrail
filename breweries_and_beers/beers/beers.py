@@ -5,6 +5,7 @@ from typing import Optional
 
 router = APIRouter()
 
+
 class BeerIn(BaseModel):
     name: str
     description: Optional[str]
@@ -15,6 +16,7 @@ class BeerIn(BaseModel):
     image_url: Optional[str]
     category: Optional[str]
     vegetarian_friendly: Optional[bool]
+
 
 class BeerOut(BaseModel):
     beer_id: int
@@ -28,6 +30,7 @@ class BeerOut(BaseModel):
     category: Optional[str]
     vegetarian_friendly: Optional[bool]
 
+
 class BeerList(BaseModel):
     beers: list[BeerOut]
 
@@ -36,21 +39,20 @@ class BeerList(BaseModel):
 def get_beers(queries: BeerQueries = Depends()):
     return {"beers": queries.get_beers()}
 
+
 @router.get("/beer/{beer_id}", response_model=BeerOut)
-def get_beer(
-    beer_id: int,
-    response: Response,
-    queries: BeerQueries = Depends()
-    ):
+def get_beer(beer_id: int, response: Response, queries: BeerQueries = Depends()):
     record = queries.get_beer(beer_id)
     if record is None:
         response.status_code = 404
     else:
         return record
 
+
 @router.post("/beers", response_model=BeerOut)
 def create_beer(beer: BeerIn, queries: BeerQueries = Depends()):
     return queries.create_beer(beer)
+
 
 @router.put("/beer/{beer_id}", response_model=BeerOut)
 def update_beer(
@@ -64,6 +66,7 @@ def update_beer(
         response.status_code = 404
     else:
         return record
+
 
 @router.delete("/beer/{beer_id}", response_model=bool)
 def delete_beer(beer_id: int, queries: BeerQueries = Depends()):

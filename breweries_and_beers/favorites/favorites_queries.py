@@ -3,14 +3,17 @@ from db import pool
 from typing import List, Optional
 from pprint import pprint
 
+
 class BreweryFavoriteIn(BaseModel):
     user_id: int
     brewery_id: int
+
 
 class BreweryFavoriteOut(BaseModel):
     brewery_favorite_id: int
     user_id: int
     brewery_id: int
+
 
 class BreweryFavoriteJoinOut(BaseModel):
     brewery_favorite_id: int
@@ -26,14 +29,17 @@ class BreweryFavoriteJoinOut(BaseModel):
     description: Optional[str]
     website: Optional[str]
 
+
 class BeerFavoriteIn(BaseModel):
     user_id: int
     beer_id: int
+
 
 class BeerFavoriteOut(BaseModel):
     beer_favorite_id: int
     user_id: int
     beer_id: int
+
 
 class BeerFavoriteJoinOut(BaseModel):
     beer_favorite_id: int
@@ -48,6 +54,7 @@ class BeerFavoriteJoinOut(BaseModel):
     image_url: str
     category: str
     vegetarian_friendly: bool
+
 
 class BreweryFavoritesRepository:
     def get_all(self, user_id) -> List[BreweryFavoriteJoinOut]:
@@ -73,7 +80,7 @@ class BreweryFavoritesRepository:
                         ON (fav.brewery_id = brew.brewery_id)
                         WHERE fav.user_id = %s;
                         """,
-                        [user_id]
+                        [user_id],
                     )
                     temp_list = [item for item in result]
                     pprint(temp_list)
@@ -90,12 +97,12 @@ class BreweryFavoritesRepository:
                             phone=record[8],
                             image_url=record[9],
                             description=record[10],
-                            website=record[11]
-                        ) for record in temp_list
+                            website=record[11],
+                        )
+                        for record in temp_list
                     ]
         except Exception:
-            return {'message:' 'Could not get all brewery favorites'}
-
+            return {"message:" "Could not get all brewery favorites"}
 
     def create(self, brewery_favorite: BreweryFavoriteIn) -> BreweryFavoriteOut:
         with pool.connection() as conn:
@@ -108,16 +115,15 @@ class BreweryFavoritesRepository:
                         (%s, %s)
                     RETURNING brewery_favorite_id;
                     """,
-                    [
-                        brewery_favorite.user_id, 
-                        brewery_favorite.brewery_id
-                    ]
+                    [brewery_favorite.user_id, brewery_favorite.brewery_id],
                 )
                 row = result.fetchone()
                 brewery_favorite_id = row[0]
                 old_data = brewery_favorite.dict()
-                return BreweryFavoriteOut(brewery_favorite_id=brewery_favorite_id, **old_data)
-    
+                return BreweryFavoriteOut(
+                    brewery_favorite_id=brewery_favorite_id, **old_data
+                )
+
     def delete(self, brewery_favorite_id: int) -> bool:
         try:
             with pool.connection() as conn:
@@ -127,14 +133,12 @@ class BreweryFavoritesRepository:
                         DELETE FROM brewery_favorites
                         WHERE brewery_favorite_id = %s
                         """,
-                        [brewery_favorite_id]
+                        [brewery_favorite_id],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
-
-
 
 
 class BeerFavoritesRepository:
@@ -161,7 +165,7 @@ class BeerFavoritesRepository:
                         ON (fav.beer_id = brew.beer_id)
                         WHERE fav.user_id = %s;
                         """,
-                        [user_id]
+                        [user_id],
                     )
                     temp_list = [item for item in result]
                     print(temp_list)
@@ -179,11 +183,11 @@ class BeerFavoritesRepository:
                             image_url=record[9],
                             category=record[10],
                             vegetarian_friendly=record[11],
-                        ) for record in temp_list
+                        )
+                        for record in temp_list
                     ]
         except Exception:
-            return {'message:' 'Could not get all brewery favorites'}
-
+            return {"message:" "Could not get all brewery favorites"}
 
     def create(self, beer_favorite: BeerFavoriteIn) -> BeerFavoriteOut:
         with pool.connection() as conn:
@@ -196,16 +200,13 @@ class BeerFavoritesRepository:
                         (%s, %s)
                     RETURNING beer_favorite_id;
                     """,
-                    [
-                        beer_favorite.user_id, 
-                        beer_favorite.beer_id
-                    ]
+                    [beer_favorite.user_id, beer_favorite.beer_id],
                 )
                 row = result.fetchone()
                 beer_favorite_id = row[0]
                 old_data = beer_favorite.dict()
                 return BeerFavoriteOut(beer_favorite_id=beer_favorite_id, **old_data)
-    
+
     def delete(self, beer_favorite_id: int) -> bool:
         try:
             with pool.connection() as conn:
@@ -215,7 +216,7 @@ class BeerFavoritesRepository:
                         DELETE FROM beer_favorites
                         WHERE beer_favorite_id = %s
                         """,
-                        [beer_favorite_id]
+                        [beer_favorite_id],
                     )
                     return True
         except Exception as e:
