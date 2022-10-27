@@ -1,3 +1,9 @@
+## 10/27/22 
+This morning we worked on getting the frontend authentication to work on the deployed site. We're working on readme file. 
+
+## 10/26/22
+Today we continued to get our application deployed on heroku. We ran into authentication issue. I made change to the signup/login so that it converts the email to lowercase. I had to correct my unit test and I worked on updating readme. 
+
 ## 10/25/22
 This morning we ran into to some issue with our pipeline on gitlab. It was fine the previous day, but suddenly stopped working. We only caught the problem when another team member merge main to their branch. It was an error with psycopg and in the end we had to delete “binary” from it for the pipeline to work again. We worked on heroku deployment and ran into some blockers. After class, I worked on touching up wireframe.
 
