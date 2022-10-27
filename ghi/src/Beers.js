@@ -8,10 +8,23 @@ function Beers() {
     const [token] = useToken()
 
     async function addFavsToBeers(brew, favData) {
+
+    let user_id = null;
+    const url = `${process.env.REACT_APP_USERS_AND_FAVORITES_API_HOST}/token`;
+    try {
+        const response = await fetch(url, {
+            credentials: "include",
+        });
+        if (response.ok) {
+            const data = await response.json();
+            user_id = data.user.id;
+        };
+    }catch(error){
+        console.log(error)
+    }
       // creates a list of all brewery_ids in Favorite breweries
       if(favData.length > 0){
         let favs = [];
-        const user_id = favData[0]["user_id"]
         for(let i = 0; i < favData.length; i++){
           if(!(favs.includes(favData[i]["beer_id"]))){
             favs.push(favData[i]["beer_id"]);
@@ -29,6 +42,10 @@ function Beers() {
         };
         setBeers(brew);
       }else{
+        for(let i = 0; i < brew.length; i++){
+          brew[i]["fav"] = 0;
+          brew[i]["user_id"] = user_id;
+        }
         setBeers(brew);
       };
     };
@@ -37,7 +54,7 @@ function Beers() {
     async function getBeers() {
       let favData = [];
       const favUrl = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/beers`
-      const favResponse = await fetch(favUrl, { method: "GET", credentials: "include" });
+      const favResponse = await fetch(favUrl, { method: "GET", headers: { Authorization: `Bearer ${token}` }});
       if (favResponse.ok) {
         const data = await favResponse.json();
         favData = Array.from(data);
@@ -52,13 +69,11 @@ function Beers() {
           return formattedData.push(obj);
         });
         addFavsToBeers(formattedData, favData);
-      }else{
-        setBeers(formattedData);
       };
     };
 
     getBeers();
-  }, [])
+  }, [token])
 
   let beerCards = beers.map(function(beer) {
     return <div key={beer.beer_id}>

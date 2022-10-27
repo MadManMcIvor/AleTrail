@@ -9,6 +9,9 @@ import LoginPage from './Login';
 import { AuthProvider, useToken } from './LoginToken';
 import PrivateRoute from './PrivateRoute';
 
+const domain = /https:\/\/[^/]+/;
+const basename = process.env.PUBLIC_URL.replace(domain, '');
+
 function GetToken() {
   // Get token from JWT cookie (if already logged in)
   useToken();
@@ -19,7 +22,7 @@ function GetToken() {
 function App() {
   return (
    
-        <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <AuthProvider>
       <GetToken />
           <OurNav />
@@ -44,7 +47,7 @@ function App() {
             </Routes>
           </div>
           </AuthProvider>
-        </BrowserRouter>
+      </BrowserRouter>
   );
 }
 

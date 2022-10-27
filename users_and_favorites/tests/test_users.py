@@ -10,8 +10,38 @@ sys.path.append(abs_dir)
 
 from main import app
 from queries.users import UserQueries
+from authenticator import authenticator
 
 client = TestClient(app)
+
+
+class TestUserQueries:
+    def get_all_users(self):
+        return [testUser]
+
+testUser = {
+  "id": 1,
+  "first": "test",
+  "last": "test",
+  "profile_pic": "",
+  "email": "email@test.com",
+  "username": "test"
+}
+
+
+def user_override():
+  return testUser 
+
+
+def test_get_all_users():
+    app.dependency_overrides[UserQueries] = TestUserQueries
+    app.dependency_overrides[authenticator.try_get_current_account_data] = user_override
+    response = client.get('/users')
+
+    assert response.status_code == 200
+    assert response.json() ==  { 'users' : [testUser] }
+
+    app.dependency_overrides = {}
 
 
 class TestInvalidTokenUserQueries:
@@ -31,48 +61,5 @@ def test_get_all_users_invalid_token():
     assert response.json() == invalid_token
 
     app.dependency_overrides = {} 
-
-# Currently these 2 tests only pass locally because token is from local database
-# class TestEmptyUserQueries:
-#     def get_all_users(self):
-#         return []
-
-# class TestUserQueries:
-#     def get_all_users(self):
-#         return [user]
-
-# user = {
-#   "id": 1,
-#   "first": "test",
-#   "last": "str",
-#   "profile_pic": "",
-#   "email": "email@test.com",
-#   "username": "test"
-# }
-
-
-# headers = {
-
-#     "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZDc2M2Q3YS04MjkwLTRiMzgtYjcwMS0yMTZmYjMxNzgzYWYiLCJleHAiOjE2NjY0MDIxNDksInN1YiI6Im1hY3lAbWFpbC5jb20iLCJhY2NvdW50Ijp7ImlkIjoxMiwiZmlyc3QiOiJNYWN5IiwibGFzdCI6IlNob3AiLCJwcm9maWxlX3BpYyI6bnVsbCwiZW1haWwiOiJtYWN5QG1haWwuY29tIiwidXNlcm5hbWUiOiJtYWN5IiwiaXNfYnJld2VyeV9vd25lciI6ZmFsc2V9fQ.kdxhaCorU6UNop8akFm4FZiwFMhJeL6vT8O4M6tlDVg"
-# }
-
-# def test_get_all_users_empty():
-#     app.dependency_overrides[UserQueries] = TestEmptyUserQueries
-
-#     response = client.get('/users', headers = headers)
-#     assert response.status_code == 200
-#     assert response.json() == { 'users' : [] }
-
-#     app.dependency_overrides = {}
-
-# def test_get_all_users():
-#     app.dependency_overrides[UserQueries] = TestUserQueries
-#     response = client.get('/users', headers = headers)
-
-#     assert response.status_code == 200
-#     assert response.json() == { 'users' : [user] }
-
-
-#     app.dependency_overrides = {} 
 
 

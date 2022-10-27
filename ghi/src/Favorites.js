@@ -3,18 +3,20 @@ import "react-multi-carousel/lib/styles.css";
 import BeerCard from './BeerCard';
 import BreweryCard from './BreweryCard';
 import React, { useEffect, useState } from 'react';
+import { useToken } from './LoginToken';
+
 
 function Favorites() {
     const [breweries, setBreweries] = useState([]);
     const [beers, setBeers] = useState([]);
+    const [token] = useToken()
 
     useEffect(() => {
       async function getBreweries() {
         const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries`
-        const response = await fetch(url, { method: "GET", credentials: "include" });
+        const response = await fetch(url, { method: "GET", headers: { Authorization: `Bearer ${token}` }});
         if (response.ok) {
           const data = await response.json();
-          console.log(data)
           let formattedData = [];
           data.map((obj) => {
             return formattedData.push(obj);
@@ -25,7 +27,7 @@ function Favorites() {
 
         async function getBeers() {
             const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/beers`
-            const response = await fetch(url, { method: "GET", credentials: "include" });
+            const response = await fetch(url, { method: "GET", headers: { Authorization: `Bearer ${token}` }});
             if (response.ok) {
               const data = await response.json();
               let formattedData = [];
@@ -38,7 +40,7 @@ function Favorites() {
 
         getBeers();
         getBreweries();
-      }, [])
+      }, [token])
 
     // Convert array to JSX items
     let beerCards = beers.map(function(beer) {
