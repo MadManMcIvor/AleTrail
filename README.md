@@ -7,8 +7,37 @@
 * Justin Thomas
 * Julie Liao
 
+## Deployed application 
+
+
+## Design 
+- [API design](/docs/api-design.md)
+
+
+## Intended market
+
+
+## Functionality 
+
+
+
+## Project Initialization 
+
+1. Git clone this repository into your local computer 
+2. CD into ale-trail-alpha directory
+3. Run `docker volume create postgres-data`
+4. Run `docker volume create pg-admin`
+5. Run `docker-compose build`
+6. Run `docker-compose up`
+
+- Access application on browser at localhost:3000
+- Accessing FastAPI Swagger UI:
+  - breweries, beers, and favorites services on localhost:8090/docs
+  - users service on localhost:8100/docs 
 
 # Module3 Project Gamma
+
+
 
 ## Getting started
 
@@ -54,3 +83,6 @@ There will be further guidance on completing the initial deployment, but it just
 - setup Heroku account and app
 - setup 2 CI/CD variables in GitLab
 - push to main
+
+
+   
