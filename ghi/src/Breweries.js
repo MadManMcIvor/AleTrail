@@ -74,7 +74,7 @@ function Breweries() {
       };
     };
     getBreweries();
-  }, []);
+  }, [token]);
   
       // Convert breweries in state to brewery cards
       let breweryCards = breweries.map(function(brewery) {
