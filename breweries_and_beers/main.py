@@ -3,14 +3,13 @@ from breweries import breweries
 from favorites import favorites_router
 from fastapi.middleware.cors import CORSMiddleware
 from beers import beers
-import os
 
 app = FastAPI()
 
 origins = [
     "http://localhost",
     "http://localhost:3000",
-    os.environ.get("CORS_HOST", "REACT_APP_USERS_AND_FAVORITES_API_HOST")
+    "https://aletrail.gitlab.io",
 ]
 
 app.add_middleware(
