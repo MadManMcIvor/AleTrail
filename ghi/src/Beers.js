@@ -54,7 +54,7 @@ function Beers() {
     async function getBeers() {
       let favData = [];
       const favUrl = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/beers`
-      const favResponse = await fetch(favUrl, { method: "GET", credentials: "include" });
+      const favResponse = await fetch(favUrl, { method: "GET", headers: { Authorization: `Bearer ${token}` }});
       if (favResponse.ok) {
         const data = await favResponse.json();
         favData = Array.from(data);
@@ -73,7 +73,7 @@ function Beers() {
     };
 
     getBeers();
-  }, [])
+  }, [token])
 
   let beerCards = beers.map(function(beer) {
     return <div key={beer.beer_id}>

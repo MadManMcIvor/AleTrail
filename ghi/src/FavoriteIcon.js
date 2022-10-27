@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useToken } from './LoginToken';
 
 function FavoriteIcon(props) {
+    const [token] = useToken()
 
     const [fav, setFav] = useState(props.fav);
 
@@ -36,7 +38,7 @@ function FavoriteIcon(props) {
             };
         }else{
             const url = `${process.env.REACT_APP_BREWERIES_AND_BEERS_API_HOST}/favorites/breweries`
-            const response = await fetch(url, { method: "GET", credentials: "include" });
+            const response = await fetch(url, { method: "GET", headers: { Authorization: `Bearer ${token}` }});
             if (response.ok) {
                 const data = await response.json();
                 for(let i=0; i < data.length; i++){
