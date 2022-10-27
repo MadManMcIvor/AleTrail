@@ -40,7 +40,7 @@ function Favorites() {
 
         getBeers();
         getBreweries();
-      }, [])
+      }, [token])
 
     // Convert array to JSX items
     let beerCards = beers.map(function(beer) {
