@@ -35,6 +35,8 @@ def get_all_brewery_favorites_by_user(
     repo: BreweryFavoritesRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):    
+    print('ACCOUNT DATA:',account_data)
+    print('ACCOUNT ID:', account_data['id'])
     user_id= account_data['id']
     return repo.get_all(user_id)
 
