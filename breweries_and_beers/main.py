@@ -4,8 +4,6 @@ from favorites import favorites_router
 from fastapi.middleware.cors import CORSMiddleware
 from beers import beers
 import os
-from authenticator import authenticator
-
 
 app = FastAPI()
 
@@ -26,5 +24,3 @@ app.add_middleware(
 app.include_router(breweries.router)
 app.include_router(favorites_router.router)
 app.include_router(beers.router)
-app.include_router(authenticator.router)
-
